@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+    showed:
+        build:
+            context: .
+            dockerfile: ./infra/showed/Dockerfile
+        container_name: showed
+        ports:
+            - '3000:3000'
+        volumes:
+            - .:/app
