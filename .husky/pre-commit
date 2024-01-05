@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh"
+exec < /dev/tty
+docker-compose run --rm showed npx lint-staged --no-stash > /dev/tty

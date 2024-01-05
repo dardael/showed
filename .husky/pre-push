@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+exec < /dev/tty
+docker-compose run --rm showed bash -c "npx tsc --noEmit && npx eslint" > /dev/tty
