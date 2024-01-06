@@ -1,9 +1,11 @@
-const path = require('path')
+const path = require('path');
 
 const buildEslintCommand = (filenames) =>
-  `next lint --file ${filenames.map((f) => path.relative(process.cwd(), f)).join(' --file ')}`
+    `next lint --file ${filenames
+        .map((f) => path.relative(process.cwd(), f))
+        .join(' --file ')}`;
 
 module.exports = {
     '**/*.(ts|tsx)': () => 'npx tsc --noEmit',
     '*.{js,jsx,ts,tsx}': [buildEslintCommand],
-}
+};
