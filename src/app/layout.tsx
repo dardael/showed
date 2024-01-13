@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
-import { Box, Image, Flex, Spacer, Link, Center } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'Showed',
@@ -28,20 +26,16 @@ export default function RootLayout({
                                 Accueil
                             </Link>
                             <Spacer />
-                            <Link as={NextLink} href='/company'>
-                                L&apos;entreprise
+                            <Link as={NextLink} href='/coaching'>
+                                Coaching individuel
                             </Link>
                             <Spacer />
-                            <Link as={NextLink} href='/location'>
-                                Nous trouver
-                            </Link>
-                            <Spacer />
-                            <Link as={NextLink} href='/openingTime'>
-                                Horaires d&apos;ouverture
+                            <Link as={NextLink} href='/presentation'>
+                                Qui suis-je ?
                             </Link>
                             <Spacer />
                             <Link as={NextLink} href='/contact'>
-                                Contacts
+                                Me contacter
                             </Link>
                             <Spacer />
                         </Flex>
