@@ -4,7 +4,6 @@ import { Providers } from './providers';
 import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-
 export const metadata: Metadata = {
     title: 'Showed',
     description: 'Publicity web app',
@@ -19,7 +18,13 @@ export default function RootLayout({
         <html lang='fr'>
             <body>
                 <Providers>
-                    <Center bg='tomato' h='100px' color='white'>
+                    <Center
+                        fontWeight='600'
+                        fontFamily={'system-ui'}
+                        bg='black'
+                        h='100px'
+                        color='white'
+                    >
                         <Flex alignItems='center' width='full'>
                             <Spacer />
                             <Link as={NextLink} href='/'>
