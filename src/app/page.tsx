@@ -1,4 +1,6 @@
+'use client';
 import {
+    Avatar,
     Box,
     Card,
     CardBody,
@@ -7,26 +9,63 @@ import {
     Flex,
     Heading,
     Image,
+    List,
+    ListIcon,
+    ListItem,
     Spacer,
+    Text,
 } from '@chakra-ui/react';
+import { MdCheckCircle } from 'react-icons/md';
 
 export default function Home() {
     return (
-        <Box
-            height={450}
-            backgroundSize={'cover'}
-            backgroundImage={'/bandeau-sport.jpg'}
-        >
-            <Center h={'inherit'}>
-                <Heading as='h1' color={'white'} textAlign={'center'}>
-                    Atteignez vos objectifs avec Aurelien, Coach Sportif à
-                    Grenoble
-                </Heading>
+        <Box>
+            <Box
+                height={450}
+                backgroundSize={'cover'}
+                backgroundImage={'/bandeau-sport.jpg'}
+            >
+                <Center h={'inherit'}>
+                    <Heading as='h1' color={'white'} textAlign={'center'}>
+                        Atteignez vos objectifs avec Aurelien, Coach Sportif à
+                        Grenoble
+                    </Heading>
+                </Center>
+            </Box>
+            <Center mt={10}>
+                <Avatar
+                    size='2xl'
+                    name='Segun Adebayo'
+                    src='https://bit.ly/sage-adebayo'
+                />
             </Center>
-            <Flex>
+            <Flex direction={'column'}>
+                <Center mt={5}>
+                    <Text fontSize={'2xl'}>
+                        PERFORMANCE / SANTE / BIEN ÊTRE
+                    </Text>
+                </Center>
+                <Center mt={5}>
+                    <Text fontSize={'lg'} textAlign={'center'}>
+                        Coach sportif sur Grenoble, je m&apos;appelle Aurélien
+                        DIDIER. Je suis à votre disposition pour vous aider à
+                        atteindre vos objectifs. Mon accompagnement se traduit
+                        par :
+                    </Text>
+                    <List spacing={3}>
+                        <ListItem>
+                            <ListIcon
+                                as={MdCheckCircle}
+                                color={'green.500'}
+                            ></ListIcon>
+                        </ListItem>
+                    </List>
+                </Center>
+            </Flex>
+            <Flex mt={10}>
                 <Spacer />
-                <Box borderRadius='lg' w='sm' h='m'>
-                    <Card padding='0'>
+                <Box borderRadius='lg' h='400px' w='sm'>
+                    <Card padding='0' h='inherit'>
                         <CardHeader>
                             <Image
                                 borderRadius='lg'
@@ -35,16 +74,16 @@ export default function Home() {
                         </CardHeader>
                         <CardBody>
                             <Center>
-                                <Heading as='h4' textAlign={'center'}>
+                                <Text fontSize='2xl' textAlign={'center'}>
                                     Programme mensuel
-                                </Heading>
+                                </Text>
                             </Center>
                         </CardBody>
                     </Card>
                 </Box>
                 <Spacer />
-                <Box borderRadius='lg' h='m' w='sm'>
-                    <Card padding='0'>
+                <Box borderRadius='lg' h='400px' w='sm'>
+                    <Card padding='0' h='inherit'>
                         <CardHeader>
                             <Image
                                 borderRadius='lg'
@@ -53,9 +92,9 @@ export default function Home() {
                         </CardHeader>
                         <CardBody>
                             <Center>
-                                <Heading as='h4' textAlign={'center'}>
+                                <Text fontSize='2xl' textAlign={'center'}>
                                     Coaching individuel
-                                </Heading>
+                                </Text>
                             </Center>
                         </CardBody>
                     </Card>
