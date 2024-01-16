@@ -52,16 +52,28 @@ export default function Home() {
             <Center mt={5}>
                 <List spacing={3}>
                     <ListItem fontSize={'md'}>
-                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        <ListIcon
+                            as={MdCheckCircle}
+                            color={'black'}
+                            fontSize={'xl'}
+                        />
                         Une définition des objectifs que vous souhaitez
                         atteindre
                     </ListItem>
                     <ListItem fontSize={'md'}>
-                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        <ListIcon
+                            as={MdCheckCircle}
+                            color={'black'}
+                            fontSize={'xl'}
+                        />
                         Un programme construit avec et pour vous
                     </ListItem>
                     <ListItem fontSize={'md'}>
-                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        <ListIcon
+                            as={MdCheckCircle}
+                            color={'black'}
+                            fontSize={'xl'}
+                        />
                         Un coaching au plus prêt pour chacune de vos séances
                     </ListItem>
                 </List>
