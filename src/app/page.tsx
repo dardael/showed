@@ -2,8 +2,10 @@
 import {
     Avatar,
     Box,
+    Button,
     Card,
     CardBody,
+    CardFooter,
     CardHeader,
     Center,
     Flex,
@@ -15,9 +17,11 @@ import {
     Spacer,
     Text,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import { MdCheckCircle } from 'react-icons/md';
 
 export default function Home() {
+    const routeur = useRouter();
     return (
         <Box>
             <Box
@@ -78,9 +82,9 @@ export default function Home() {
                     </ListItem>
                 </List>
             </Center>
-            <Flex mt={10}>
+            <Flex mt={10} mb={10}>
                 <Spacer />
-                <Box borderRadius='lg' h='400px' w='sm'>
+                <Box borderRadius='lg' h='450px' w='sm'>
                     <Card padding='0' h='inherit'>
                         <CardHeader>
                             <Image
@@ -95,10 +99,20 @@ export default function Home() {
                                 </Text>
                             </Center>
                         </CardBody>
+                        <CardFooter>
+                            <Spacer />
+                            <Button
+                                onClick={() => routeur.push('/programme')}
+                                colorScheme='red'
+                            >
+                                Programme mensuel
+                            </Button>
+                            <Spacer />
+                        </CardFooter>
                     </Card>
                 </Box>
                 <Spacer />
-                <Box borderRadius='lg' h='400px' w='sm'>
+                <Box borderRadius='lg' h='450px' w='sm'>
                     <Card padding='0' h='inherit'>
                         <CardHeader>
                             <Image
@@ -113,6 +127,16 @@ export default function Home() {
                                 </Text>
                             </Center>
                         </CardBody>
+                        <CardFooter>
+                            <Spacer />
+                            <Button
+                                onClick={() => routeur.push('/coaching')}
+                                colorScheme='red'
+                            >
+                                Coaching individuel
+                            </Button>
+                            <Spacer />
+                        </CardFooter>
                     </Card>
                 </Box>
                 <Spacer />
