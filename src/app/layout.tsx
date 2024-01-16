@@ -35,6 +35,10 @@ export default function RootLayout({
                                 Coaching individuel
                             </Link>
                             <Spacer />
+                            <Link as={NextLink} href='/programme'>
+                                Programme mensuel
+                            </Link>
+                            <Spacer />
                             <Link as={NextLink} href='/presentation'>
                                 Qui suis-je ?
                             </Link>
