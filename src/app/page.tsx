@@ -39,29 +39,33 @@ export default function Home() {
                     src='https://bit.ly/sage-adebayo'
                 />
             </Center>
-            <Flex direction={'column'}>
-                <Center mt={5}>
-                    <Text fontSize={'2xl'}>
-                        PERFORMANCE / SANTE / BIEN ÊTRE
-                    </Text>
-                </Center>
-                <Center mt={5}>
-                    <Text fontSize={'lg'} textAlign={'center'}>
-                        Coach sportif sur Grenoble, je m&apos;appelle Aurélien
-                        DIDIER. Je suis à votre disposition pour vous aider à
-                        atteindre vos objectifs. Mon accompagnement se traduit
-                        par :
-                    </Text>
-                    <List spacing={3}>
-                        <ListItem>
-                            <ListIcon
-                                as={MdCheckCircle}
-                                color={'green.500'}
-                            ></ListIcon>
-                        </ListItem>
-                    </List>
-                </Center>
-            </Flex>
+            <Center mt={5}>
+                <Text fontSize={'2xl'}>PERFORMANCE / SANTE / BIEN ÊTRE</Text>
+            </Center>
+            <Center mt={5}>
+                <Text fontSize={'lg'} textAlign={'center'}>
+                    Coach sportif sur Grenoble, je m&apos;appelle Aurélien
+                    DIDIER. Je suis à votre disposition pour vous aider à
+                    atteindre vos objectifs. Mon accompagnement se traduit par :
+                </Text>
+            </Center>
+            <Center mt={5}>
+                <List spacing={3}>
+                    <ListItem fontSize={'md'}>
+                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        Une définition des objectifs que vous souhaitez
+                        atteindre
+                    </ListItem>
+                    <ListItem fontSize={'md'}>
+                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        Un programme construit avec et pour vous
+                    </ListItem>
+                    <ListItem fontSize={'md'}>
+                        <ListIcon as={MdCheckCircle} color={'green.500'} />
+                        Un coaching au plus prêt pour chacune de vos séances
+                    </ListItem>
+                </List>
+            </Center>
             <Flex mt={10}>
                 <Spacer />
                 <Box borderRadius='lg' h='400px' w='sm'>
