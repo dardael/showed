@@ -3,6 +3,9 @@ import './globals.css';
 import { Providers } from './providers';
 import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { FaSquareFacebook, FaSquarePhone } from 'react-icons/fa6';
+import { IoMdMail } from 'react-icons/io';
+import { RiInstagramFill } from 'react-icons/ri';
 
 export const metadata: Metadata = {
     title: 'Showed',
@@ -64,13 +67,42 @@ export default function RootLayout({
                                 },
                                 '&::-webkit-scrollbar-thumb': {
                                     background: '#434343',
-                                    'border-radius': '16px',
-                                    'box-shadow':
-                                        'inset 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25)',
+                                    borderRadius: '18px',
                                 },
                             }}
                         >
                             {children}
+                            <Box backgroundColor={'black'} height={'100px'}>
+                                <Center>
+                                    <Flex
+                                        alignItems={'Center'}
+                                        height={'100px'}
+                                        width={'full'}
+                                    >
+                                        <Spacer />
+                                        <RiInstagramFill
+                                            fontSize='xx-large'
+                                            color='white'
+                                        />
+                                        <Spacer />
+                                        <FaSquareFacebook
+                                            fontSize='xx-large'
+                                            color='white'
+                                        />
+                                        <Spacer />
+                                        <IoMdMail
+                                            fontSize='xx-large'
+                                            color='white'
+                                        />
+                                        <Spacer />
+                                        <FaSquarePhone
+                                            fontSize='xx-large'
+                                            color='white'
+                                        />
+                                        <Spacer />
+                                    </Flex>
+                                </Center>
+                            </Box>
                         </Box>
                     </Box>
                 </Providers>
