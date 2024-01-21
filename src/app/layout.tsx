@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from './providers';
+import MenuBar from 'showed/components/menu/menuBar';
 import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { FaSquareFacebook, FaSquarePhone } from 'react-icons/fa6';
@@ -22,37 +23,7 @@ export default function RootLayout({
             <body>
                 <Providers>
                     <Box height={'100vh'}>
-                        <Center
-                            fontWeight='600'
-                            fontFamily={'system-ui'}
-                            bg='black'
-                            h='100px'
-                            color='white'
-                        >
-                            <Flex alignItems='center' width='full'>
-                                <Spacer />
-                                <Link as={NextLink} href='/'>
-                                    Accueil
-                                </Link>
-                                <Spacer />
-                                <Link as={NextLink} href='/coaching'>
-                                    Coaching individuel
-                                </Link>
-                                <Spacer />
-                                <Link as={NextLink} href='/programme'>
-                                    Programme mensuel
-                                </Link>
-                                <Spacer />
-                                <Link as={NextLink} href='/presentation'>
-                                    Qui suis-je ?
-                                </Link>
-                                <Spacer />
-                                <Link as={NextLink} href='/contact'>
-                                    Me contacter
-                                </Link>
-                                <Spacer />
-                            </Flex>
-                        </Center>
+                        <MenuBar />
                         <Box
                             height={'calc(100% - 100px)'}
                             overflowY={'auto'}
