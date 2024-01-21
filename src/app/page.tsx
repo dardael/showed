@@ -82,8 +82,14 @@ export default function Home() {
                     </ListItem>
                 </List>
             </Center>
-            <Flex mt={10} mb={10}>
-                <Spacer />
+            <Flex
+                flexWrap={'wrap'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                gap={10}
+                mt={10}
+                mb={10}
+            >
                 <Box borderRadius='lg' h='450px' w='sm'>
                     <Card padding='0' h='inherit'>
                         <CardHeader>
@@ -111,7 +117,6 @@ export default function Home() {
                         </CardFooter>
                     </Card>
                 </Box>
-                <Spacer />
                 <Box borderRadius='lg' h='450px' w='sm'>
                     <Card padding='0' h='inherit'>
                         <CardHeader>
@@ -139,7 +144,6 @@ export default function Home() {
                         </CardFooter>
                     </Card>
                 </Box>
-                <Spacer />
             </Flex>
         </Box>
     );
