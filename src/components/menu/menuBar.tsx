@@ -1,7 +1,16 @@
+'use client';
 import { Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import LinkItem from 'showed/lib/menu/entities/link';
 
 export default function MenuBar() {
+    const linkItems = [
+        new LinkItem('Accueil', '/'),
+        new LinkItem('Coaching individuel', '/coaching'),
+        new LinkItem('Programme mensuel', '/programme'),
+        new LinkItem('Qui suis-je ?', '/presentation'),
+        new LinkItem('Me contacter', '/contact'),
+    ];
     return (
         <Center
             fontWeight='600'
@@ -12,26 +21,14 @@ export default function MenuBar() {
         >
             <Flex alignItems='center' width='full'>
                 <Spacer />
-                <Link as={NextLink} href='/'>
-                    Accueil
-                </Link>
-                <Spacer />
-                <Link as={NextLink} href='/coaching'>
-                    Coaching individuel
-                </Link>
-                <Spacer />
-                <Link as={NextLink} href='/programme'>
-                    Programme mensuel
-                </Link>
-                <Spacer />
-                <Link as={NextLink} href='/presentation'>
-                    Qui suis-je ?
-                </Link>
-                <Spacer />
-                <Link as={NextLink} href='/contact'>
-                    Me contacter
-                </Link>
-                <Spacer />
+                {linkItems.map((linkItem) => (
+                    <>
+                        <Link as={NextLink} href={linkItem.target}>
+                            {linkItem.label}
+                        </Link>
+                        <Spacer />
+                    </>
+                ))}
             </Flex>
         </Center>
     );
