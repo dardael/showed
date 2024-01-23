@@ -11,13 +11,17 @@ export default function FooterBar() {
                 <Flex alignItems={'Center'} height={'100px'} width={'full'}>
                     <Spacer />
                     <Flex direction={'column'} alignItems={'Center'}>
-                        <Link href={'https://www.instagram.com/aurel_ddr/'}>
+                        <Link
+                            as={NextLink}
+                            href={'https://www.instagram.com/aurel_ddr/'}
+                        >
                             <RiInstagramFill
                                 fontSize='xx-large'
                                 color='white'
                             />
                         </Link>
                         <Link
+                            as={NextLink}
                             pt={1}
                             color='white'
                             href={'https://www.instagram.com/aurel_ddr/'}
@@ -28,6 +32,7 @@ export default function FooterBar() {
                     <Spacer />
                     <Flex direction={'column'} alignItems={'Center'}>
                         <Link
+                            as={NextLink}
                             href={'https://www.facebook.com/aureliendidier26'}
                         >
                             <FaSquareFacebook
@@ -36,6 +41,7 @@ export default function FooterBar() {
                             />
                         </Link>
                         <Link
+                            as={NextLink}
                             pt={1}
                             color='white'
                             href={'https://www.facebook.com/aureliendidier26'}
@@ -59,10 +65,15 @@ export default function FooterBar() {
                     </Flex>
                     <Spacer />
                     <Flex direction={'column'} alignItems={'Center'}>
-                        <Link href='tel:0635198016'>
+                        <Link as={NextLink} href='tel:0635198016'>
                             <FaSquarePhone fontSize='xx-large' color='white' />
                         </Link>
-                        <Link pt={1} color='white' href='tel:0635198016'>
+                        <Link
+                            as={NextLink}
+                            pt={1}
+                            color='white'
+                            href='tel:0635198016'
+                        >
                             06 35 19 80 16
                         </Link>
                     </Flex>
