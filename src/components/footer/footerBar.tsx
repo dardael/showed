@@ -35,7 +35,7 @@ export default function FooterBar() {
                 <Flex alignItems={'Center'} height={'100px'} width={'full'}>
                     <Spacer />
                     {linkItems.map((linkItem) => (
-                        <>
+                        <Box key={linkItem.target}>
                             <Flex direction={'column'} alignItems={'Center'}>
                                 <Link as={NextLink} href={linkItem.target}>
                                     {linkItem.icone}
@@ -50,7 +50,7 @@ export default function FooterBar() {
                                 </Link>
                             </Flex>
                             <Spacer />
-                        </>
+                        </Box>
                     ))}
                 </Flex>
             </Center>
