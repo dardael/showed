@@ -5,7 +5,7 @@ import { FaSquareFacebook, FaSquarePhone } from 'react-icons/fa6';
 import { IoMdMail } from 'react-icons/io';
 import { RiInstagramFill } from 'react-icons/ri';
 import LinkItem from 'showed/lib/footer/entities/link';
-
+import React from 'react';
 export default function FooterBar() {
     const linkItems = [
         new LinkItem(
@@ -34,24 +34,30 @@ export default function FooterBar() {
             <Center>
                 <Flex alignItems={'Center'} height={'100px'} width={'full'}>
                     <Spacer />
-                    {linkItems.map((linkItem) => (
-                        <Box key={linkItem.target}>
-                            <Flex direction={'column'} alignItems={'Center'}>
-                                <Link as={NextLink} href={linkItem.target}>
-                                    {linkItem.icone}
-                                </Link>
-                                <Link
-                                    as={NextLink}
-                                    pt={1}
-                                    color='white'
-                                    href={linkItem.target}
+                    {React.Children.toArray(
+                        linkItems.map((linkItem) => (
+                            <>
+                                <Flex
+                                    direction={'column'}
+                                    alignItems={'Center'}
                                 >
-                                    {linkItem.label}
-                                </Link>
-                            </Flex>
-                            <Spacer />
-                        </Box>
-                    ))}
+                                    <Link as={NextLink} href={linkItem.target}>
+                                        {linkItem.icone}
+                                    </Link>
+                                    <Link
+                                        as={NextLink}
+                                        pt={1}
+                                        color='white'
+                                        href={linkItem.target}
+                                        textAlign='center'
+                                    >
+                                        {linkItem.label}
+                                    </Link>
+                                </Flex>
+                                <Spacer />
+                            </>
+                        ))
+                    )}
                 </Flex>
             </Center>
         </Box>
