@@ -3,7 +3,7 @@ import './globals.css';
 import { Providers } from './providers';
 import MenuBar from 'showed/components/menu/menuBar';
 import FooterBar from 'showed/components/footer/footerBar';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 export const metadata: Metadata = {
     title: 'Showed',
@@ -19,10 +19,11 @@ export default function RootLayout({
         <html lang='fr'>
             <body>
                 <Providers>
-                    <Box height={'100vh'}>
-                        <MenuBar />
+                    <Flex height={'100vh'} direction='column'>
+                        <Box flex='1'>
+                            <MenuBar />
+                        </Box>
                         <Box
-                            height={'calc(100% - 100px)'}
                             overflowY={'auto'}
                             sx={{
                                 '&::-webkit-scrollbar': {
@@ -42,7 +43,7 @@ export default function RootLayout({
                             {children}
                             <FooterBar />
                         </Box>
-                    </Box>
+                    </Flex>
                 </Providers>
             </body>
         </html>

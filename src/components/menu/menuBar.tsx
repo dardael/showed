@@ -1,8 +1,8 @@
 'use client';
-import { Flex, Spacer, Link, Center } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { useMediaQuery } from '@chakra-ui/react';
 import LinkItem from 'showed/lib/menu/entities/link';
-
+import MobileMenuBar from 'showed/components/menu/mobileMenuBar';
+import LaptopMenuBar from 'showed/components/menu/laptopMenuBar';
 export default function MenuBar() {
     const linkItems = [
         new LinkItem('Accueil', '/'),
@@ -11,25 +11,14 @@ export default function MenuBar() {
         new LinkItem('Qui suis-je ?', '/presentation'),
         new LinkItem('Me contacter', '/contact'),
     ];
+    const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (
-        <Center
-            fontWeight='600'
-            fontFamily={'system-ui'}
-            bg='black'
-            h='100px'
-            color='white'
-        >
-            <Flex alignItems='center' width='full'>
-                <Spacer />
-                {linkItems.map((linkItem) => (
-                    <>
-                        <Link as={NextLink} href={linkItem.target}>
-                            {linkItem.label}
-                        </Link>
-                        <Spacer />
-                    </>
-                ))}
-            </Flex>
-        </Center>
+        <>
+            {isMobile ? (
+                <MobileMenuBar links={linkItems} />
+            ) : (
+                <LaptopMenuBar links={linkItems} />
+            )}
+        </>
     );
 }
