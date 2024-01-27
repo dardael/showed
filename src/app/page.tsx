@@ -2,26 +2,17 @@
 import {
     Avatar,
     Box,
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
     Center,
-    Flex,
     Heading,
-    Image,
     List,
     ListIcon,
     ListItem,
-    Spacer,
     Text,
 } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
 import { MdCheckCircle } from 'react-icons/md';
+import Offers from 'showed/components/offer/offers';
 
 export default function Home() {
-    const routeur = useRouter();
     return (
         <Box>
             <Box
@@ -82,69 +73,7 @@ export default function Home() {
                     </ListItem>
                 </List>
             </Center>
-            <Flex
-                flexWrap={'wrap'}
-                alignItems={'center'}
-                justifyContent={'center'}
-                gap={10}
-                mt={10}
-                mb={10}
-            >
-                <Box borderRadius='lg' h='450px' w='sm'>
-                    <Card padding='0' h='inherit'>
-                        <CardHeader>
-                            <Image
-                                borderRadius='lg'
-                                src='/programme.jpg'
-                            ></Image>
-                        </CardHeader>
-                        <CardBody>
-                            <Center>
-                                <Text fontSize='2xl' textAlign={'center'}>
-                                    Programme mensuel
-                                </Text>
-                            </Center>
-                        </CardBody>
-                        <CardFooter>
-                            <Spacer />
-                            <Button
-                                onClick={() => routeur.push('/programme')}
-                                colorScheme='red'
-                            >
-                                Programme mensuel
-                            </Button>
-                            <Spacer />
-                        </CardFooter>
-                    </Card>
-                </Box>
-                <Box borderRadius='lg' h='450px' w='sm'>
-                    <Card padding='0' h='inherit'>
-                        <CardHeader>
-                            <Image
-                                borderRadius='lg'
-                                src='/coaching.jpg'
-                            ></Image>
-                        </CardHeader>
-                        <CardBody>
-                            <Center>
-                                <Text fontSize='2xl' textAlign={'center'}>
-                                    Coaching individuel
-                                </Text>
-                            </Center>
-                        </CardBody>
-                        <CardFooter>
-                            <Spacer />
-                            <Button
-                                onClick={() => routeur.push('/coaching')}
-                                colorScheme='red'
-                            >
-                                Coaching individuel
-                            </Button>
-                            <Spacer />
-                        </CardFooter>
-                    </Card>
-                </Box>
-            </Flex>
+            <Offers />
         </Box>
     );
 }
