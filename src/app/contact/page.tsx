@@ -7,25 +7,12 @@ import {
     Select,
     Textarea,
     Button,
-    Center,
-    Heading,
 } from '@chakra-ui/react';
-
+import Banner from 'showed/components/banner/banner';
 export default function Home() {
     return (
         <>
-            <Box
-                height={450}
-                backgroundSize={'cover'}
-                backgroundImage={'/powder.jpg'}
-            >
-                <Center h={'inherit'}>
-                    <Heading as='h1' color={'white'} textAlign={'center'}>
-                        Avec vos disponibilités et vos objectifs, nous pourrons
-                        définir ensemble la meilleur facon de vous accompagner
-                    </Heading>
-                </Center>
-            </Box>
+            <Banner text='Avec vos disponibilités et vos objectifs, nous pourrons définir ensemble la meilleur facon de vous accompagner' />
             <form>
                 <SimpleGrid
                     columns={{ sm: 1, md: 2 }}

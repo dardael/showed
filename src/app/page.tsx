@@ -3,30 +3,19 @@ import {
     Avatar,
     Box,
     Center,
-    Heading,
     List,
     ListIcon,
     ListItem,
     Text,
 } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md';
+import Banner from 'showed/components/banner/banner';
 import Offers from 'showed/components/offer/offers';
 
 export default function Home() {
     return (
         <Box>
-            <Box
-                height={450}
-                backgroundSize={'cover'}
-                backgroundImage={'/powder.jpg'}
-            >
-                <Center h={'inherit'}>
-                    <Heading as='h1' color={'white'} textAlign={'center'}>
-                        Atteignez vos objectifs avec Aurelien, Coach Sportif à
-                        Grenoble
-                    </Heading>
-                </Center>
-            </Box>
+            <Banner text='Atteignez vos objectifs avec Aurelien, Coach Sportif à Grenoble' />
             <Center mt={10}>
                 <Avatar
                     size='2xl'
