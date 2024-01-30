@@ -18,7 +18,7 @@ export default function Home() {
             <Box
                 height={450}
                 backgroundSize={'cover'}
-                backgroundImage={'/bandeau-sport.jpg'}
+                backgroundImage={'/powder.jpg'}
             >
                 <Center h={'inherit'}>
                     <Heading as='h1' color={'white'} textAlign={'center'}>
