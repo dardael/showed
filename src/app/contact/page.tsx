@@ -64,7 +64,7 @@ export default function Home() {
                         <Textarea name='message' />
                     </FormControl>
                 </SimpleGrid>
-                <Box margin={'40px'} textAlign={'right'}>
+                <Box margin={'40px'} textAlign={'center'}>
                     <Button color='white' colorScheme='red' type='submit'>
                         Envoyer la demande
                     </Button>
