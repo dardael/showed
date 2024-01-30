@@ -8,7 +8,6 @@ export default function MenuBar() {
         new LinkItem('Accueil', '/'),
         new LinkItem('Coaching individuel', '/coaching'),
         new LinkItem('Programme mensuel', '/programme'),
-        new LinkItem('Qui suis-je ?', '/presentation'),
         new LinkItem('Me contacter', '/contact'),
     ];
     const [isMobile] = useMediaQuery('(max-width: 750px)');
