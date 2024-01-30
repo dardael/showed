@@ -20,10 +20,12 @@ export default function RootLayout({
             <body>
                 <Providers>
                     <Flex height={'100vh'} direction='column'>
-                        <Box flex='1'>
+                        <Box flex='0 0 fit-content' maxH={'fit-content'}>
                             <MenuBar />
                         </Box>
-                        <Box
+                        <Flex
+                            direction='column'
+                            flex='1'
                             overflowY={'auto'}
                             sx={{
                                 '&::-webkit-scrollbar': {
@@ -40,9 +42,9 @@ export default function RootLayout({
                                 },
                             }}
                         >
-                            {children}
+                            <Box flex='1'>{children}</Box>
                             <FooterBar />
-                        </Box>
+                        </Flex>
                     </Flex>
                 </Providers>
             </body>
