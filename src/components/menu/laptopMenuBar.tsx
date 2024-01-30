@@ -8,8 +8,8 @@ export default function LaptopMenuBar({ links }: { links: LinkItem[] }) {
         <Center
             fontWeight='600'
             fontFamily={'system-ui'}
-            bg='black'
-            color='white'
+            bg='#a94646'
+            color='#ebd2d2'
             h='100'
         >
             <Flex alignItems='center' width='full'>

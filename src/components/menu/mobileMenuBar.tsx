@@ -11,8 +11,8 @@ export default function MobileMenuBar({ links }: { links: LinkItem[] }) {
             <IconButton
                 position='absolute'
                 right='1px'
-                color='white'
-                backgroundColor='black'
+                color='#ebd2d2'
+                backgroundColor='#a94646'
                 aria-label='Afficher/Masquer le menu'
                 icon={<Icon as={TiThMenu} />}
                 onClick={() => setIsMenuDisplayed(!isMenuDisplayed)}
@@ -22,8 +22,8 @@ export default function MobileMenuBar({ links }: { links: LinkItem[] }) {
                 templateColumns={'repeat(1, ' + links.length + ')'}
                 fontWeight='600'
                 fontFamily={'system-ui'}
-                bg='black'
-                color='white'
+                bg='#a94646'
+                color='#ebd2d2'
                 padding='15px'
             >
                 {isMenuDisplayed

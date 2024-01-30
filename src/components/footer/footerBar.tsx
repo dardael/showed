@@ -9,28 +9,18 @@ import React from 'react';
 export default function FooterBar() {
     const linkItems = [
         new LinkItem(
-            'aurel_ddr',
-            'https://www.instagram.com/aurel_ddr/',
-            <RiInstagramFill fontSize='xx-large' color='white' />
-        ),
-        new LinkItem(
-            'Aurélien DIDIER',
-            'https://www.facebook.com/aureliendidier26',
-            <FaSquareFacebook fontSize='xx-large' color='white' />
-        ),
-        new LinkItem(
             'Me contacter',
             '/contact',
             <IoMdMail fontSize='xx-large' color='white' />
         ),
         new LinkItem(
-            '06 35 19 80 16',
-            'tel:0635198016',
+            '07 49 68 22 17',
+            'tel:0749682217',
             <FaSquarePhone fontSize='xx-large' color='white' />
         ),
     ];
     return (
-        <Box backgroundColor={'black'} height={'100px'}>
+        <Box color='#ebd2d2' backgroundColor='#a94646' height={'100px'}>
             <Center>
                 <Flex alignItems={'Center'} height={'100px'} width={'full'}>
                     <Spacer />
@@ -47,7 +37,6 @@ export default function FooterBar() {
                                     <Link
                                         as={NextLink}
                                         pt={1}
-                                        color='white'
                                         href={linkItem.target}
                                         textAlign='center'
                                     >

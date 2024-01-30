@@ -1,16 +1,18 @@
 import { Box, Heading, Center } from '@chakra-ui/react';
-export default function Banner({ text }: { text: string }) {
+export default function Banner({ texts }: { texts: string[] }) {
     return (
         <Box
             height={450}
             backgroundSize={'cover'}
-            backgroundImage={'/powder.jpg'}
+            backgroundImage={'/banner.jpg'}
         >
             <Center h={'inherit'}>
                 <Heading as='h1' color={'white'} textAlign={'center'}>
-                    {text}
+                    {texts.map((text) => (
+                        <p key={text}>{text}</p>
+                    ))}
                 </Heading>
-            </Center>
+            </Center>{' '}
         </Box>
     );
 }

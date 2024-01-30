@@ -6,8 +6,10 @@ import LaptopMenuBar from 'showed/components/menu/laptopMenuBar';
 export default function MenuBar() {
     const linkItems = [
         new LinkItem('Accueil', '/'),
-        new LinkItem('Coaching individuel', '/coaching'),
-        new LinkItem('Programme mensuel', '/programme'),
+        new LinkItem('Modalités', '/summary'),
+        new LinkItem("Secteur d'intervention", '/location'),
+        new LinkItem('Horaires', '/schedule'),
+        new LinkItem('Qui suis-je', '/presentation'),
         new LinkItem('Me contacter', '/contact'),
     ];
     const [isMobile] = useMediaQuery('(max-width: 750px)');
