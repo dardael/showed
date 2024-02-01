@@ -10,3 +10,40 @@ services:
             - '3000:3000'
         volumes:
             - .:/app
+        depends_on:
+            - mongodb
+        networks:
+            - showed-network
+
+    mongodb:
+        image: mongo:latest
+        container_name: mongo
+        env_file:
+            - ./.env.local
+        volumes:
+            - showed-data:/data/db
+        ports:
+            - '27017:27017'
+        networks:
+            - showed-network
+
+    mongodb-express:
+        image: mongo-express
+        env_file:
+            - ./.env.local
+        volumes:
+            - showed-data:/data/db
+        depends_on:
+            - mongodb
+        ports:
+            - '8081:8081'
+        networks:
+            - showed-network
+
+volumes:
+    showed-data:
+        name: showed-data
+
+networks:
+    showed-network:
+        name: showed-network
