@@ -1,11 +1,8 @@
 import { Box, Button, Input } from '@chakra-ui/react';
 import { use } from 'react';
-import { getMaintainers } from 'showed/lib/maintainer/bridge/database/repository';
-
-import {
-    createMaintainerAction,
-    updateMaintainerAction,
-} from 'showed/lib/maintainer/service/provider';
+import Repository from 'showed/lib/maintainer/bridge/database/repository';
+import Provider from 'showed/lib/maintainer/provider';
+import { MaintainerClass } from 'showed/models/maintainer';
 
 async function action(data: FormData) {
     'use server';
@@ -16,18 +13,24 @@ async function action(data: FormData) {
     if (!email) {
         return;
     }
+    const repository = new Repository();
+    const provider = new Provider(repository);
     if (id) {
-        await updateMaintainerAction(id, { email, name, surname }, '/admin');
+        provider.updateMaintainer(id, { email, name, surname });
     } else {
-        await createMaintainerAction({ email, path: '/admin' });
+        provider.createMaintainer(email);
     }
 }
 
-async function getMaintainer() {
-    const response = await getMaintainers({ limit: 1 });
-    return response.maintainers?.pop();
+async function getMaintainer(): Promise<MaintainerClass | undefined> {
+    'use server';
+    const repository = new Repository();
+    const provider = new Provider(repository);
+    const maintainer = await provider.getMaintainer();
+    return maintainer;
 }
 export default function Home() {
+    'use client';
     const maintainer = use(getMaintainer());
 
     return (
@@ -37,17 +40,17 @@ export default function Home() {
                 <Input
                     placeholder='email'
                     name='email'
-                    value={maintainer?.email}
+                    defaultValue={maintainer?.email}
                 />
                 <Input
                     placeholder='name'
                     name='name'
-                    value={maintainer?.name}
+                    defaultValue={maintainer?.name}
                 />
                 <Input
                     placeholder='surname'
                     name='surname'
-                    value={maintainer?.surname}
+                    defaultValue={maintainer?.surname}
                 />
                 <Button type='submit'>Enregistrer</Button>
             </form>

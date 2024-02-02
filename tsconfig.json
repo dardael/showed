@@ -21,6 +21,7 @@
         "paths": {
             "showed/*": ["./src/*"]
         },
+        "types": ["reflect-metadata"],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false
