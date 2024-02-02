@@ -1,6 +1,6 @@
 import { Flex, Spacer, Link, Center } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import LinkItem from 'showed/lib/menu/entities/link';
+import LinkItem from 'showed/components/menu/entities/link';
 import React from 'react';
 
 export default function LaptopMenuBar({ links }: { links: LinkItem[] }) {

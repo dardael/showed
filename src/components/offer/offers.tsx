@@ -1,6 +1,6 @@
 'use client';
 import { Flex } from '@chakra-ui/react';
-import OfferEntity from 'showed/lib/offer/entities/offer';
+import OfferEntity from 'showed/components/offer/entities/offer';
 import OfferCard from './offerCard';
 
 export default function Offers() {

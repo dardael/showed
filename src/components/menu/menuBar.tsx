@@ -1,6 +1,6 @@
 'use client';
 import { useMediaQuery } from '@chakra-ui/react';
-import LinkItem from 'showed/lib/menu/entities/link';
+import LinkItem from 'showed/components/menu/entities/link';
 import MobileMenuBar from 'showed/components/menu/mobileMenuBar';
 import LaptopMenuBar from 'showed/components/menu/laptopMenuBar';
 export default function MenuBar() {

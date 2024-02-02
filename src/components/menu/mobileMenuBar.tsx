@@ -1,7 +1,7 @@
 import { Link, Grid, GridItem, IconButton, Icon } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useState } from 'react';
-import LinkItem from 'showed/lib/menu/entities/link';
+import LinkItem from 'showed/components/menu/entities/link';
 import { TiThMenu } from 'react-icons/ti';
 
 export default function MobileMenuBar({ links }: { links: LinkItem[] }) {

@@ -11,7 +11,7 @@ import {
     Button,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import Offer from 'showed/lib/offer/entities/offer';
+import Offer from 'showed/components/offer/entities/offer';
 
 export default function OfferCard({ offer }: { offer: Offer }) {
     const routeur = useRouter();

@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { FaSquareFacebook, FaSquarePhone } from 'react-icons/fa6';
 import { IoMdMail } from 'react-icons/io';
 import { RiInstagramFill } from 'react-icons/ri';
-import LinkItem from 'showed/lib/footer/entities/link';
+import LinkItem from 'showed/components/footer/entities/link';
 import React from 'react';
 export default function FooterBar() {
     const linkItems = [
