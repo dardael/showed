@@ -1,8 +1,7 @@
 import { Box, Button, Input } from '@chakra-ui/react';
 import { use } from 'react';
-import Repository from 'showed/lib/maintainer/bridge/database/repository';
 import Provider from 'showed/lib/maintainer/service/provider';
-import { MaintainerClass } from 'showed/models/maintainer';
+import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
 import { container } from 'tsyringe';
 
 async function action(data: FormData) {

@@ -1,6 +1,6 @@
 import ProviderInterface from 'showed/lib/maintainer/service/provider';
 import type Repository from 'showed/lib/maintainer/repository';
-import { MaintainerClass } from 'showed/models/maintainer';
+import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
 import { injectable, inject } from 'tsyringe';
 
 @injectable()

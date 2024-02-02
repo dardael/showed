@@ -1,4 +1,4 @@
-import { MaintainerClass } from 'showed/models/maintainer';
+import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
 
 export default interface Provider {
     createMaintainer(email: string): void;

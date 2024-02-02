@@ -1,40 +1,36 @@
-import { Maintainer, MaintainerClass } from 'showed/models/maintainer';
-import connection from 'showed/lib/core/database/connection';
-import { stringToObjectId } from 'showed/lib/core/database/utils';
+import {
+    Maintainer,
+    MaintainerClass,
+} from 'showed/lib/maintainer/models/maintainer';
 import RepositoryInterface from 'showed/lib/maintainer/repository';
-import { injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
+import type Database from 'showed/lib/core/database/service/database';
 
 @injectable()
 export default class Repository implements RepositoryInterface {
+    constructor(@inject('Database') private database: Database) {
+        this.database = database;
+    }
+
     public async getMaintainers(filter: {
         limit?: number;
     }): Promise<MaintainerClass[]> {
-        await connection();
-
-        const limit = filter.limit ?? 10;
-
-        const maintainers = await Maintainer.find().limit(limit).lean().exec();
+        const maintainers = (await this.database.find(
+            Maintainer,
+            filter
+        )) as MaintainerClass[];
 
         return maintainers;
     }
 
     public async createMaintainer(email: string): Promise<void> {
-        await connection();
-        await Maintainer.create({ email });
+        await this.database.create(Maintainer, { email });
     }
 
     public async updateMaintainer(
         id: string,
         maintainerData: { email?: string; name?: string; surname?: string }
     ): Promise<void> {
-        await connection();
-
-        const parsedId = stringToObjectId(id);
-
-        await Maintainer.findByIdAndUpdate(parsedId, maintainerData, {
-            new: true,
-        })
-            .lean()
-            .exec();
+        await this.database.findByIdAndUpdate(Maintainer, id, maintainerData);
     }
 }
