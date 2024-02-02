@@ -1,4 +1,4 @@
-import { Box, Button, Input } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { use } from 'react';
 import Provider from 'showed/lib/maintainer/service/provider';
 import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
@@ -30,25 +30,39 @@ async function getMaintainer(): Promise<MaintainerClass | undefined> {
 export default function MaintainerData() {
     const maintainer = use(getMaintainer());
     return (
-        <Box>
+        <Box padding={'40px'}>
             <form action={action}>
                 <Input type='hidden' name='id' value={maintainer?.id} />
-                <Input
-                    placeholder='email'
-                    name='email'
-                    defaultValue={maintainer?.email}
-                />
-                <Input
-                    placeholder='name'
-                    name='name'
-                    defaultValue={maintainer?.name}
-                />
-                <Input
-                    placeholder='surname'
-                    name='surname'
-                    defaultValue={maintainer?.surname}
-                />
-                <Button type='submit'>Enregistrer</Button>
+                <FormControl isRequired>
+                    <FormLabel>Adresse mail</FormLabel>
+                    <Input
+                        placeholder='email'
+                        name='email'
+                        defaultValue={maintainer?.email}
+                    />
+                </FormControl>
+                <FormControl>
+                    <FormLabel>Nom</FormLabel>
+
+                    <Input
+                        placeholder='name'
+                        name='name'
+                        defaultValue={maintainer?.name}
+                    />
+                </FormControl>
+                <FormControl>
+                    <FormLabel>Prénom</FormLabel>
+                    <Input
+                        placeholder='surname'
+                        name='surname'
+                        defaultValue={maintainer?.surname}
+                    />
+                </FormControl>
+                <Box textAlign={'right'} paddingTop={'20px'}>
+                    <Button color='white' colorScheme='red' type='submit'>
+                        Enregistrer
+                    </Button>
+                </Box>
             </form>
         </Box>
     );
