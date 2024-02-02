@@ -1,10 +1,19 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import MaintainerData from 'showed/components/admin/maintainerData';
 
 export default function Home() {
     return (
-        <Box>
-            <MaintainerData></MaintainerData>
+        <Box padding={'40px'}>
+            <Tabs>
+                <TabList>
+                    <Tab>Utilisateur</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel>
+                        <MaintainerData></MaintainerData>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
         </Box>
     );
 }
