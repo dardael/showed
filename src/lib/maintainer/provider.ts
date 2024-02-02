@@ -1,11 +1,13 @@
 import ProviderInterface from 'showed/lib/maintainer/service/provider';
-import Repository from 'showed/lib/maintainer/repository';
+import type Repository from 'showed/lib/maintainer/repository';
 import { MaintainerClass } from 'showed/models/maintainer';
+import { injectable, inject } from 'tsyringe';
 
+@injectable()
 export default class Provider implements ProviderInterface {
-    private repository: Repository;
-
-    constructor(repository: Repository) {
+    constructor(
+        @inject('MaintainerRepository') private repository: Repository
+    ) {
         this.repository = repository;
     }
 

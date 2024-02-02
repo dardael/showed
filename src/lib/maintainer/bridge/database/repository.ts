@@ -2,6 +2,9 @@ import { Maintainer, MaintainerClass } from 'showed/models/maintainer';
 import connection from 'showed/lib/core/database/connection';
 import { stringToObjectId } from 'showed/lib/core/database/utils';
 import RepositoryInterface from 'showed/lib/maintainer/repository';
+import { injectable } from 'tsyringe';
+
+@injectable()
 export default class Repository implements RepositoryInterface {
     public async getMaintainers(filter: {
         limit?: number;
