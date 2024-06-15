@@ -4,15 +4,24 @@ export default function TextInput({
     label,
     name,
     placeholder,
+    defaultValue = '',
+    isRequired = false,
 }: {
     label: string;
     name: string;
     placeholder: string;
+    defaultValue?: string;
+    isRequired?: boolean;
 }) {
     return (
-        <FormControl>
+        <FormControl isRequired={isRequired}>
             <FormLabel>{label}</FormLabel>
-            <Input type='text' name={name} placeholder={placeholder} />
+            <Input
+                type='text'
+                name={name}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+            />
         </FormControl>
     );
 }
