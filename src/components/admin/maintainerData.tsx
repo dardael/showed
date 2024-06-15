@@ -33,8 +33,10 @@ export default function MaintainerData() {
     const maintainer = use(getMaintainer());
     return (
         <Box padding={'40px'}>
-            <SaveForm action={action}>
-                <Input type='hidden' name='id' value={maintainer?.id} />
+            <SaveForm
+                action={action}
+                parameters={[{ key: 'id', value: maintainer?.id }]}
+            >
                 <TextInput
                     label='Adresse mail'
                     name='email'
