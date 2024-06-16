@@ -1,4 +1,4 @@
-import { Box, Button, Input } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { use } from 'react';
 import Provider from 'showed/lib/maintainer/service/provider';
 import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
