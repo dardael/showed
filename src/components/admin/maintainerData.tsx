@@ -6,7 +6,7 @@ import { container } from 'tsyringe';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import SaveForm from 'showed/components/core/form/saveForm';
 
-async function action(data: FormData) {
+async function saveMaintainer(data: FormData) {
     'use server';
     const id = data.get('id')?.toString();
     const email = data.get('email')?.toString();
@@ -34,7 +34,7 @@ export default function MaintainerData() {
     return (
         <Box padding={'40px'}>
             <SaveForm
-                action={action}
+                action={saveMaintainer}
                 parameters={[{ key: 'id', value: maintainer?.id }]}
             >
                 <TextInput
