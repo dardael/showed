@@ -30,7 +30,7 @@ async function getMaintainer(): Promise<MaintainerClass | undefined> {
     return maintainer;
 }
 export default function MaintainerData() {
-    const maintainer = use(getMaintainer());
+    const maintainer: MaintainerClass | undefined = use(getMaintainer());
     return (
         <Box padding={'40px'}>
             <SaveForm

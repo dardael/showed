@@ -17,13 +17,18 @@ export default class Database implements DatabaseInterface {
         model: ReturnModelType<U, QueryHelpers>,
         filter: {
             limit?: number;
+            model?: any;
         }
     ): Promise<object[]> {
         await connectToDb();
 
         const limit = filter.limit ?? 10;
 
-        const foundItems = await model.find().limit(limit).lean().exec();
+        const foundItems = await model
+            .find(filter.model)
+            .limit(limit)
+            .lean()
+            .exec();
 
         return foundItems as U[];
     }
@@ -31,9 +36,10 @@ export default class Database implements DatabaseInterface {
     public async create<
         U extends AnyParamConstructor<any>,
         QueryHelpers = BeAnObject,
-    >(model: ReturnModelType<U, QueryHelpers>, data: any): Promise<void> {
+    >(model: ReturnModelType<U, QueryHelpers>, data: any): Promise<object> {
         await connectToDb();
-        await model.create(data);
+        const created = await model.create(data);
+        return created.toObject() as U;
     }
 
     public async findByIdAndUpdate<
@@ -43,16 +49,14 @@ export default class Database implements DatabaseInterface {
         model: ReturnModelType<U, QueryHelpers>,
         id: string,
         data: any
-    ): Promise<void> {
+    ): Promise<object> {
         await connectToDb();
 
         const parsedId = stringToObjectId(id);
 
-        await model
-            .findByIdAndUpdate(parsedId, data, {
-                new: true,
-            })
-            .lean()
-            .exec();
+        const updatedObject = await model.findByIdAndUpdate(parsedId, data, {
+            new: true,
+        });
+        return updatedObject?.toObject() as U;
     }
 }
