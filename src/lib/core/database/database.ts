@@ -6,9 +6,7 @@ import {
     ReturnModelType,
 } from '@typegoose/typegoose/lib/types';
 import { stringToObjectId } from './utils';
-import { injectable } from 'tsyringe';
 
-@injectable()
 export default class Database implements DatabaseInterface {
     public async find<
         U extends AnyParamConstructor<any>,

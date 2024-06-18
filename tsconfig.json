@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es2022",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -8,11 +8,12 @@
         "noEmit": true,
         "esModuleInterop": true,
         "module": "esnext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "allowSyntheticDefaultImports": true,
         "plugins": [
             {
                 "name": "next"
@@ -21,9 +22,6 @@
         "paths": {
             "showed/*": ["./src/*"]
         },
-        "types": ["reflect-metadata"],
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

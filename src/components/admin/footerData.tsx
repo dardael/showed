@@ -31,25 +31,22 @@ export default function FooterData() {
                     {
                         title: 'Téléphone',
                         content: (
-                            <SaveForm>
-                                <TextInput
-                                    label='Numéro de téléphone'
-                                    name='phoneNumber'
-                                    placeholder='Numéro de téléphone'
-                                />
-                            </SaveForm>
+                            <SocialNetworkData
+                                key={SocialNetworkName.Phone.toString()}
+                                name={SocialNetworkName.Phone}
+                                unchangableText='Numéro de téléphone'
+                                linkLabel='Numéro de téléphone'
+                            />
                         ),
                     },
                     {
                         title: 'Lien vers la page de contact',
                         content: (
-                            <SaveForm>
-                                <TextInput
-                                    label='Texte affiché'
-                                    name='text'
-                                    placeholder='Texte affiché'
-                                />
-                            </SaveForm>
+                            <SocialNetworkData
+                                key={SocialNetworkName.Contact.toString()}
+                                name={SocialNetworkName.Contact}
+                                unchangableLink='/contact'
+                            />
                         ),
                     },
                 ]}

@@ -1,58 +1,43 @@
-import {
-    ModelOptions,
-    Severity,
-    getModelForClass,
-    index,
-    post,
-    prop,
-} from '@typegoose/typegoose';
 import mongoose from 'mongoose';
+import { getModelForClass } from '@typegoose/typegoose';
 import { SocialNetworkName } from './socialNetworkName';
 
-@post<SocialNetworkClass>('save', function (doc) {
-    if (doc) {
+const SocialNetworkSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    name: { type: String },
+    surname: { type: String },
+});
+
+SocialNetworkSchema.pre('save', function (next) {
+    if (this) {
+        this.id = this._id.toString();
+        this._id = this.id;
+    }
+    next();
+});
+
+SocialNetworkSchema.post(/^find/, async function (docs: SocialNetworkClass[]) {
+    docs.forEach((doc) => {
         doc.id = doc._id.toString();
         doc._id = doc.id;
-    }
-})
-@post<SocialNetworkClass[]>(/^find/, function (docs) {
-    // @ts-ignore
-    if (this.op === 'find') {
-        docs.forEach((doc) => {
-            doc.id = doc._id.toString();
-            doc._id = doc.id;
-        });
-    }
-})
-@ModelOptions({
-    schemaOptions: {
-        timestamps: true,
-        collection: 'socialNetworks',
-    },
-    options: {
-        allowMixed: Severity.ALLOW,
-    },
-})
-@index({ name: 1 })
+    });
+});
+
+SocialNetworkSchema.index({ email: 1 });
+
 class SocialNetworkClass {
-    @prop({
-        required: true,
-        unique: true,
-        set: (name: SocialNetworkName) => name.toString(),
-        get: (name: string) => SocialNetworkName.getSocialNetworkName(name),
-    })
-    name: string;
-
-    @prop()
-    text: string;
-
-    @prop()
-    link: string;
-
-    _id: mongoose.Types.ObjectId | string;
-
+    _id: mongoose.Schema.Types.ObjectId | string;
     id: string;
+    link: string;
+    name: SocialNetworkName;
+    text: string;
 }
 
-const SocialNetwork = getModelForClass(SocialNetworkClass);
+const SocialNetworkModel = getModelForClass(SocialNetworkClass, {
+    schemaOptions: { timestamps: true, collection: 'socialNetworks' },
+    options: { allowMixed: 0 }, // Setting Severity.ALLOW to 0
+});
+
+const SocialNetwork = SocialNetworkModel;
+
 export { SocialNetwork, SocialNetworkClass };

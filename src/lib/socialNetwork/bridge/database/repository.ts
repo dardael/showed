@@ -3,13 +3,11 @@ import {
     SocialNetworkClass,
 } from 'showed/lib/socialNetwork/models/socialNetwork';
 import RepositoryInterface from 'showed/lib/socialNetwork/repository';
-import { injectable, inject } from 'tsyringe';
 import type Database from 'showed/lib/core/database/service/database';
 import { SocialNetworkName } from '../../models/socialNetworkName';
 
-@injectable()
 export default class Repository implements RepositoryInterface {
-    constructor(@inject('Database') private database: Database) {
+    constructor(private database: Database) {
         this.database = database;
     }
 

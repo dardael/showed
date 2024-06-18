@@ -12,8 +12,14 @@ import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetwork
 
 export default function SocialNetworkData({
     name,
+    unchangableLink,
+    unchangableText,
+    linkLabel,
 }: {
     name: SocialNetworkName;
+    unchangableLink?: string;
+    unchangableText?: string;
+    linkLabel?: string;
 }) {
     const [socialNetwork, setSocialNetwork] = useState<
         SocialNetworkClass | undefined
@@ -25,6 +31,16 @@ export default function SocialNetworkData({
             setIsLoading(false);
         });
     }, []);
+    let formParameters = [
+        { key: 'id', value: socialNetwork?.id },
+        { key: 'name', value: name },
+    ];
+    if (unchangableLink) {
+        formParameters.push({ key: 'link', value: unchangableLink });
+    }
+    if (unchangableText) {
+        formParameters.push({ key: 'text', value: unchangableText });
+    }
     return (
         <>
             {isLoading ? (
@@ -36,23 +52,28 @@ export default function SocialNetworkData({
                             setSocialNetwork(socialNetwork)
                         );
                     }}
-                    parameters={[
-                        { key: 'id', value: socialNetwork?.id },
-                        { key: 'name', value: name },
-                    ]}
+                    parameters={formParameters}
                 >
-                    <TextInput
-                        label='Texte affiché'
-                        name='text'
-                        placeholder='Texte affiché'
-                        defaultValue={socialNetwork?.text}
-                    />
-                    <TextInput
-                        label='Lien'
-                        name='link'
-                        placeholder='Lien'
-                        defaultValue={socialNetwork?.link}
-                    />
+                    {unchangableText ? (
+                        <></>
+                    ) : (
+                        <TextInput
+                            label='Texte affiché'
+                            name='text'
+                            placeholder='Texte affiché'
+                            defaultValue={socialNetwork?.text}
+                        />
+                    )}
+                    {unchangableLink ? (
+                        <></>
+                    ) : (
+                        <TextInput
+                            label={linkLabel ? linkLabel : 'Lien'}
+                            name='link'
+                            placeholder='Lien'
+                            defaultValue={socialNetwork?.link}
+                        />
+                    )}
                 </SaveForm>
             )}
         </>

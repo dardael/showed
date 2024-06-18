@@ -3,7 +3,7 @@ import 'showed/lib/core/dependencyInjection/container';
 import { SocialNetworkClass } from 'showed/lib/socialNetwork/models/socialNetwork';
 import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
 import Provider from 'showed/lib/socialNetwork/provider';
-import { container } from 'tsyringe';
+import { Container } from 'typedi';
 
 export async function saveSocialNetwork(
     data: FormData
@@ -15,7 +15,7 @@ export async function saveSocialNetwork(
     const text = data.get('text')?.toString();
     const link = data.get('link')?.toString();
 
-    const provider: Provider = container.resolve('SocialNetworkProvider');
+    const provider: Provider = Container.get('SocialNetworkProvider');
     let socialNetwork: SocialNetworkClass;
     if (id) {
         socialNetwork = await provider.updateSocialNetwork(id, {
@@ -36,7 +36,7 @@ export async function saveSocialNetwork(
 export async function getSocialNetwork(
     name: SocialNetworkName
 ): Promise<SocialNetworkClass | undefined> {
-    const provider: Provider = container.resolve('SocialNetworkProvider');
+    const provider: Provider = Container.get('SocialNetworkProvider');
     const socialNetwork = await provider.getSocialNetwork(name);
     return socialNetwork;
 }

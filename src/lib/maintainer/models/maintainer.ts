@@ -1,52 +1,42 @@
-import {
-    ModelOptions,
-    Severity,
-    getModelForClass,
-    index,
-    post,
-    prop,
-} from '@typegoose/typegoose';
 import mongoose from 'mongoose';
+import { getModelForClass } from '@typegoose/typegoose';
 
-@post<MaintainerClass>('save', function (doc) {
-    if (doc) {
+const MaintainerSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    name: { type: String },
+    surname: { type: String },
+});
+
+MaintainerSchema.pre('save', function (next) {
+    if (this) {
+        this.id = this._id.toString();
+        this._id = this.id;
+    }
+    next();
+});
+
+MaintainerSchema.post(/^find/, async function (docs: MaintainerClass[]) {
+    docs.forEach((doc) => {
         doc.id = doc._id.toString();
         doc._id = doc.id;
-    }
-})
-@post<MaintainerClass[]>(/^find/, function (docs) {
-    // @ts-ignore
-    if (this.op === 'find') {
-        docs.forEach((doc) => {
-            doc.id = doc._id.toString();
-            doc._id = doc.id;
-        });
-    }
-})
-@ModelOptions({
-    schemaOptions: {
-        timestamps: true,
-        collection: 'maintainers',
-    },
-    options: {
-        allowMixed: Severity.ALLOW,
-    },
-})
-@index({ email: 1 })
+    });
+});
+
+MaintainerSchema.index({ email: 1 });
+
 class MaintainerClass {
-    @prop({ required: true, unique: true })
-    email: string;
-
-    @prop()
-    name: string;
-
-    @prop()
-    surname: string;
-
-    _id: mongoose.Types.ObjectId | string;
-
+    _id: mongoose.Schema.Types.ObjectId | string;
     id: string;
+    email: string;
+    name: string;
+    surname: string;
 }
 
-const Maintainer = getModelForClass(MaintainerClass);
+const MaintainerModel = getModelForClass(MaintainerClass, {
+    schemaOptions: { timestamps: true, collection: 'maintainers' },
+    options: { allowMixed: 0 }, // Setting Severity.ALLOW to 0
+});
+
+const Maintainer = MaintainerModel;
+
 export { Maintainer, MaintainerClass };

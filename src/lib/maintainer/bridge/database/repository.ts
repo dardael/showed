@@ -3,12 +3,10 @@ import {
     MaintainerClass,
 } from 'showed/lib/maintainer/models/maintainer';
 import RepositoryInterface from 'showed/lib/maintainer/repository';
-import { injectable, inject } from 'tsyringe';
 import type Database from 'showed/lib/core/database/service/database';
 
-@injectable()
 export default class Repository implements RepositoryInterface {
-    constructor(@inject('Database') private database: Database) {
+    constructor(private database: Database) {
         this.database = database;
     }
 
@@ -23,14 +21,22 @@ export default class Repository implements RepositoryInterface {
         return maintainers;
     }
 
-    public async createMaintainer(email: string): Promise<void> {
-        await this.database.create(Maintainer, { email });
+    public async createMaintainer(email: string): Promise<MaintainerClass> {
+        const createdMaintainer = await this.database.create(Maintainer, {
+            email,
+        });
+        return createdMaintainer as MaintainerClass;
     }
 
     public async updateMaintainer(
         id: string,
         maintainerData: { email?: string; name?: string; surname?: string }
-    ): Promise<void> {
-        await this.database.findByIdAndUpdate(Maintainer, id, maintainerData);
+    ): Promise<MaintainerClass> {
+        const updatedMaintainer = await this.database.findByIdAndUpdate(
+            Maintainer,
+            id,
+            maintainerData
+        );
+        return updatedMaintainer as MaintainerClass;
     }
 }
