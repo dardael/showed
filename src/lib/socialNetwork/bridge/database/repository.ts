@@ -1,7 +1,5 @@
-import {
-    SocialNetwork,
-    SocialNetworkClass,
-} from 'showed/lib/socialNetwork/models/socialNetwork';
+import { SocialNetworkModel } from 'showed/lib/socialNetwork/models/socialNetwork';
+import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import RepositoryInterface from 'showed/lib/socialNetwork/repository';
 import type Database from 'showed/lib/core/database/service/database';
 import { SocialNetworkName } from '../../models/socialNetworkName';
@@ -13,23 +11,21 @@ export default class Repository implements RepositoryInterface {
 
     public async getSocialNetworks(
         name: SocialNetworkName
-    ): Promise<SocialNetworkClass[]> {
-        const socialNetworks = (await this.database.find(SocialNetwork, {
+    ): Promise<SocialNetwork[]> {
+        return this.database.find<SocialNetwork>(SocialNetworkModel, {
             model: { name: name },
-        })) as SocialNetworkClass[];
-        return socialNetworks;
+        });
     }
 
     public async createSocialNetwork(SocialNetworkData: {
         name?: SocialNetworkName;
         link?: string;
         text?: string;
-    }): Promise<SocialNetworkClass> {
-        const socialNetwork = (await this.database.create(
-            SocialNetwork,
+    }): Promise<SocialNetwork> {
+        return this.database.create<SocialNetwork>(
+            SocialNetworkModel,
             SocialNetworkData
-        )) as SocialNetworkClass;
-        return socialNetwork;
+        );
     }
 
     public async updateSocialNetwork(
@@ -39,12 +35,11 @@ export default class Repository implements RepositoryInterface {
             name?: SocialNetworkName;
             text?: string;
         }
-    ): Promise<SocialNetworkClass> {
-        const socialNetwork = (await this.database.findByIdAndUpdate(
-            SocialNetwork,
+    ): Promise<SocialNetwork> {
+        return this.database.findByIdAndUpdate<SocialNetwork>(
+            SocialNetworkModel,
             id,
             socialNetworkData
-        )) as SocialNetworkClass;
-        return socialNetwork;
+        );
     }
 }

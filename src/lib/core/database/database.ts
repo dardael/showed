@@ -1,23 +1,16 @@
 import DatabaseInterface from 'showed/lib/core/database/service/database';
 import connectToDb from 'showed/lib/core/database/connection';
-import {
-    AnyParamConstructor,
-    BeAnObject,
-    ReturnModelType,
-} from '@typegoose/typegoose/lib/types';
-import { stringToObjectId } from './utils';
+import { Model } from 'mongoose';
+import { nanoid } from 'nanoid';
 
 export default class Database implements DatabaseInterface {
-    public async find<
-        U extends AnyParamConstructor<any>,
-        QueryHelpers = BeAnObject,
-    >(
-        model: ReturnModelType<U, QueryHelpers>,
+    public async find<U>(
+        model: Model<U>,
         filter: {
             limit?: number;
             model?: any;
         }
-    ): Promise<object[]> {
+    ): Promise<U[]> {
         await connectToDb();
 
         const limit = filter.limit ?? 10;
@@ -31,28 +24,21 @@ export default class Database implements DatabaseInterface {
         return foundItems as U[];
     }
 
-    public async create<
-        U extends AnyParamConstructor<any>,
-        QueryHelpers = BeAnObject,
-    >(model: ReturnModelType<U, QueryHelpers>, data: any): Promise<object> {
+    public async create<U>(model: Model<U>, data: any): Promise<U> {
         await connectToDb();
+        data._id = nanoid();
         const created = await model.create(data);
         return created.toObject() as U;
     }
 
-    public async findByIdAndUpdate<
-        U extends AnyParamConstructor<any>,
-        QueryHelpers = BeAnObject,
-    >(
-        model: ReturnModelType<U, QueryHelpers>,
+    public async findByIdAndUpdate<U>(
+        model: Model<U>,
         id: string,
         data: any
-    ): Promise<object> {
+    ): Promise<U> {
         await connectToDb();
 
-        const parsedId = stringToObjectId(id);
-
-        const updatedObject = await model.findByIdAndUpdate(parsedId, data, {
+        const updatedObject = await model.findByIdAndUpdate(id, data, {
             new: true,
         });
         return updatedObject?.toObject() as U;

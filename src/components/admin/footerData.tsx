@@ -1,7 +1,5 @@
 import { Box } from '@chakra-ui/react';
 import SocialNetworkData from 'showed/components/admin/footer/socialNetworkData';
-import SaveForm from 'showed/components/core/form/saveForm';
-import TextInput from 'showed/components/core/form/inputs/textInput';
 import VerticalTabs from 'showed/components/core/tabs/verticalTabs';
 import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
 

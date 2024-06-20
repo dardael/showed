@@ -1,43 +1,25 @@
-import mongoose from 'mongoose';
-import { getModelForClass } from '@typegoose/typegoose';
+import mongoose, { Model } from 'mongoose';
 import { SocialNetworkName } from './socialNetworkName';
 
-const SocialNetworkSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    name: { type: String },
-    surname: { type: String },
-});
-
-SocialNetworkSchema.pre('save', function (next) {
-    if (this) {
-        this.id = this._id.toString();
-        this._id = this.id;
-    }
-    next();
-});
-
-SocialNetworkSchema.post(/^find/, async function (docs: SocialNetworkClass[]) {
-    docs.forEach((doc) => {
-        doc.id = doc._id.toString();
-        doc._id = doc.id;
-    });
-});
-
-SocialNetworkSchema.index({ email: 1 });
-
-class SocialNetworkClass {
-    _id: mongoose.Schema.Types.ObjectId | string;
-    id: string;
-    link: string;
+type SocialNetwork = {
+    _id?: string;
     name: SocialNetworkName;
-    text: string;
+    text?: string;
+    link?: string;
+};
+const SocialNetworkSchema = new mongoose.Schema({
+    _id: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
+    text: { type: String },
+    link: { type: String },
+});
+let SocialNetworkModel: Model<SocialNetwork> = mongoose.models.SocialNetwork;
+if (!SocialNetworkModel) {
+    SocialNetworkModel = mongoose.model<SocialNetwork>(
+        'SocialNetwork',
+        SocialNetworkSchema
+    );
 }
 
-const SocialNetworkModel = getModelForClass(SocialNetworkClass, {
-    schemaOptions: { timestamps: true, collection: 'socialNetworks' },
-    options: { allowMixed: 0 }, // Setting Severity.ALLOW to 0
-});
-
-const SocialNetwork = SocialNetworkModel;
-
-export { SocialNetwork, SocialNetworkClass };
+export { SocialNetworkModel };
+export type { SocialNetwork };

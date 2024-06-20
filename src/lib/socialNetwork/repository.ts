@@ -1,12 +1,12 @@
-import { SocialNetworkClass } from 'showed/lib/socialNetwork/models/socialNetwork';
+import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import { SocialNetworkName } from './models/socialNetworkName';
 export default interface Repository {
-    getSocialNetworks(name: SocialNetworkName): Promise<SocialNetworkClass[]>;
+    getSocialNetworks(name: SocialNetworkName): Promise<SocialNetwork[]>;
     createSocialNetwork(socialNetworkData: {
         name?: SocialNetworkName;
         link?: string;
         text?: string;
-    }): Promise<SocialNetworkClass>;
+    }): Promise<SocialNetwork>;
     updateSocialNetwork(
         id: string,
         socialNetworkData: {
@@ -14,5 +14,5 @@ export default interface Repository {
             name?: SocialNetworkName;
             link?: string;
         }
-    ): Promise<SocialNetworkClass>;
+    ): Promise<SocialNetwork>;
 }

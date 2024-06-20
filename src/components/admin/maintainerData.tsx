@@ -1,7 +1,7 @@
 'use client';
 import { Box, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
+import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import SaveForm from 'showed/components/core/form/saveForm';
 import {
@@ -10,12 +10,12 @@ import {
 } from 'showed/controllers/maintainer/maintainerController';
 
 export default function MaintainerData() {
-    const [maintainer, setMaintainer] = useState<MaintainerClass | undefined>(
+    const [maintainer, setMaintainer] = useState<Maintainer | undefined>(
         undefined
     );
     const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
-        getMaintainer().then((foundMaintainer: MaintainerClass | undefined) => {
+        getMaintainer().then((foundMaintainer: Maintainer | undefined) => {
             setMaintainer(foundMaintainer);
             setIsLoading(false);
         });
@@ -27,8 +27,14 @@ export default function MaintainerData() {
             ) : (
                 <Box padding={'40px'}>
                     <SaveForm
-                        action={saveMaintainer}
-                        parameters={[{ key: 'id', value: maintainer?.id }]}
+                        action={async (formData: FormData) => {
+                            return saveMaintainer(formData).then(
+                                (updatedMaintainer) => {
+                                    setMaintainer(updatedMaintainer);
+                                }
+                            );
+                        }}
+                        parameters={[{ key: 'id', value: maintainer?._id }]}
                     >
                         <TextInput
                             label='Adresse mail'

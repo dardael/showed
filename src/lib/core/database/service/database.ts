@@ -1,27 +1,17 @@
-import {
-    AnyParamConstructor,
-    BeAnObject,
-    ReturnModelType,
-} from '@typegoose/typegoose/lib/types';
+import { Model } from 'mongoose';
 
 export default interface Database {
-    find<U extends AnyParamConstructor<any>, QueryHelpers = BeAnObject>(
-        model: ReturnModelType<U, QueryHelpers>,
+    find<U>(
+        model: Model<U>,
         filter: {
             limit?: number;
             model?: any;
         }
-    ): Promise<object[]>;
-    create<U extends AnyParamConstructor<any>, QueryHelpers = BeAnObject>(
-        model: ReturnModelType<U, QueryHelpers>,
-        data: any
-    ): Promise<object>;
-    findByIdAndUpdate<
-        U extends AnyParamConstructor<any>,
-        QueryHelpers = BeAnObject,
-    >(
-        model: ReturnModelType<U, QueryHelpers>,
+    ): Promise<U[]>;
+    create<U>(model: Model<U>, data: any): Promise<U>;
+    findByIdAndUpdate<U>(
+        model: Model<U>,
         id: string,
         data: { email?: string; name?: string; surname?: string }
-    ): Promise<object>;
+    ): Promise<U>;
 }

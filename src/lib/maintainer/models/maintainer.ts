@@ -1,42 +1,25 @@
-import mongoose from 'mongoose';
-import { getModelForClass } from '@typegoose/typegoose';
+import mongoose, { Model } from 'mongoose';
 
+type Maintainer = {
+    _id?: string;
+    email: string;
+    name?: string;
+    surname?: string;
+};
 const MaintainerSchema = new mongoose.Schema({
+    _id: { type: String, require: true, unique: true },
     email: { type: String, required: true, unique: true },
     name: { type: String },
     surname: { type: String },
 });
 
-MaintainerSchema.pre('save', function (next) {
-    if (this) {
-        this.id = this._id.toString();
-        this._id = this.id;
-    }
-    next();
-});
-
-MaintainerSchema.post(/^find/, async function (docs: MaintainerClass[]) {
-    docs.forEach((doc) => {
-        doc.id = doc._id.toString();
-        doc._id = doc.id;
-    });
-});
-
-MaintainerSchema.index({ email: 1 });
-
-class MaintainerClass {
-    _id: mongoose.Schema.Types.ObjectId | string;
-    id: string;
-    email: string;
-    name: string;
-    surname: string;
+let MaintainerModel: Model<Maintainer> = mongoose.models.Maintainer;
+if (!MaintainerModel) {
+    MaintainerModel = mongoose.model<Maintainer>(
+        'Maintainer',
+        MaintainerSchema
+    );
 }
 
-const MaintainerModel = getModelForClass(MaintainerClass, {
-    schemaOptions: { timestamps: true, collection: 'maintainers' },
-    options: { allowMixed: 0 }, // Setting Severity.ALLOW to 0
-});
-
-const Maintainer = MaintainerModel;
-
-export { Maintainer, MaintainerClass };
+export { MaintainerModel };
+export type { Maintainer };

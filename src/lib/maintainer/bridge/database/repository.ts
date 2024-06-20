@@ -1,7 +1,5 @@
-import {
-    Maintainer,
-    MaintainerClass,
-} from 'showed/lib/maintainer/models/maintainer';
+import { MaintainerModel } from 'showed/lib/maintainer/models/maintainer';
+import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import RepositoryInterface from 'showed/lib/maintainer/repository';
 import type Database from 'showed/lib/core/database/service/database';
 
@@ -12,31 +10,29 @@ export default class Repository implements RepositoryInterface {
 
     public async getMaintainers(filter: {
         limit?: number;
-    }): Promise<MaintainerClass[]> {
-        const maintainers = (await this.database.find(
-            Maintainer,
-            filter
-        )) as MaintainerClass[];
-
-        return maintainers;
+    }): Promise<Maintainer[]> {
+        return this.database.find<Maintainer>(MaintainerModel, filter);
     }
 
-    public async createMaintainer(email: string): Promise<MaintainerClass> {
-        const createdMaintainer = await this.database.create(Maintainer, {
-            email,
-        });
-        return createdMaintainer as MaintainerClass;
+    public async createMaintainer(maintainerData: {
+        email?: string;
+        name?: string;
+        surname?: string;
+    }): Promise<Maintainer> {
+        return this.database.create<Maintainer>(
+            MaintainerModel,
+            maintainerData
+        );
     }
 
     public async updateMaintainer(
         id: string,
         maintainerData: { email?: string; name?: string; surname?: string }
-    ): Promise<MaintainerClass> {
-        const updatedMaintainer = await this.database.findByIdAndUpdate(
-            Maintainer,
+    ): Promise<Maintainer> {
+        return this.database.findByIdAndUpdate<Maintainer>(
+            MaintainerModel,
             id,
             maintainerData
         );
-        return updatedMaintainer as MaintainerClass;
     }
 }

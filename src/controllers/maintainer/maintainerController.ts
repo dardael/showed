@@ -1,10 +1,10 @@
 'use server';
 import 'showed/lib/core/dependencyInjection/container';
-import { MaintainerClass } from 'showed/lib/maintainer/models/maintainer';
+import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import Provider from 'showed/lib/maintainer/provider';
-import { Container, Token } from 'typedi';
+import { Container } from 'typedi';
 
-export async function saveMaintainer(data: FormData): Promise<MaintainerClass> {
+export async function saveMaintainer(data: FormData): Promise<Maintainer> {
     const id = data.get('id')?.toString();
     const email = data.get('email')?.toString();
     const name = data.get('name')?.toString();
@@ -21,12 +21,16 @@ export async function saveMaintainer(data: FormData): Promise<MaintainerClass> {
             surname,
         });
     } else {
-        updatedMaintainer = await provider.createMaintainer(email);
+        updatedMaintainer = await provider.createMaintainer({
+            email,
+            name,
+            surname,
+        });
     }
     return updatedMaintainer;
 }
 
-export async function getMaintainer(): Promise<MaintainerClass | undefined> {
+export async function getMaintainer(): Promise<Maintainer | undefined> {
     const provider: Provider = Container.get('MaintainerProvider');
     const maintainer = await provider.getMaintainer();
     return maintainer;

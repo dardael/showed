@@ -7,7 +7,7 @@ import {
     getSocialNetwork,
     saveSocialNetwork,
 } from 'showed/controllers/socialNetwork/socialNetworkController';
-import { SocialNetworkClass } from 'showed/lib/socialNetwork/models/socialNetwork';
+import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
 
 export default function SocialNetworkData({
@@ -22,7 +22,7 @@ export default function SocialNetworkData({
     linkLabel?: string;
 }) {
     const [socialNetwork, setSocialNetwork] = useState<
-        SocialNetworkClass | undefined
+        SocialNetwork | undefined
     >(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
@@ -32,7 +32,7 @@ export default function SocialNetworkData({
         });
     }, []);
     let formParameters = [
-        { key: 'id', value: socialNetwork?.id },
+        { key: 'id', value: socialNetwork?._id },
         { key: 'name', value: name },
     ];
     if (unchangableLink) {
@@ -47,9 +47,10 @@ export default function SocialNetworkData({
                 <Spinner size='xl' />
             ) : (
                 <SaveForm
-                    action={(data: FormData) => {
-                        saveSocialNetwork(data).then((socialNetwork) =>
-                            setSocialNetwork(socialNetwork)
+                    action={async (data: FormData) => {
+                        return saveSocialNetwork(data).then(
+                            (updatedSocialNetwork) =>
+                                setSocialNetwork(updatedSocialNetwork)
                         );
                     }}
                     parameters={formParameters}

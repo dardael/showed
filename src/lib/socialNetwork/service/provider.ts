@@ -1,4 +1,4 @@
-import { SocialNetworkClass } from 'showed/lib/socialNetwork/models/socialNetwork';
+import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import { SocialNetworkName } from '../models/socialNetworkName';
 
 export default interface Provider {
@@ -6,7 +6,7 @@ export default interface Provider {
         link?: string;
         name?: SocialNetworkName;
         text?: string;
-    }): Promise<SocialNetworkClass>;
+    }): Promise<SocialNetwork>;
     updateSocialNetwork(
         id: string,
         socialNetworkData: {
@@ -14,6 +14,6 @@ export default interface Provider {
             name?: SocialNetworkName;
             text?: string;
         }
-    ): Promise<SocialNetworkClass>;
-    getSocialNetwork(name: string): Promise<SocialNetworkClass | undefined>;
+    ): Promise<SocialNetwork>;
+    getSocialNetwork(name: string): Promise<SocialNetwork | undefined>;
 }
