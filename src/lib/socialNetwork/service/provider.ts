@@ -16,4 +16,5 @@ export default interface Provider {
         }
     ): Promise<SocialNetwork>;
     getSocialNetwork(name: string): Promise<SocialNetwork | undefined>;
+    getSocialNetworks(): Promise<SocialNetwork[]>;
 }

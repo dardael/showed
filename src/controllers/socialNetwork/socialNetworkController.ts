@@ -40,3 +40,9 @@ export async function getSocialNetwork(
     const socialNetwork = await provider.getSocialNetwork(name);
     return socialNetwork;
 }
+
+export async function getSocialNetworks(): Promise<SocialNetwork[]> {
+    const provider: Provider = Container.get('SocialNetworkProvider');
+    const socialNetworks = await provider.getSocialNetworks();
+    return socialNetworks;
+}

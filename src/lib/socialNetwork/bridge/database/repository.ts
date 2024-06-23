@@ -10,10 +10,10 @@ export default class Repository implements RepositoryInterface {
     }
 
     public async getSocialNetworks(
-        name: SocialNetworkName
+        name?: SocialNetworkName
     ): Promise<SocialNetwork[]> {
         return this.database.find<SocialNetwork>(SocialNetworkModel, {
-            model: { name: name },
+            model: name ? { name: name } : {},
         });
     }
 
