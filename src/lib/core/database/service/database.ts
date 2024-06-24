@@ -12,6 +12,6 @@ export default interface Database {
     findByIdAndUpdate<U>(
         model: Model<U>,
         id: string,
-        data: { email?: string; name?: string; surname?: string }
+        data: any
     ): Promise<U>;
 }
