@@ -1,3 +1,4 @@
+'use client';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import RichTextEditor from '../../input/richTextEditor';
 import { useState } from 'react';

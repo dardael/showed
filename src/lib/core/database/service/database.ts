@@ -9,9 +9,6 @@ export default interface Database {
         }
     ): Promise<U[]>;
     create<U>(model: Model<U>, data: any): Promise<U>;
-    findByIdAndUpdate<U>(
-        model: Model<U>,
-        id: string,
-        data: any
-    ): Promise<U>;
+    findByIdAndUpdate<U>(model: Model<U>, id: string, data: any): Promise<U>;
+    findByIdAndDelete<U>(model: Model<U>, id: string): Promise<U>;
 }

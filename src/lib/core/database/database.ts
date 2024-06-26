@@ -24,6 +24,13 @@ export default class Database implements DatabaseInterface {
         return foundItems as U[];
     }
 
+    public async findByIdAndDelete<U>(model: Model<U>, id: string): Promise<U> {
+        await connectToDb();
+
+        const deletedObject = await model.findByIdAndDelete(id);
+        return deletedObject?.toObject() as U;
+    }
+
     public async create<U>(model: Model<U>, data: any): Promise<U> {
         await connectToDb();
         data._id = nanoid();
