@@ -3,7 +3,9 @@ import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const RichTextEditor = dynamic(() => import('../../input/richTextEditor'), { ssr: false });
+const RichTextEditor = dynamic(() => import('../../input/richTextEditor'), {
+    ssr: false,
+});
 
 export default function RichTextInput({
     label,
