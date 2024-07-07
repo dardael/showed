@@ -5,24 +5,26 @@ import { Providers } from './providers';
 import MenuBar from 'showed/components/menu/menuBar';
 import FooterBar from 'showed/components/footer/footerBar';
 import { Box, Flex } from '@chakra-ui/react';
+import { getPages } from 'showed/controllers/page/pageController';
 
 export const metadata: Metadata = {
     title: 'Showed',
     description: 'Publicity web app',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const pages = await getPages();
     return (
         <html lang='fr'>
             <body>
                 <Providers>
                     <Flex height={'100vh'} direction='column'>
                         <Box flex='0 0 fit-content' maxH={'fit-content'}>
-                            <MenuBar />
+                            <MenuBar pages={pages} />
                         </Box>
                         <Flex
                             direction='column'

@@ -1,4 +1,3 @@
-'use client';
 import { Box, Button, Input, useToast } from '@chakra-ui/react';
 import { Notification } from '../feedback/notification';
 

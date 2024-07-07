@@ -1,15 +1,8 @@
-import { Box } from '@chakra-ui/react';
-import { getPage } from 'showed/controllers/page/pageController';
+import { redirect } from 'next/navigation';
+import { getPages } from 'showed/controllers/page/pageController';
 
 export default async function Home() {
-    const homePage = await getPage();
-    return (
-        <Box padding={'40px'}>
-            <div
-                dangerouslySetInnerHTML={{
-                    __html: homePage?.content ? homePage?.content : '',
-                }}
-            />
-        </Box>
-    );
+    const response = await getPages();
+    const page = response[0];
+    redirect('/page/' + page._id + '?id=' + page._id);
 }

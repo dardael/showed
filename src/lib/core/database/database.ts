@@ -9,6 +9,7 @@ export default class Database implements DatabaseInterface {
         filter: {
             limit?: number;
             model?: any;
+            sort?: any;
         }
     ): Promise<U[]> {
         await connectToDb();
@@ -18,6 +19,7 @@ export default class Database implements DatabaseInterface {
         const foundItems = await model
             .find(filter.model)
             .limit(limit)
+            .sort(filter.sort)
             .lean()
             .exec();
 

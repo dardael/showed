@@ -1,7 +1,8 @@
+'use client';
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import MaintainerData from 'showed/components/admin/maintainerData';
 import FooterData from 'showed/components/admin/footerData';
-import HomePageData from 'showed/components/admin/homePageData';
+import PagesData from 'showed/components/admin/pagesData';
 
 export default function Home() {
     return (
@@ -10,7 +11,7 @@ export default function Home() {
                 <TabList>
                     <Tab>Utilisateur</Tab>
                     <Tab>Bas de page</Tab>
-                    <Tab>Page d&apos;accueil</Tab>
+                    <Tab>Pages</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -20,7 +21,7 @@ export default function Home() {
                         <FooterData></FooterData>
                     </TabPanel>
                     <TabPanel>
-                        <HomePageData></HomePageData>
+                        <PagesData></PagesData>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

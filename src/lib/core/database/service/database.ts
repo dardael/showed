@@ -6,6 +6,7 @@ export default interface Database {
         filter: {
             limit?: number;
             model?: any;
+            sort?: any;
         }
     ): Promise<U[]>;
     create<U>(model: Model<U>, data: any): Promise<U>;

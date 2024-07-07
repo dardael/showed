@@ -3,13 +3,12 @@ import { useMediaQuery } from '@chakra-ui/react';
 import LinkItem from 'showed/components/menu/entities/link';
 import MobileMenuBar from 'showed/components/menu/mobileMenuBar';
 import LaptopMenuBar from 'showed/components/menu/laptopMenuBar';
-export default function MenuBar() {
-    const linkItems = [
-        new LinkItem('Accueil', '/'),
-        new LinkItem('Coaching individuel', '/coaching'),
-        new LinkItem('Programme mensuel', '/programme'),
-        new LinkItem('Me contacter', '/contact'),
-    ];
+import { Page } from 'showed/lib/page/models/page';
+export default function MenuBar({ pages }: { pages: Page[] }) {
+    const linkItems = pages.map(
+        (page) =>
+            new LinkItem(page.title, '/page/' + page._id + '?id=' + page._id)
+    );
     const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (
         <>

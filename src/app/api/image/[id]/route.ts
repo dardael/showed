@@ -5,10 +5,10 @@ import 'showed/lib/core/dependencyInjection/container';
 import fs from 'fs';
 
 type params = {
-    id: string;
+    params: { id: string };
 };
 export async function GET(request: NextRequest, context: params) {
-    const { id } = context;
+    const id = context.params.id;
     const provider: Provider = Container.get('FileProvider');
     const file = await provider.getFile(id);
     if (!file) {
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, context: params) {
 }
 
 export async function DELETE(request: NextRequest, context: params) {
-    const { id } = context;
+    const id = context.params.id;
     const provider: Provider = Container.get('FileProvider');
     const file = await provider.getFile(id);
     if (!file) {
