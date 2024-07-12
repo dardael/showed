@@ -3,7 +3,7 @@ import { getPages } from 'showed/controllers/page/pageController';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const response = await getPages();
-    const page = response.find((page) => page._id === params.id);
+    const page = response.find((page) => page.urlPart === params.id);
     return (
         <Box padding={'40px'}>
             <div

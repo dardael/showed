@@ -7,7 +7,10 @@ import { Page } from 'showed/lib/page/models/page';
 export default function MenuBar({ pages }: { pages: Page[] }) {
     const linkItems = pages.map(
         (page) =>
-            new LinkItem(page.title, '/page/' + page._id + '?id=' + page._id)
+            new LinkItem(
+                page.title,
+                '/page/' + page.urlPart + '?id=' + page.urlPart
+            )
     );
     const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (

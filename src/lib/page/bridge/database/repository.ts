@@ -18,6 +18,7 @@ export default class Repository implements RepositoryInterface {
 
     public async createPage(pageData: {
         title: string;
+        urlPart: string;
         content: string;
         position: number;
     }): Promise<Page> {
@@ -26,7 +27,12 @@ export default class Repository implements RepositoryInterface {
 
     public async updatePage(
         id: string,
-        pageData: { title?: string; content?: string; position: number }
+        pageData: {
+            title?: string;
+            urlPart?: string;
+            content?: string;
+            position: number;
+        }
     ): Promise<Page> {
         return this.database.findByIdAndUpdate<Page>(PageModel, id, pageData);
     }

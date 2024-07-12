@@ -13,14 +13,20 @@ export default class Provider implements ProviderInterface {
         content: string;
         position: number;
     }): Promise<Page> {
-        return this.repository.createPage(pageData);
+        return this.repository.createPage({
+            ...pageData,
+            urlPart: encodeURIComponent(pageData.title),
+        });
     }
 
     public async updatePage(
         id: string,
         update: { title: string; content: string; position: number }
     ): Promise<Page> {
-        return this.repository.updatePage(id, update);
+        return this.repository.updatePage(id, {
+            ...update,
+            urlPart: encodeURIComponent(update.title),
+        });
     }
     public async getPages(): Promise<Page[]> {
         const pages = await this.repository.getPages({});
