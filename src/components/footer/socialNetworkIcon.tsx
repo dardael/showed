@@ -16,7 +16,7 @@ export default function SocialNetworkIcon({
         case 'Facebook':
             icone = <FaSquareFacebook fontSize='xx-large' />;
             break;
-        case 'Contact':
+        case 'Email':
             icone = <IoMdMail fontSize='xx-large' />;
             break;
         case 'Phone':

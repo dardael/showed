@@ -13,7 +13,7 @@ export default class Provider implements ProviderInterface {
         name?: SocialNetworkName;
         link?: string;
     }): Promise<SocialNetwork> {
-        this.transformPhoneNumberToLink(socialNetworkData);
+        this.addLinkPrefixIfNecessary(socialNetworkData);
         return this.repository.createSocialNetwork(socialNetworkData);
     }
 
@@ -21,7 +21,7 @@ export default class Provider implements ProviderInterface {
         id: string,
         update: { text?: string; name?: SocialNetworkName; link?: string }
     ): Promise<SocialNetwork> {
-        this.transformPhoneNumberToLink(update);
+        this.addLinkPrefixIfNecessary(update);
         return this.repository.updateSocialNetwork(id, update);
     }
 
@@ -31,7 +31,7 @@ export default class Provider implements ProviderInterface {
         const socialNetworks = await this.repository.getSocialNetworks(name);
         const socialNetwork = socialNetworks?.pop();
         return socialNetwork
-            ? this.transformLinkToPhoneNumberIfNecessary(socialNetwork)
+            ? this.removeLinkPrefixIfNecessary(socialNetwork)
             : undefined;
     }
 
@@ -44,10 +44,10 @@ export default class Provider implements ProviderInterface {
         socialNetworks: SocialNetwork[]
     ): SocialNetwork[] {
         return socialNetworks.sort((a, b) => {
-            if (a.name === SocialNetworkName.Contact) {
+            if (a.name === SocialNetworkName.Email) {
                 return 1;
             }
-            if (b.name === SocialNetworkName.Contact) {
+            if (b.name === SocialNetworkName.Email) {
                 return -1;
             }
             if (a.name === SocialNetworkName.Phone) {
@@ -60,17 +60,20 @@ export default class Provider implements ProviderInterface {
         });
     }
 
-    private transformPhoneNumberToLink(socialNetwork: {
+    private addLinkPrefixIfNecessary(socialNetwork: {
         name?: string;
         link?: string;
     }): { name?: string; link?: string } {
         if (socialNetwork.name === SocialNetworkName.Phone) {
             socialNetwork.link = `tel:${socialNetwork.link?.replace(/ /g, '')}`;
         }
+        else if (socialNetwork.name === SocialNetworkName.Email) {
+            socialNetwork.link = `mailto:${socialNetwork.link}`;
+        }
         return socialNetwork;
     }
 
-    private transformLinkToPhoneNumberIfNecessary(
+    private removeLinkPrefixIfNecessary(
         socialNetwork: SocialNetwork
     ): SocialNetwork {
         if (
@@ -78,6 +81,11 @@ export default class Provider implements ProviderInterface {
             socialNetwork.name === SocialNetworkName.Phone
         ) {
             socialNetwork.link = socialNetwork.link.replace('tel:', '');
+        } else if (
+            socialNetwork?.link &&
+            socialNetwork.name === SocialNetworkName.Email
+        ) {
+            socialNetwork.link = socialNetwork.link.replace('mailto:', '');
         }
         return socialNetwork;
     }

@@ -2,7 +2,7 @@ export enum SocialNetworkName {
     Facebook = 'Facebook',
     Instagram = 'Instagram',
     Phone = 'Phone',
-    Contact = 'Contact',
+    Email = 'Email',
 }
 export namespace SocialNetworkName {
     export function getSocialNetworkName(
@@ -14,8 +14,8 @@ export namespace SocialNetworkName {
             return SocialNetworkName.Instagram;
         } else if (name === 'Phone') {
             return SocialNetworkName.Phone;
-        } else if (name === 'Contact') {
-            return SocialNetworkName.Contact;
+        } else if (name === 'Email') {
+            return SocialNetworkName.Email;
         } else {
             throw new Error(`Unknown social network name: ${name}`);
         }

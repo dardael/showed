@@ -63,7 +63,7 @@ describe('Provider', () => {
             expect(result).toEqual(socialNetworkData);
         });
     });
-    describe('transformPhoneNumberToLink', () => {
+    describe('addLinkPrefixIfNecessary', () => {
         it('should update phone number link', () => {
             const socialNetworkData = {
                 name: SocialNetworkName.Phone,
@@ -71,8 +71,27 @@ describe('Provider', () => {
             };
 
             const result =
-                provider['transformPhoneNumberToLink'](socialNetworkData);
+                provider['addLinkPrefixIfNecessary'](socialNetworkData);
             expect(result.link).toEqual('tel:1234567890');
+        });
+        it('should update email link', () => {
+            const socialNetworkData = {
+                name: SocialNetworkName.Email,
+                link: 'dupont@gmail.com',
+            };
+            const result =
+                provider['addLinkPrefixIfNecessary'](socialNetworkData);
+            expect(result.link).toEqual('mailto:dupont@gmail.com');
+        });
+        it('should not update link if not phone number an not email', () => {
+            const socialNetworkData = {
+                name: SocialNetworkName.Facebook,
+                link: 'https://facebook.com',
+            };
+
+            const result =
+                provider['addLinkPrefixIfNecessary'](socialNetworkData);
+            expect(result.link).toEqual('https://facebook.com');
         });
     });
 
@@ -80,7 +99,7 @@ describe('Provider', () => {
         it('should return sorted social networks', async () => {
             const unsortedNetworks: SocialNetwork[] = [
                 { name: SocialNetworkName.Phone },
-                { name: SocialNetworkName.Contact },
+                { name: SocialNetworkName.Email },
                 { name: SocialNetworkName.Facebook },
                 { name: SocialNetworkName.Instagram },
             ];
@@ -88,7 +107,7 @@ describe('Provider', () => {
                 { name: SocialNetworkName.Facebook },
                 { name: SocialNetworkName.Instagram },
                 { name: SocialNetworkName.Phone },
-                { name: SocialNetworkName.Contact },
+                { name: SocialNetworkName.Email },
             ];
             repositoryMock.getSocialNetworks.mockReturnValue(
                 Promise.resolve(unsortedNetworks)
@@ -104,7 +123,7 @@ describe('Provider', () => {
         it('should sort social networks correctly', () => {
             const unsortedNetworks: SocialNetwork[] = [
                 { name: SocialNetworkName.Phone },
-                { name: SocialNetworkName.Contact },
+                { name: SocialNetworkName.Email },
                 { name: SocialNetworkName.Facebook },
                 { name: SocialNetworkName.Instagram },
             ];
@@ -112,7 +131,7 @@ describe('Provider', () => {
                 { name: SocialNetworkName.Facebook },
                 { name: SocialNetworkName.Instagram },
                 { name: SocialNetworkName.Phone },
-                { name: SocialNetworkName.Contact },
+                { name: SocialNetworkName.Email },
             ];
 
             const result = (provider as any).sortSocialNetworks(
@@ -123,7 +142,7 @@ describe('Provider', () => {
         });
     });
 
-    describe('transformLinkToPhoneNumberIfNecessary', () => {
+    describe('removeLinkPrefixIfNecessary', () => {
         it('should remove "tel:" from the link if the social network is Phone', () => {
             const socialNetwork = {
                 name: SocialNetworkName.Phone,
@@ -131,7 +150,7 @@ describe('Provider', () => {
             };
 
             const result =
-                provider['transformLinkToPhoneNumberIfNecessary'](
+                provider['removeLinkPrefixIfNecessary'](
                     socialNetwork
                 );
 
@@ -140,15 +159,28 @@ describe('Provider', () => {
                 link: '1234567890',
             });
         });
-
-        it('should not modify the link if the social network is not Phone', () => {
+        it('should remove "mailto:" from the link if the social network is Email', () => {
+            const socialNetwork = {
+                name: SocialNetworkName.Email,
+                link: 'mailto:dupont@gmail.com',
+            };
+            const result =
+                provider['removeLinkPrefixIfNecessary'](
+                    socialNetwork
+                );
+                expect(result).toEqual({
+                    name: SocialNetworkName.Email,
+                    link: 'dupont@gmail.com',
+                });
+        })
+        it('should not modify the link if the social network is not Phone and not Email', () => {
             const socialNetwork = {
                 name: SocialNetworkName.Facebook,
                 link: 'https://facebook.com',
             };
 
             const result =
-                provider['transformLinkToPhoneNumberIfNecessary'](
+                provider['removeLinkPrefixIfNecessary'](
                     socialNetwork
                 );
 

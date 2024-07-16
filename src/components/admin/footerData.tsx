@@ -38,12 +38,12 @@ export default function FooterData() {
                         ),
                     },
                     {
-                        title: 'Lien vers la page de contact',
+                        title: 'Email',
                         content: (
                             <SocialNetworkData
-                                key={SocialNetworkName.Contact.toString()}
-                                name={SocialNetworkName.Contact}
-                                unchangableLink='/contact'
+                                key={SocialNetworkName.Email.toString()}
+                                name={SocialNetworkName.Email}
+                                linkLabel='Email'
                             />
                         ),
                     },
