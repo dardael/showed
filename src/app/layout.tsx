@@ -6,6 +6,8 @@ import MenuBar from 'showed/components/menu/menuBar';
 import FooterBar from 'showed/components/footer/footerBar';
 import { Box, Flex } from '@chakra-ui/react';
 import { getPages } from 'showed/controllers/page/pageController';
+import { getSocialNetworks } from 'showed/controllers/socialNetwork/socialNetworkController';
+import { getTheme } from 'showed/controllers/theme/themeController';
 
 export const metadata: Metadata = {
     title: 'Showed',
@@ -18,10 +20,12 @@ export default async function RootLayout({
     children: React.ReactNode;
 }) {
     const pages = await getPages();
+    const socialNetworks = await getSocialNetworks();
+    const theme = await getTheme();
     return (
         <html lang='fr'>
             <body>
-                <Providers>
+                <Providers initialTheme={theme}>
                     <Flex height={'100vh'} direction='column'>
                         <Box flex='0 0 fit-content' maxH={'fit-content'}>
                             <MenuBar pages={pages} />
@@ -46,7 +50,7 @@ export default async function RootLayout({
                             }}
                         >
                             <Box flex='1'>{children}</Box>
-                            <FooterBar />
+                            <FooterBar socialNetworks={socialNetworks} />
                         </Flex>
                     </Flex>
                 </Providers>

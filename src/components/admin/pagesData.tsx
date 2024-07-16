@@ -193,11 +193,17 @@ export default function PagesData() {
                                                             <Icon
                                                                 as={FaMinus}
                                                                 fontSize='12px'
+                                                                color={
+                                                                    'brand.500'
+                                                                }
                                                             />
                                                         ) : (
                                                             <Icon
                                                                 as={FaPlus}
                                                                 fontSize='12px'
+                                                                color={
+                                                                    'brand.500'
+                                                                }
                                                             />
                                                         )}
                                                     </AccordionButton>

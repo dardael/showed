@@ -1,5 +1,7 @@
 import FileRepository from 'showed/lib/file/bridge/database/repository';
 import FileProvider from 'showed/lib/file/provider';
+import ThemeRepository from 'showed/lib/theme/bridge/database/repository';
+import ThemeProvider from 'showed/lib/theme/provider';
 import MaintainerRepository from 'showed/lib/maintainer/bridge/database/repository';
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/repository';
@@ -20,6 +22,14 @@ Container.set(fileRepositoryToken, fileRepository);
 const fileProvider = new FileProvider(fileRepository);
 const fileProviderToken = 'FileProvider';
 Container.set(fileProviderToken, fileProvider);
+
+const themeRepository = new ThemeRepository(database);
+const themeRepositoryToken = 'ThemeRepository';
+Container.set(themeRepositoryToken, themeRepository);
+
+const themeProvider = new ThemeProvider(themeRepository);
+const themeProviderToken = 'ThemeProvider';
+Container.set(themeProviderToken, themeProvider);
 
 const maintainerRepository = new MaintainerRepository(database);
 const maintainerRepositoryToken = 'MaintainerRepository';

@@ -11,16 +11,16 @@ export default function SocialNetworkIcon({
     let icone;
     switch (socialNetwork.name) {
         case 'Instagram':
-            icone = <RiInstagramFill fontSize='xx-large' color='white' />;
+            icone = <RiInstagramFill fontSize='xx-large' />;
             break;
         case 'Facebook':
-            icone = <FaSquareFacebook fontSize='xx-large' color='white' />;
+            icone = <FaSquareFacebook fontSize='xx-large' />;
             break;
         case 'Contact':
-            icone = <IoMdMail fontSize='xx-large' color='white' />;
+            icone = <IoMdMail fontSize='xx-large' />;
             break;
         case 'Phone':
-            icone = <FaSquarePhone fontSize='xx-large' color='white' />;
+            icone = <FaSquarePhone fontSize='xx-large' />;
             break;
         default:
             icone = <></>;

@@ -1,43 +1,30 @@
-'use server';
-import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
-import NextLink from 'next/link';
+'use client';
+import { Box, Flex, Spacer, Center } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import SocialNetworkLinks from './socialNetworkLinks';
+import { ThemeContext } from 'showed/app/providers';
+import { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import LinkItem from 'showed/components/footer/entities/link';
-import React from 'react';
-import { getSocialNetworks } from 'showed/controllers/socialNetwork/socialNetworkController';
-export default async function FooterBar() {
-    const socialNetworks = await getSocialNetworks();
+
+export default function FooterBar({
+    socialNetworks,
+}: {
+    socialNetworks: SocialNetwork[];
+}) {
+    const { theme } = useContext(ThemeContext);
     const linkItems = socialNetworks.map((socialNetwork) =>
         LinkItem.fromSocialNetwork(socialNetwork)
     );
     return (
-        <Box backgroundColor={'black'} height={'100px'}>
+        <Box
+            height={'100px'}
+            color={'white'}
+            backgroundColor={theme.color + '.500'}
+        >
             <Center>
                 <Flex alignItems={'Center'} height={'100px'} width={'full'}>
                     <Spacer />
-                    {React.Children.toArray(
-                        linkItems.map((linkItem) => (
-                            <>
-                                <Flex
-                                    direction={'column'}
-                                    alignItems={'Center'}
-                                >
-                                    <Link as={NextLink} href={linkItem.target}>
-                                        {linkItem.icone}
-                                    </Link>
-                                    <Link
-                                        as={NextLink}
-                                        pt={1}
-                                        color='white'
-                                        href={linkItem.target}
-                                        textAlign='center'
-                                    >
-                                        {linkItem.label}
-                                    </Link>
-                                </Flex>
-                                <Spacer />
-                            </>
-                        ))
-                    )}
+                    <SocialNetworkLinks linkItems={linkItems} />
                 </Flex>
             </Center>
         </Box>
