@@ -9,11 +9,7 @@ import { ThemeContext } from 'showed/app/providers';
 export default function MenuBar({ pages }: { pages: Page[] }) {
     const { theme } = useContext(ThemeContext);
     const linkItems = pages.map(
-        (page) =>
-            new LinkItem(
-                page.title,
-                '/page/' + page.urlPart + '?id=' + page.urlPart
-            )
+        (page) => new LinkItem(page.title, '/page/' + page.urlPart)
     );
     const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (

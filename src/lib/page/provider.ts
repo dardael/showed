@@ -15,7 +15,7 @@ export default class Provider implements ProviderInterface {
     }): Promise<Page> {
         return this.repository.createPage({
             ...pageData,
-            urlPart: encodeURIComponent(pageData.title),
+            urlPart: this.getUriFromPage(pageData.title),
         });
     }
 
@@ -25,7 +25,7 @@ export default class Provider implements ProviderInterface {
     ): Promise<Page> {
         return this.repository.updatePage(id, {
             ...update,
-            urlPart: encodeURIComponent(update.title),
+            urlPart: this.getUriFromPage(update.title),
         });
     }
     public async getPages(): Promise<Page[]> {
@@ -80,5 +80,16 @@ export default class Provider implements ProviderInterface {
             });
         });
         return pages;
+    }
+
+    private getUriFromPage(title: string): string {
+        return title
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-zA-Z0-9]/g, '-')
+            .replace(/--/g, '-')
+            .replace(/'/g, '-')
+            .replace(/ /g, '-')
+            .toLowerCase();
     }
 }
