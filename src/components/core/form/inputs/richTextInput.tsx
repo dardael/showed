@@ -24,7 +24,7 @@ export default function RichTextInput({
         setEditorData(data);
     };
     return (
-        <FormControl isRequired={isRequired}>
+        <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
             <Input type='hidden' name={name} value={editorData} />
             <RichTextEditor

@@ -22,7 +22,7 @@ export default function ColorPickerInput({
         setColorData(color);
     };
     return (
-        <FormControl isRequired={isRequired}>
+        <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
             <Input type='hidden' name={name} value={colorData} />
             <ColorPicker

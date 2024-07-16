@@ -16,7 +16,7 @@ export default function SelectInput({
     isRequired?: boolean;
 }) {
     return (
-        <FormControl isRequired={isRequired}>
+        <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
             <Select
                 name={name}

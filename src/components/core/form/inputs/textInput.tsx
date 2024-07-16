@@ -14,7 +14,7 @@ export default function TextInput({
     isRequired?: boolean;
 }) {
     return (
-        <FormControl isRequired={isRequired}>
+        <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
             <Input
                 type='text'
