@@ -53,7 +53,6 @@ export default function ConfirmationButton({
                             {modal.cancelText}
                         </Button>
                         <Button
-                            colorScheme='blue'
                             onClick={() => {
                                 modal.onConfirm();
                                 onClose();
