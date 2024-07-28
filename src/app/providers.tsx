@@ -6,10 +6,9 @@ import {
     withDefaultColorScheme,
 } from '@chakra-ui/react';
 import { Theme } from 'showed/lib/theme/models/theme';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { Color } from 'showed/lib/theme/models/color';
 import { Colors } from 'showed/components/core/theme/color';
-import { getTheme, saveTheme } from 'showed/controllers/theme/themeController';
 
 export const ThemeContext = createContext({
     theme: { color: Color.gray } as Theme,

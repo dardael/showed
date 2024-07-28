@@ -2,7 +2,6 @@ import { ThemeModel } from 'showed/lib/theme/models/theme';
 import type { Theme } from 'showed/lib/theme/models/theme';
 import RepositoryInterface from 'showed/lib/theme/repository';
 import type Database from 'showed/lib/core/database/service/database';
-import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 import { Color } from '../../models/color';
 
 export default class Repository implements RepositoryInterface {

@@ -12,6 +12,7 @@ import { getTheme } from 'showed/controllers/theme/themeController';
 export const metadata: Metadata = {
     title: 'Showed',
     description: 'Publicity web app',
+    icons: { icon: './favicon.ico' },
 };
 
 export default async function RootLayout({
