@@ -66,8 +66,7 @@ export default class Provider implements ProviderInterface {
     }): { name?: string; link?: string } {
         if (socialNetwork.name === SocialNetworkName.Phone) {
             socialNetwork.link = `tel:${socialNetwork.link?.replace(/ /g, '')}`;
-        }
-        else if (socialNetwork.name === SocialNetworkName.Email) {
+        } else if (socialNetwork.name === SocialNetworkName.Email) {
             socialNetwork.link = `mailto:${socialNetwork.link}`;
         }
         return socialNetwork;

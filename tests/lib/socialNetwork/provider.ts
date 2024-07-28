@@ -150,9 +150,7 @@ describe('Provider', () => {
             };
 
             const result =
-                provider['removeLinkPrefixIfNecessary'](
-                    socialNetwork
-                );
+                provider['removeLinkPrefixIfNecessary'](socialNetwork);
 
             expect(result).toEqual({
                 name: SocialNetworkName.Phone,
@@ -165,14 +163,12 @@ describe('Provider', () => {
                 link: 'mailto:dupont@gmail.com',
             };
             const result =
-                provider['removeLinkPrefixIfNecessary'](
-                    socialNetwork
-                );
-                expect(result).toEqual({
-                    name: SocialNetworkName.Email,
-                    link: 'dupont@gmail.com',
-                });
-        })
+                provider['removeLinkPrefixIfNecessary'](socialNetwork);
+            expect(result).toEqual({
+                name: SocialNetworkName.Email,
+                link: 'dupont@gmail.com',
+            });
+        });
         it('should not modify the link if the social network is not Phone and not Email', () => {
             const socialNetwork = {
                 name: SocialNetworkName.Facebook,
@@ -180,9 +176,7 @@ describe('Provider', () => {
             };
 
             const result =
-                provider['removeLinkPrefixIfNecessary'](
-                    socialNetwork
-                );
+                provider['removeLinkPrefixIfNecessary'](socialNetwork);
 
             expect(result).toEqual(socialNetwork);
         });
