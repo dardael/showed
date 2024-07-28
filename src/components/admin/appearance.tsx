@@ -62,7 +62,7 @@ export default function Appearance() {
                             )}
                         />
                         <FileInput
-                            defaultValue={'./favicon.ico'}
+                            defaultValue={'/favicon.ico'}
                             name='logo'
                             label='Logo'
                             onChange={handleIconChange}

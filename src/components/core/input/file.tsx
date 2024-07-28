@@ -66,7 +66,6 @@ export default function File({
                     ref={inputRef}
                     display={'none'}
                     name={name}
-                    defaultValue={selectedFile?.name || ''}
                     type='file'
                     accept='.ico'
                     onChange={handleFileChange}
