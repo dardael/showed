@@ -16,7 +16,7 @@
 # production
 /build
 /public/images
-
+/public/favicon.ico
 # misc
 .DS_Store
 *.pem
