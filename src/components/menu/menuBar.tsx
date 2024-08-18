@@ -13,12 +13,18 @@ export default function MenuBar({ pages }: { pages: Page[] }) {
     );
     const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (
-        <Box color={'white'} backgroundColor={theme.color + '.500'}>
-            {isMobile ? (
-                <MobileMenuBar links={linkItems} />
+        <>
+            {linkItems.length < 2 ? (
+                <></>
             ) : (
-                <LaptopMenuBar links={linkItems} />
+                <Box color={'white'} backgroundColor={theme.color + '.500'}>
+                    {isMobile ? (
+                        <MobileMenuBar links={linkItems} />
+                    ) : (
+                        <LaptopMenuBar links={linkItems} />
+                    )}
+                </Box>
             )}
-        </Box>
+        </>
     );
 }
