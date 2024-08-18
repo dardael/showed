@@ -12,21 +12,31 @@ export default function FooterBar({
     socialNetworks: SocialNetwork[];
 }) {
     const { theme } = useContext(ThemeContext);
-    const linkItems = socialNetworks.map((socialNetwork) =>
-        LinkItem.fromSocialNetwork(socialNetwork)
-    );
+    const linkItems = socialNetworks
+        .filter((socialNetwork) => !!socialNetwork.link)
+        .map((socialNetwork) => LinkItem.fromSocialNetwork(socialNetwork));
     return (
-        <Box
-            height={'100px'}
-            color={'white'}
-            backgroundColor={theme.color + '.500'}
-        >
-            <Center>
-                <Flex alignItems={'Center'} height={'100px'} width={'full'}>
-                    <Spacer />
-                    <SocialNetworkLinks linkItems={linkItems} />
-                </Flex>
-            </Center>
-        </Box>
+        <>
+            {linkItems.length === 0 ? (
+                <></>
+            ) : (
+                <Box
+                    height={'100px'}
+                    color={'white'}
+                    backgroundColor={theme.color + '.500'}
+                >
+                    <Center>
+                        <Flex
+                            alignItems={'Center'}
+                            height={'100px'}
+                            width={'full'}
+                        >
+                            <Spacer />
+                            <SocialNetworkLinks linkItems={linkItems} />
+                        </Flex>
+                    </Center>
+                </Box>
+            )}
+        </>
     );
 }

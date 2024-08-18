@@ -118,6 +118,41 @@ describe('Provider', () => {
             expect(result).toEqual(sortedNetworks);
         });
     });
+    describe('removeLinkPrefixWhenEmpty', () => {
+        it('should remove link prefix when empty for phone', () => {
+            const socialNetwork = {
+                name: SocialNetworkName.Phone,
+                link: 'tel:',
+            };
+            const result = provider['removeLinkPrefixWhenEmpty'](socialNetwork);
+            expect(result).toEqual({
+                name: SocialNetworkName.Phone,
+                link: '',
+            });
+        });
+        it('should remove link prefix when empty for email', () => {
+            const socialNetwork = {
+                name: SocialNetworkName.Email,
+                link: 'mailto:',
+            };
+            const result = provider['removeLinkPrefixWhenEmpty'](socialNetwork);
+            expect(result).toEqual({
+                name: SocialNetworkName.Email,
+                link: '',
+            });
+        });
+        it('should do nothing when already empty', () => {
+            const socialNetwork = {
+                name: SocialNetworkName.Facebook,
+                link: '',
+            };
+            const result = provider['removeLinkPrefixWhenEmpty'](socialNetwork);
+            expect(result).toEqual({
+                name: SocialNetworkName.Facebook,
+                link: '',
+            });
+        });
+    });
 
     describe('sortSocialNetworks', () => {
         it('should sort social networks correctly', () => {

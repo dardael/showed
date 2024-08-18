@@ -37,7 +37,9 @@ export default class Provider implements ProviderInterface {
 
     public async getSocialNetworks(): Promise<SocialNetwork[]> {
         const socialNetworks = await this.repository.getSocialNetworks();
-        return this.sortSocialNetworks(socialNetworks);
+        return this.sortSocialNetworks(
+            socialNetworks.map(this.removeLinkPrefixWhenEmpty)
+        );
     }
 
     private sortSocialNetworks(
@@ -68,6 +70,17 @@ export default class Provider implements ProviderInterface {
             socialNetwork.link = `tel:${socialNetwork.link?.replace(/ /g, '')}`;
         } else if (socialNetwork.name === SocialNetworkName.Email) {
             socialNetwork.link = `mailto:${socialNetwork.link}`;
+        }
+        return socialNetwork;
+    }
+
+    private removeLinkPrefixWhenEmpty(
+        socialNetwork: SocialNetwork
+    ): SocialNetwork {
+        if (socialNetwork.link === 'tel:') {
+            socialNetwork.link = '';
+        } else if (socialNetwork.link === 'mailto:') {
+            socialNetwork.link = '';
         }
         return socialNetwork;
     }
