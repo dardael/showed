@@ -17,7 +17,11 @@ export default function FileInput({
     return (
         <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
-            <File onChange={onChange} name={name} initialFilePath={defaultValue} />
+            <File
+                onChange={onChange}
+                name={name}
+                initialFilePath={defaultValue}
+            />
         </FormControl>
     );
 }
