@@ -8,13 +8,17 @@ export default class Provider implements ProviderInterface {
         this.repository = repository;
     }
 
-    public async createTheme(themeData: { color: Color }): Promise<Theme> {
+    public async createTheme(themeData: {
+        color: Color;
+        title?: string;
+        description?: string;
+    }): Promise<Theme> {
         return this.repository.createTheme(themeData);
     }
 
     public async updateTheme(
         id: string,
-        update: { color: Color }
+        update: { color: Color; description?: string; title?: string }
     ): Promise<Theme> {
         return this.repository.updateTheme(id, update);
     }

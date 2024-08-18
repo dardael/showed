@@ -14,15 +14,20 @@ export async function saveTheme(data: FormData): Promise<Theme> {
     }
     const provider: Provider = Container.get('ThemeProvider');
     const color = getColorFromHex(hexColor);
-    console.log(color);
+    const title = data.get('title')?.toString();
+    const description = data.get('description')?.toString();
     let updatedTheme;
     if (id) {
         updatedTheme = await provider.updateTheme(id, {
             color,
+            title,
+            description,
         });
     } else {
         updatedTheme = await provider.createTheme({
             color,
+            title,
+            description,
         });
     }
     return updatedTheme;

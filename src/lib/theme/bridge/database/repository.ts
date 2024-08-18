@@ -16,7 +16,11 @@ export default class Repository implements RepositoryInterface {
         return themes.pop() as Theme;
     }
 
-    public async createTheme(themeData: { color: Color }): Promise<Theme> {
+    public async createTheme(themeData: {
+        color: Color;
+        title?: string;
+        description?: string;
+    }): Promise<Theme> {
         return this.database.create<Theme>(ThemeModel, themeData);
     }
 
@@ -24,6 +28,8 @@ export default class Repository implements RepositoryInterface {
         id: string,
         themeData: {
             color: Color;
+            title?: string;
+            description?: string;
         }
     ): Promise<Theme> {
         return this.database.findByIdAndUpdate<Theme>(

@@ -9,6 +9,7 @@ import * as ThemeController from 'showed/controllers/theme/themeController';
 import { useContext } from 'react';
 import { ThemeContext } from 'showed/app/providers';
 import FileInput from '../core/form/inputs/fileInput';
+import TextInput from '../core/form/inputs/textInput';
 export default function Appearance() {
     const [theme, setTheme] = useState<Theme>({ color: Color.gray });
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -66,6 +67,18 @@ export default function Appearance() {
                             name='logo'
                             label='Logo'
                             onChange={handleIconChange}
+                        />
+                        <TextInput
+                            name='title'
+                            label='Titre du site'
+                            placeholder='Titre du site'
+                            defaultValue={theme.title}
+                        />
+                        <TextInput
+                            name='description'
+                            label='Description du site'
+                            placeholder='Description du site'
+                            defaultValue={theme.description}
                         />
                     </SaveForm>
                 </Box>

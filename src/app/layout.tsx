@@ -9,12 +9,14 @@ import { getPages } from 'showed/controllers/page/pageController';
 import { getSocialNetworks } from 'showed/controllers/socialNetwork/socialNetworkController';
 import { getTheme } from 'showed/controllers/theme/themeController';
 
-export const metadata: Metadata = {
-    title: 'Showed',
-    description: 'Publicity web app',
-    icons: { icon: './favicon.ico' },
-};
-
+export async function generateMetadata(): Promise<Metadata> {
+    const theme = await getTheme();
+    return {
+        title: theme.title,
+        description: theme.description,
+        icons: { icon: './favicon.ico' },
+    };
+}
 export default async function RootLayout({
     children,
 }: {
