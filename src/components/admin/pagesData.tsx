@@ -19,6 +19,7 @@ import { FaTrash } from 'react-icons/fa6';
 import ConfirmationButton from '../core/button/confirmationButton';
 import { Notification } from '../core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
+import DynamicAccordion from '../core/accordion/dynamicAccordion';
 
 export default function PagesData() {
     const notification = new Notification(useToast());
@@ -105,127 +106,54 @@ export default function PagesData() {
                         Ajouter une page
                     </Button>
                     <Box paddingTop={'55px'}>
-                        <Accordion allowMultiple>
-                            {pages.map((page, index) => {
-                                return (
-                                    <AccordionItem key={index}>
-                                        {({ isExpanded }) => (
-                                            <>
-                                                <h2>
-                                                    <AccordionButton
-                                                        as={'span'}
-                                                    >
-                                                        <Box
-                                                            as='span'
-                                                            flex='1'
-                                                            textAlign='left'
-                                                        >
-                                                            {page.title}
-                                                        </Box>
-                                                        <IconButton
-                                                            variant={'ghost'}
-                                                            title={
-                                                                'Déplacer la page vers le haut'
-                                                            }
-                                                            aria-label={
-                                                                'Déplacer la page vers le haut'
-                                                            }
-                                                            icon={<FaAngleUp />}
-                                                            isDisabled={
-                                                                index === 0
-                                                            }
-                                                            onClick={(
-                                                                evt: React.MouseEvent<HTMLButtonElement>
-                                                            ) => {
-                                                                evt.stopPropagation();
-                                                                movePage(
-                                                                    page,
-                                                                    SortDirection.UP
-                                                                );
-                                                            }}
-                                                        />
-                                                        <IconButton
-                                                            variant={'ghost'}
-                                                            title={
-                                                                'Déplacer la page vers le bas'
-                                                            }
-                                                            aria-label={
-                                                                'Déplacer la page vers le bas'
-                                                            }
-                                                            icon={
-                                                                <FaAngleDown />
-                                                            }
-                                                            isDisabled={
-                                                                index + 1 ===
-                                                                pages.length
-                                                            }
-                                                            onClick={(
-                                                                evt: React.MouseEvent<HTMLButtonElement>
-                                                            ) => {
-                                                                evt.stopPropagation();
-                                                                movePage(
-                                                                    page,
-                                                                    SortDirection.DOWN
-                                                                );
-                                                            }}
-                                                        />
-                                                        <ConfirmationButton
-                                                            button={{
-                                                                title: 'Supprimer la page',
-                                                                icon: (
-                                                                    <FaTrash />
-                                                                ),
-                                                            }}
-                                                            modal={{
-                                                                title: 'Supprimer une page',
-                                                                content: `Souhaitez vous supprimer la page "${page.title}" ?\nLa page sera perdue.`,
-                                                                confirmText:
-                                                                    'Supprimer',
-                                                                cancelText:
-                                                                    'Annuler',
-                                                                onConfirm: () =>
-                                                                    deletePage(
-                                                                        page
-                                                                    ),
-                                                            }}
-                                                        />
-                                                        {isExpanded ? (
-                                                            <Icon
-                                                                as={FaMinus}
-                                                                fontSize='12px'
-                                                                color={
-                                                                    'brand.500'
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            <Icon
-                                                                as={FaPlus}
-                                                                fontSize='12px'
-                                                                color={
-                                                                    'brand.500'
-                                                                }
-                                                            />
-                                                        )}
-                                                    </AccordionButton>
-                                                </h2>
-                                                <AccordionPanel>
-                                                    <PageData
-                                                        page={page}
-                                                        onPageChange={async (
-                                                            data
-                                                        ) => {
-                                                            return PageController.savePage(
-                                                                data
-                                                            ).then(updatePage);
-                                                        }}
-                                                    />
-                                                </AccordionPanel>
-                                            </>
-                                        )}
-                                    </AccordionItem>
-                                );
-                            })}
-                        </Accordion>
+                        <DynamicAccordion
+                            elements={pages.map((page) => ({
+                                reference: page,
+                                title: page.title,
+                                content: (
+                                    <PageData
+                                        page={page}
+                                        onPageChange={async (data) => {
+                                            return PageController.savePage(
+                                                data
+                                            ).then(updatePage);
+                                        }}
+                                    />
+                                ),
+                                buttons: {
+                                    sort: {
+                                        sortUp: {
+                                            title: 'Déplacer la page vers le haut',
+                                            action: (page) => {
+                                                movePage(
+                                                    page,
+                                                    SortDirection.UP
+                                                );
+                                            },
+                                        },
+                                        sortDown: {
+                                            title: 'Déplacer la page vers le bas',
+                                            action: (page) => {
+                                                movePage(
+                                                    page,
+                                                    SortDirection.DOWN
+                                                );
+                                            },
+                                        },
+                                    },
+                                    delete: {
+                                        title: 'Supprimer la page',
+                                        action: (page) => deletePage(page),
+                                        confirmation: {
+                                            title: 'Supprimer une page',
+                                            content: `Souhaitez vous supprimer la page "${page.title}" ?\nLa page sera perdue.`,
+                                            acceptButtonTitle: 'Supprimer',
+                                            cancelButtonTitle: 'Annuler',
+                                        },
+                                    },
+                                },
+                            }))}
+                        />
                     </Box>
                 </Box>
             )}
