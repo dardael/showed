@@ -1,22 +1,9 @@
-import {
-    Accordion,
-    AccordionButton,
-    AccordionItem,
-    AccordionPanel,
-    Box,
-    Button,
-    Icon,
-    IconButton,
-    Spinner,
-    useToast,
-} from '@chakra-ui/react';
+import { Box, Button, Spinner, useToast } from '@chakra-ui/react';
 import PageData from './pageData';
-import { FaPlus, FaMinus, FaAngleUp, FaAngleDown } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import type { Page } from 'showed/lib/page/models/page';
 import * as PageController from 'showed/controllers/page/pageController';
-import { FaTrash } from 'react-icons/fa6';
-import ConfirmationButton from '../core/button/confirmationButton';
 import { Notification } from '../core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from '../core/accordion/dynamicAccordion';

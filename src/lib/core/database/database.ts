@@ -2,6 +2,7 @@ import DatabaseInterface from 'showed/lib/core/database/service/database';
 import connectToDb from 'showed/lib/core/database/connection';
 import { Model } from 'mongoose';
 import { nanoid } from 'nanoid';
+import { any } from 'jest-mock-extended';
 
 export default class Database implements DatabaseInterface {
     public async find<U>(
@@ -24,6 +25,11 @@ export default class Database implements DatabaseInterface {
             .exec();
 
         return foundItems as U[];
+    }
+
+    public async deleteMany<U>(model: Model<U>, data: any): Promise<void> {
+        await connectToDb();
+        const deletedObjects = await model.deleteMany(data);
     }
 
     public async findByIdAndDelete<U>(model: Model<U>, id: string): Promise<U> {

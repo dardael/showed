@@ -4,7 +4,6 @@ type Page = {
     _id?: string;
     title: string;
     urlPart: string;
-    content: string;
     position: number;
 };
 const PageSchema = new mongoose.Schema({
@@ -12,7 +11,6 @@ const PageSchema = new mongoose.Schema({
     title: { type: String, required: true },
     urlPart: { type: String, required: true },
     position: { type: Number, required: true },
-    content: { type: String },
 });
 
 let PageModel: Model<Page> = mongoose.models.Page;
