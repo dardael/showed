@@ -1,17 +1,16 @@
 import { Box, Button, Divider, Spinner, useToast } from '@chakra-ui/react';
-import SaveForm from '../core/form/saveForm';
-import RichTextInput from '../core/form/inputs/richTextInput';
-import TextInput from '../core/form/inputs/textInput';
+import SaveForm from 'showed/components/core/form/saveForm';
+import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
 import { useEffect, useState } from 'react';
 import * as PageController from 'showed/controllers/page/pageController';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
-import { Notification } from '../core/feedback/notification';
+import { Notification } from 'showed/components/core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
-import DynamicAccordion from '../core/accordion/dynamicAccordion';
+import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
 import { FaPlus } from 'react-icons/fa6';
-import ComponentData from './page/component/component';
+import ComponentData from 'showed/components/admin/page/component/component';
 
 export default function PageData({
     page,

@@ -1,5 +1,5 @@
 import { Box, Button, Spinner, useToast } from '@chakra-ui/react';
-import PageData from './pageData';
+import PageData from './page/pageData';
 import { FaPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import type { Page } from 'showed/lib/page/models/page';
