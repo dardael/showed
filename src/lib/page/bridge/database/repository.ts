@@ -3,9 +3,6 @@ import type { Page } from 'showed/lib/page/models/page';
 import RepositoryInterface from 'showed/lib/page/repository';
 import type Database from 'showed/lib/core/database/service/database';
 import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
-import type { Component } from '../../models/component';
-import { ComponentModel } from 'showed/lib/page/models/component';
-import { ComponentType } from '../../models/componentType';
 
 export default class Repository implements RepositoryInterface {
     constructor(private database: Database) {
@@ -40,48 +37,5 @@ export default class Repository implements RepositoryInterface {
 
     public async deletePage(id: string): Promise<Page> {
         return this.database.findByIdAndDelete<Page>(PageModel, id);
-    }
-
-    public async getComponents(filter: {
-        pageId: string;
-        limit?: number;
-    }): Promise<Component[]> {
-        return this.database.find<Component>(ComponentModel, {
-            ...filter,
-            sort: { position: SortOrder.ASC },
-        });
-    }
-
-    public async createComponent(componentData: {
-        pageId: string;
-        componentType: ComponentType;
-        title: string;
-        content: string;
-        position: number;
-    }): Promise<Component> {
-        return this.database.create<Component>(ComponentModel, componentData);
-    }
-
-    public async updateComponent(
-        id: string,
-        componentData: {
-            title?: string;
-            content?: string;
-            position: number;
-        }
-    ): Promise<Component> {
-        return this.database.findByIdAndUpdate<Component>(
-            ComponentModel,
-            id,
-            componentData
-        );
-    }
-
-    public async deleteComponent(id: string): Promise<Component> {
-        return this.database.findByIdAndDelete<Component>(ComponentModel, id);
-    }
-
-    public async deletePageComponents(pageId: string): Promise<void> {
-        this.database.deleteMany<Component>(ComponentModel, { pageId });
     }
 }

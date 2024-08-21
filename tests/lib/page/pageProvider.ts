@@ -1,13 +1,16 @@
 import Provider from 'showed/lib/page/pageProvider';
 import type Repository from 'showed/lib/page/repository';
+import type ComponentRepository from 'showed/lib/page/componentRepository';
 
 describe('Provider', () => {
     let repository: Repository;
+    let componentRepository: ComponentRepository;
     let provider: Provider;
 
     beforeEach(() => {
         repository = {} as any;
-        provider = new Provider(repository);
+        componentRepository = {} as any;
+        provider = new Provider(repository, componentRepository);
     });
 
     it('should generate correct URI from page title', () => {

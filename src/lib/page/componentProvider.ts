@@ -1,12 +1,11 @@
 import ComponentProviderInterface from 'showed/lib/page/service/componentProvider';
-import type Repository from 'showed/lib/page/repository';
-import type { Page } from 'showed/lib/page/models/page';
+import type ComponentRepository from 'showed/lib/page/componentRepository';
 import type { Component } from 'showed/lib/page/models/component';
 import { SortDirection } from './models/sortDirection';
 import { ComponentType } from './models/componentType';
 
 export default class ComponentProvider implements ComponentProviderInterface {
-    constructor(private repository: Repository) {
+    constructor(private repository: ComponentRepository) {
         this.repository = repository;
     }
     public async createComponent(componentData: {
@@ -35,7 +34,7 @@ export default class ComponentProvider implements ComponentProviderInterface {
         await this.updateComponentsPosition(deletedComponent.pageId as string);
         return deletedComponent;
     }
-
+    
     public async moveComponent(
         component: Component,
         sortDirection: SortDirection

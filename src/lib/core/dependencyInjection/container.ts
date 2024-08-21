@@ -5,6 +5,7 @@ import ThemeProvider from 'showed/lib/theme/provider';
 import MaintainerRepository from 'showed/lib/maintainer/bridge/database/repository';
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/repository';
+import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
@@ -44,11 +45,15 @@ const pageRepository = new PageRepository(database);
 const pageRepositoryToken = 'PageRepository';
 Container.set(pageRepositoryToken, pageRepository);
 
-const pageProvider = new PageProvider(pageRepository);
+const componentRepository = new ComponentRepository(database);
+const componentRepositoryToken = 'ComponentRepository';
+Container.set(componentRepositoryToken, componentRepository);
+
+const pageProvider = new PageProvider(pageRepository, componentRepository);
 const pageProviderToken = 'PageProvider';
 Container.set(pageProviderToken, pageProvider);
 
-const componentProvider = new ComponentProvider(pageRepository);
+const componentProvider = new ComponentProvider(componentRepository);
 const componentProviderToken = 'ComponentProvider';
 Container.set(componentProviderToken, componentProvider);
 
