@@ -3,7 +3,7 @@ import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
 import { useEffect, useState } from 'react';
-import * as PageController from 'showed/controllers/page/pageController';
+import * as ComponentController from 'showed/controllers/page/componentController';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import { Notification } from 'showed/components/core/feedback/notification';
@@ -23,7 +23,7 @@ export default function PageData({
     const [components, setComponents] = useState<Component[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const addNewComponent = async (componentType: ComponentType) => {
-        const newComponent = await PageController.createComponent(
+        const newComponent = await ComponentController.createComponent(
             page._id as string,
             componentType,
             components.length + 1
@@ -45,7 +45,7 @@ export default function PageData({
             return;
         }
         notification.handlePromise(
-            PageController.deleteComponent(componentToDelete._id).then(
+            ComponentController.deleteComponent(componentToDelete._id).then(
                 async () => {
                     const orderedComponents = await updateComponentsPosition();
                     setComponents([
@@ -68,7 +68,7 @@ export default function PageData({
         direction: SortDirection
     ) => {
         notification.handlePromise(
-            PageController.moveComponent(componentToMove, direction).then(
+            ComponentController.moveComponent(componentToMove, direction).then(
                 async () => {
                     const orderedComponents = await updateComponentsPosition();
                     setComponents([...orderedComponents]);
@@ -83,7 +83,7 @@ export default function PageData({
     };
     const updateComponentsPosition = async () => {
         const componentsWithUpdatedPosition =
-            await PageController.getComponents(page._id as string);
+            await ComponentController.getComponents(page._id as string);
         components.forEach((component) => {
             const updatedComponent = componentsWithUpdatedPosition.find(
                 (p) => p._id === component._id
@@ -96,7 +96,7 @@ export default function PageData({
         return components;
     };
     useEffect(() => {
-        PageController.getComponents(page._id as string).then(
+        ComponentController.getComponents(page._id as string).then(
             async (foundComponents: Component[]) => {
                 setComponents([...foundComponents]);
                 setIsLoading(false);
@@ -157,7 +157,7 @@ export default function PageData({
                                             component={component}
                                             onSave={async (data) => {
                                                 const pendingSave =
-                                                    PageController.saveComponent(
+                                                    ComponentController.saveComponent(
                                                         data
                                                     );
                                                 pendingSave.then(
