@@ -1,9 +1,9 @@
-import ProviderInterface from 'showed/lib/page/service/provider';
+import PageProviderInterface from 'showed/lib/page/service/pageProvider';
 import type Repository from 'showed/lib/page/repository';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
 
-export default class Provider implements ProviderInterface {
+export default class PageProvider implements PageProviderInterface {
     constructor(private repository: Repository) {
         this.repository = repository;
     }

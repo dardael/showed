@@ -5,7 +5,7 @@ import ThemeProvider from 'showed/lib/theme/provider';
 import MaintainerRepository from 'showed/lib/maintainer/bridge/database/repository';
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/repository';
-import PageProvider from 'showed/lib/page/provider';
+import PageProvider from 'showed/lib/page/pageProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
 import SocialNetworkProvider from 'showed/lib/socialNetwork/provider';

@@ -1,7 +1,7 @@
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from '../models/sortDirection';
 
-export default interface Provider {
+export default interface PageProvider {
     createPage(pageData: { title: string; position: number }): Promise<Page>;
     updatePage(
         id: string,

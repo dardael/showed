@@ -1,4 +1,4 @@
-import Provider from 'showed/lib/page/provider';
+import Provider from 'showed/lib/page/pageProvider';
 import type Repository from 'showed/lib/page/repository';
 
 describe('Provider', () => {
