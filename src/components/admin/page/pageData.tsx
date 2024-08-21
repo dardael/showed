@@ -10,7 +10,7 @@ import { Notification } from 'showed/components/core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
 import { FaPlus } from 'react-icons/fa6';
-import ComponentData from 'showed/components/admin/page/component/component';
+import ComponentData from 'showed/components/admin/page/component/componentData';
 
 export default function PageData({
     page,
