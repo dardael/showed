@@ -1,10 +1,10 @@
 import { PageModel } from 'showed/lib/page/models/page';
 import type { Page } from 'showed/lib/page/models/page';
-import RepositoryInterface from 'showed/lib/page/repository';
+import PageRepositoryInterface from 'showed/lib/page/pageRepository';
 import type Database from 'showed/lib/core/database/service/database';
 import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 
-export default class Repository implements RepositoryInterface {
+export default class PageRepository implements PageRepositoryInterface {
     constructor(private database: Database) {
         this.database = database;
     }

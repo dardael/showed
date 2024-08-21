@@ -4,7 +4,7 @@ import ThemeRepository from 'showed/lib/theme/bridge/database/repository';
 import ThemeProvider from 'showed/lib/theme/provider';
 import MaintainerRepository from 'showed/lib/maintainer/bridge/database/repository';
 import MaintainerProvider from 'showed/lib/maintainer/provider';
-import PageRepository from 'showed/lib/page/bridge/database/repository';
+import PageRepository from 'showed/lib/page/bridge/database/pageRepository';
 import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';

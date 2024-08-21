@@ -1,4 +1,3 @@
-import type { Page } from 'showed/lib/page/models/page';
 import type { Component } from 'showed/lib/page/models/component';
 import { SortDirection } from '../models/sortDirection';
 import { ComponentType } from '../models/componentType';
