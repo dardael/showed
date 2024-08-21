@@ -5,6 +5,7 @@ import { ComponentType } from 'showed/lib/page/models/componentType';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import Provider from 'showed/lib/page/provider';
+import ComponentProvider from 'showed/lib/page/componentProvider';
 import { Container } from 'typedi';
 
 export async function savePage(data: FormData): Promise<Page> {
@@ -39,7 +40,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
             new Error('Position and content are required')
         );
     }
-    const provider: Provider = Container.get('PageProvider');
+    const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.updateComponent(id, {
         content,
         title,
@@ -60,7 +61,7 @@ export async function createComponent(
     componentType: ComponentType,
     position: number
 ): Promise<Component> {
-    const provider: Provider = Container.get('PageProvider');
+    const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.createComponent({
         componentType,
         pageId,
@@ -77,7 +78,7 @@ export async function getPages(): Promise<Page[]> {
 }
 
 export async function getComponents(pageId: string): Promise<Component[]> {
-    const provider: Provider = Container.get('PageProvider');
+    const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.getComponents(pageId);
 }
 
@@ -87,7 +88,7 @@ export async function deletePage(id: string): Promise<Page> {
 }
 
 export async function deleteComponent(id: string): Promise<Component> {
-    const provider: Provider = Container.get('PageProvider');
+    const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.deleteComponent(id);
 }
 
@@ -103,6 +104,6 @@ export async function moveComponent(
     component: Component,
     direction: SortDirection
 ): Promise<void> {
-    const provider: Provider = Container.get('PageProvider');
+    const provider: ComponentProvider = Container.get('ComponentProvider');
     provider.moveComponent(component, direction);
 }
