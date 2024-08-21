@@ -5,7 +5,10 @@ import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
 
 export default class PageProvider implements PageProviderInterface {
-    constructor(private repository: PageRepository, private componentRepository: ComponentRepository) {
+    constructor(
+        private repository: PageRepository,
+        private componentRepository: ComponentRepository
+    ) {
         this.repository = repository;
         this.componentRepository = componentRepository;
     }

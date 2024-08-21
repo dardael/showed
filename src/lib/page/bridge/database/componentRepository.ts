@@ -5,7 +5,9 @@ import type { Component } from '../../models/component';
 import { ComponentModel } from 'showed/lib/page/models/component';
 import { ComponentType } from '../../models/componentType';
 
-export default class ComponentRepository implements ComponentRepositoryInterface {
+export default class ComponentRepository
+    implements ComponentRepositoryInterface
+{
     constructor(private database: Database) {
         this.database = database;
     }

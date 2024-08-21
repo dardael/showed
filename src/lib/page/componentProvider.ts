@@ -34,7 +34,7 @@ export default class ComponentProvider implements ComponentProviderInterface {
         await this.updateComponentsPosition(deletedComponent.pageId as string);
         return deletedComponent;
     }
-    
+
     public async moveComponent(
         component: Component,
         sortDirection: SortDirection

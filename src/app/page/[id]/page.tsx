@@ -1,10 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import {
-    getPages,
-} from 'showed/controllers/page/pageController';
-import {
-    getComponents,
-} from 'showed/controllers/page/componentController';
+import { getPages } from 'showed/controllers/page/pageController';
+import { getComponents } from 'showed/controllers/page/componentController';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const response = await getPages();
