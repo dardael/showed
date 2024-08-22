@@ -9,7 +9,7 @@ export default class ComponentProvider implements ComponentProviderInterface {
         this.repository = repository;
     }
     public async createComponent(componentData: {
-        pageId: string;
+        blockId: string;
         componentType: ComponentType;
         content: string;
         title: string;
@@ -24,14 +24,14 @@ export default class ComponentProvider implements ComponentProviderInterface {
         return this.repository.updateComponent(id, update);
     }
 
-    public async getComponents(pageId: string): Promise<Component[]> {
-        const components = await this.repository.getComponents({ pageId });
+    public async getComponents(blockId: string): Promise<Component[]> {
+        const components = await this.repository.getComponents({ blockId });
         return components;
     }
 
     public async deleteComponent(id: string): Promise<Component> {
         const deletedComponent = await this.repository.deleteComponent(id);
-        await this.updateComponentsPosition(deletedComponent.pageId as string);
+        await this.updateComponentsPosition(deletedComponent.blockId as string);
         return deletedComponent;
     }
 
@@ -40,7 +40,7 @@ export default class ComponentProvider implements ComponentProviderInterface {
         sortDirection: SortDirection
     ): Promise<void> {
         const components = await this.repository.getComponents({
-            pageId: component.pageId,
+            blockId: component.blockId,
         });
         const componentToMove = components.find((p) => p._id === component._id);
         if (!componentToMove) {
@@ -72,9 +72,9 @@ export default class ComponentProvider implements ComponentProviderInterface {
     }
 
     private async updateComponentsPosition(
-        pageId: string
+        blockId: string
     ): Promise<Component[]> {
-        const components = await this.repository.getComponents({ pageId });
+        const components = await this.repository.getComponents({ blockId });
         components.forEach(async (component, index) => {
             component.position = index + 1;
             await this.repository.updateComponent(component._id as string, {

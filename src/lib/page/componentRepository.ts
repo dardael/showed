@@ -2,12 +2,12 @@ import type { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from './models/componentType';
 export default interface ComponentRepository {
     getComponents(filter: {
-        pageId: string;
+        blockId: string;
         limit?: number;
     }): Promise<Component[]>;
     createComponent(ComponentData: {
         componentType: ComponentType;
-        pageId: string;
+        blockId: string;
         content: string;
         title: string;
         position: number;
@@ -21,5 +21,5 @@ export default interface ComponentRepository {
         }
     ): Promise<Component>;
     deleteComponent(id: string): Promise<Component>;
-    deletePageComponents(pageId: string): Promise<void>;
+    deleteBlockComponents(blockId: string): Promise<void>;
 }

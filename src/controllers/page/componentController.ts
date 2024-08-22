@@ -28,23 +28,23 @@ export async function saveComponent(data: FormData): Promise<Component> {
 }
 
 export async function createComponent(
-    pageId: string,
+    blockId: string,
     componentType: ComponentType,
     position: number
 ): Promise<Component> {
     const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.createComponent({
         componentType,
-        pageId,
+        blockId,
         title: 'Nouveau composant',
         content: '',
         position,
     });
 }
 
-export async function getComponents(pageId: string): Promise<Component[]> {
+export async function getComponents(blockId: string): Promise<Component[]> {
     const provider: ComponentProvider = Container.get('ComponentProvider');
-    return provider.getComponents(pageId);
+    return provider.getComponents(blockId);
 }
 
 export async function deleteComponent(id: string): Promise<Component> {

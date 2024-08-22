@@ -12,7 +12,7 @@ export default class ComponentRepository
         this.database = database;
     }
     public async getComponents(filter: {
-        pageId: string;
+        blockId: string;
         limit?: number;
     }): Promise<Component[]> {
         return this.database.find<Component>(ComponentModel, {
@@ -22,7 +22,7 @@ export default class ComponentRepository
     }
 
     public async createComponent(componentData: {
-        pageId: string;
+        blockId: string;
         componentType: ComponentType;
         title: string;
         content: string;
@@ -50,7 +50,7 @@ export default class ComponentRepository
         return this.database.findByIdAndDelete<Component>(ComponentModel, id);
     }
 
-    public async deletePageComponents(pageId: string): Promise<void> {
-        this.database.deleteMany<Component>(ComponentModel, { pageId });
+    public async deleteBlockComponents(blockId: string): Promise<void> {
+        this.database.deleteMany<Component>(ComponentModel, { blockId });
     }
 }
