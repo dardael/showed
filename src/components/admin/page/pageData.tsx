@@ -3,14 +3,13 @@ import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
 import { useEffect, useState } from 'react';
-import * as ComponentController from 'showed/controllers/page/componentController';
-import { Component } from 'showed/lib/page/models/component';
-import { ComponentType } from 'showed/lib/page/models/componentType';
+import * as BlockController from 'showed/controllers/page/blockController';
+import { Block } from 'showed/lib/page/models/block';
 import { Notification } from 'showed/components/core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
 import { FaPlus } from 'react-icons/fa6';
-import ComponentData from 'showed/components/admin/page/component/componentData';
+import BlockData from 'showed/components/admin/page/block/blockData';
 
 export default function PageData({
     page,
@@ -20,85 +19,75 @@ export default function PageData({
     onPageChange: (data: FormData) => Promise<any>;
 }) {
     const notification = new Notification(useToast());
-    const [components, setComponents] = useState<Component[]>([]);
+    const [blocks, setBlocks] = useState<Block[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const addNewComponent = async (componentType: ComponentType) => {
-        const newComponent = await ComponentController.createComponent(
+    const addNewBlock = async () => {
+        const newBlock = await BlockController.createBlock(
             page._id as string,
-            componentType,
-            components.length + 1
+            blocks.length + 1
         );
-        components.push(newComponent);
-        setComponents([...components]);
+        blocks.push(newBlock);
+        setBlocks([...blocks]);
     };
-    const updateComponent = (updatedComponent: Component) => {
-        setComponents([
-            ...components.map((component) =>
-                component._id === updatedComponent._id
-                    ? updatedComponent
-                    : component
+    const updateBlock = (updatedBlock: Block) => {
+        setBlocks([
+            ...blocks.map((block) =>
+                block._id === updatedBlock._id ? updatedBlock : block
             ),
         ]);
     };
-    const deleteComponent = (componentToDelete: Component) => {
-        if (componentToDelete._id === undefined) {
+    const deleteBlock = (blockToDelete: Block) => {
+        if (blockToDelete._id === undefined) {
             return;
         }
         notification.handlePromise(
-            ComponentController.deleteComponent(componentToDelete._id).then(
-                async () => {
-                    const orderedComponents = await updateComponentsPosition();
-                    setComponents([
-                        ...orderedComponents.filter(
-                            (component) =>
-                                component._id !== componentToDelete._id
-                        ),
-                    ]);
-                }
-            ),
+            BlockController.deleteBlock(blockToDelete._id).then(async () => {
+                const orderedBlocks = await updateBlocksPosition();
+                setBlocks([
+                    ...orderedBlocks.filter(
+                        (block) => block._id !== blockToDelete._id
+                    ),
+                ]);
+            }),
             {
-                loading: 'Composant en cours de suppression',
-                success: 'Le composant a été supprimé avec succès',
-                error: 'Erreur lors de la suppression du composant',
+                loading: 'Block en cours de suppression',
+                success: 'Le block a été supprimé avec succès',
+                error: 'Erreur lors de la suppression du block',
             }
         );
     };
-    const moveComponent = async (
-        componentToMove: Component,
-        direction: SortDirection
-    ) => {
+    const moveBlock = async (blockToMove: Block, direction: SortDirection) => {
         notification.handlePromise(
-            ComponentController.moveComponent(componentToMove, direction).then(
-                async () => {
-                    const orderedComponents = await updateComponentsPosition();
-                    setComponents([...orderedComponents]);
-                }
-            ),
+            BlockController.moveBlock(blockToMove, direction).then(async () => {
+                const orderedBlocks = await updateBlocksPosition();
+                setBlocks([...orderedBlocks]);
+            }),
             {
-                loading: 'Composant en cours de déplacement',
-                success: 'Le composant a été déplacé avec succès',
-                error: 'Erreur lors du déplacement du composant',
+                loading: 'Block en cours de déplacement',
+                success: 'Le block a été déplacé avec succès',
+                error: 'Erreur lors du déplacement du block',
             }
         );
     };
-    const updateComponentsPosition = async () => {
-        const componentsWithUpdatedPosition =
-            await ComponentController.getComponents(page._id as string);
-        components.forEach((component) => {
-            const updatedComponent = componentsWithUpdatedPosition.find(
-                (p) => p._id === component._id
+    const updateBlocksPosition = async () => {
+        const blocksWithUpdatedPosition = await BlockController.getBlocks(
+            page._id as string
+        );
+        blocks.forEach((block) => {
+            const updatedBlock = blocksWithUpdatedPosition.find(
+                (p) => p._id === block._id
             );
-            if (updatedComponent) {
-                component.position = updatedComponent.position;
+            if (updatedBlock) {
+                block.position = updatedBlock.position;
             }
         });
-        components.sort((a, b) => a.position - b.position);
-        return components;
+        blocks.sort((a, b) => a.position - b.position);
+        return blocks;
     };
     useEffect(() => {
-        ComponentController.getComponents(page._id as string).then(
-            async (foundComponents: Component[]) => {
-                setComponents([...foundComponents]);
+        BlockController.getBlocks(page._id as string).then(
+            async (foundBlocks: Block[]) => {
+                setBlocks([...foundBlocks]);
                 setIsLoading(false);
             }
         );
@@ -136,33 +125,31 @@ export default function PageData({
                         paddingRight={'20px'}
                     >
                         <Button
-                            title='Ajouter un composant'
-                            aria-label={'Ajouter un composant'}
+                            title='Ajouter un block'
+                            aria-label={'Ajouter un block'}
                             leftIcon={<FaPlus />}
-                            onClick={() =>
-                                addNewComponent(ComponentType.RICH_TEXT_EDITOR)
-                            }
+                            onClick={addNewBlock}
                             position='absolute'
-                            right='95px'
+                            right='70px'
                         >
-                            Ajouter un composant
+                            Ajouter un block
                         </Button>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
-                                elements={components.map((component) => ({
-                                    reference: component,
-                                    title: component.title,
+                                elements={blocks.map((block) => ({
+                                    reference: block,
+                                    title: block.title,
                                     content: (
-                                        <ComponentData
-                                            component={component}
-                                            onSave={async (data) => {
+                                        <BlockData
+                                            block={block}
+                                            onBlockChange={async (
+                                                data: FormData
+                                            ) => {
                                                 const pendingSave =
-                                                    ComponentController.saveComponent(
+                                                    BlockController.saveBlock(
                                                         data
                                                     );
-                                                pendingSave.then(
-                                                    updateComponent
-                                                );
+                                                pendingSave.then(updateBlock);
                                                 return pendingSave;
                                             }}
                                         />
@@ -170,31 +157,31 @@ export default function PageData({
                                     buttons: {
                                         sort: {
                                             sortUp: {
-                                                title: 'Déplacer le composant vers le haut',
-                                                action: (component) => {
-                                                    moveComponent(
-                                                        component,
+                                                title: 'Déplacer le block vers le haut',
+                                                action: (block) => {
+                                                    moveBlock(
+                                                        block,
                                                         SortDirection.UP
                                                     );
                                                 },
                                             },
                                             sortDown: {
-                                                title: 'Déplacer le composant vers le bas',
-                                                action: (component) => {
-                                                    moveComponent(
-                                                        component,
+                                                title: 'Déplacer le block vers le bas',
+                                                action: (block) => {
+                                                    moveBlock(
+                                                        block,
                                                         SortDirection.DOWN
                                                     );
                                                 },
                                             },
                                         },
                                         delete: {
-                                            title: 'Supprimer la component',
-                                            action: (component) =>
-                                                deleteComponent(component),
+                                            title: 'Supprimer la block',
+                                            action: (block) =>
+                                                deleteBlock(block),
                                             confirmation: {
-                                                title: 'Supprimer un composant',
-                                                content: `Souhaitez vous supprimer le composant "${component.title}" ?\nLe composant sera perdue.`,
+                                                title: 'Supprimer un block',
+                                                content: `Souhaitez vous supprimer le block "${block.title}" ?\nLe block sera perdue.`,
                                                 acceptButtonTitle: 'Supprimer',
                                                 cancelButtonTitle: 'Annuler',
                                             },

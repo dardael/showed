@@ -3,7 +3,7 @@ import { ComponentType } from './componentType';
 
 type Component = {
     _id?: string;
-    pageId: string;
+    blockId: string;
     componentType: ComponentType;
     content: string;
     title: string;
@@ -11,7 +11,7 @@ type Component = {
 };
 const ComponentSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
-    pageId: { type: String, required: true },
+    blockId: { type: String, required: true },
     componentType: { type: String, required: true },
     position: { type: Number, required: true },
     title: { type: String },

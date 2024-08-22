@@ -1,16 +1,16 @@
 import PageProviderInterface from 'showed/lib/page/service/pageProvider';
 import type PageRepository from 'showed/lib/page/pageRepository';
-import type ComponentRepository from 'showed/lib/page/componentRepository';
+import type BlockRepository from 'showed/lib/page/blockRepository';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
 
 export default class PageProvider implements PageProviderInterface {
     constructor(
         private repository: PageRepository,
-        private componentRepository: ComponentRepository
+        private blockRepository: BlockRepository
     ) {
         this.repository = repository;
-        this.componentRepository = componentRepository;
+        this.blockRepository = blockRepository;
     }
 
     public async createPage(pageData: {
@@ -38,7 +38,7 @@ export default class PageProvider implements PageProviderInterface {
     public async deletePage(id: string): Promise<Page> {
         const deletedPage = await this.repository.deletePage(id);
         await this.updatePagesPosition();
-        await this.componentRepository.deletePageComponents(id);
+        await this.blockRepository.deletePageBlocks(id);
         return deletedPage;
     }
     public async movePage(

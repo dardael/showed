@@ -4,7 +4,7 @@ import { ComponentType } from '../models/componentType';
 
 export default interface ComponentProvider {
     createComponent(componentData: {
-        pageId: string;
+        blockId: string;
         componentType: ComponentType;
         content: string;
         title: string;
@@ -14,7 +14,7 @@ export default interface ComponentProvider {
         id: string,
         update: { title: string; content: string; position: number }
     ): Promise<Component>;
-    getComponents(pageId: string): Promise<Component[]>;
+    getComponents(blockId: string): Promise<Component[]>;
     deleteComponent(id: string): Promise<Component>;
     moveComponent(
         component: Component,

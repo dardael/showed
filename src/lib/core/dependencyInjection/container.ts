@@ -6,8 +6,10 @@ import MaintainerRepository from 'showed/lib/maintainer/bridge/database/reposito
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/pageRepository';
 import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
+import BlockRepository from 'showed/lib/page/bridge/database/blockRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
+import BlockProvider from 'showed/lib/page/blockProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
 import SocialNetworkProvider from 'showed/lib/socialNetwork/provider';
 import { Container } from 'typedi';
@@ -49,9 +51,17 @@ const componentRepository = new ComponentRepository(database);
 const componentRepositoryToken = 'ComponentRepository';
 Container.set(componentRepositoryToken, componentRepository);
 
-const pageProvider = new PageProvider(pageRepository, componentRepository);
+const blockRepository = new BlockRepository(database, componentRepository);
+const blockRepositoryToken = 'BlockRepository';
+Container.set(blockRepositoryToken, blockRepository);
+
+const pageProvider = new PageProvider(pageRepository, blockRepository);
 const pageProviderToken = 'PageProvider';
 Container.set(pageProviderToken, pageProvider);
+
+const blockProvider = new BlockProvider(blockRepository, componentRepository);
+const blockProviderToken = 'BlockProvider';
+Container.set(blockProviderToken, blockProvider);
 
 const componentProvider = new ComponentProvider(componentRepository);
 const componentProviderToken = 'ComponentProvider';
