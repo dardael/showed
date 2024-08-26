@@ -7,12 +7,14 @@ export default function FileInput({
     defaultValue = null,
     isRequired = false,
     onChange,
+    allowedFileExtensions,
 }: {
     label: string;
     name: string;
     defaultValue?: string | null;
     isRequired?: boolean;
     onChange: (file: File | null) => void;
+    allowedFileExtensions: string[];
 }) {
     return (
         <FormControl isRequired={isRequired} paddingBottom={5}>
@@ -21,6 +23,7 @@ export default function FileInput({
                 onChange={onChange}
                 name={name}
                 initialFilePath={defaultValue}
+                allowedFileExtensions={allowedFileExtensions}
             />
         </FormControl>
     );

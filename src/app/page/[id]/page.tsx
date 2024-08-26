@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     const page = response.find((page) => page.urlPart === params.id);
     const blocks = await getBlocks(page?._id as string);
     return (
-        <Box padding={'40px'}>
+        <Box>
             {blocks.map((block) => (
                 <Block key={block._id as string} block={block} />
             ))}

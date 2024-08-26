@@ -11,6 +11,7 @@ import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
 import { FaPlus } from 'react-icons/fa6';
 import ComponentData from 'showed/components/admin/page/component/componentData';
+import FileInput from 'showed/components/core/form/inputs/fileInput';
 
 export default function BlockData({
     block,
@@ -22,6 +23,36 @@ export default function BlockData({
     const notification = new Notification(useToast());
     const [components, setComponents] = useState<Component[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [hasIconChanged, setHasIconChanged] = useState<boolean>(true);
+    const [file, setFile] = useState<File | null>(null);
+    const [initialFilePath, setInitialFilePath] = useState<string | null>(null);
+    const handleFileChange = async (file: File | null) => {
+        setFile(file);
+        setHasIconChanged(true);
+    };
+    const handleSubmit = async (formData: FormData) => {
+        if (hasIconChanged) {
+            if (block.backgroundImageId) {
+                await fetch(`api/image/${block.backgroundImageId}`, {
+                    method: 'DELETE',
+                });
+                formData.delete('backgroundImageId');
+            }
+            if (file) {
+                const fileFormData = new FormData();
+                fileFormData.append('file', file);
+                const result = await (
+                    await fetch('api/image', {
+                        method: 'POST',
+                        body: fileFormData,
+                    })
+                ).json();
+
+                formData.set('backgroundImageId', result.id);
+            }
+        }
+        return onBlockChange(formData);
+    };
     const addNewComponent = async (componentType: ComponentType) => {
         const newComponent = await ComponentController.createComponent(
             block._id as string,
@@ -98,8 +129,19 @@ export default function BlockData({
     useEffect(() => {
         ComponentController.getComponents(block._id as string).then(
             async (foundComponents: Component[]) => {
-                setComponents([...foundComponents]);
-                setIsLoading(false);
+                if (block.backgroundImageId) {
+                    await fetch(
+                        `api/image/${block.backgroundImageId}?mustReturnData=1`
+                    ).then(async (response) => {
+                        const result = await response.json();
+                        setInitialFilePath(result.filepath);
+                        setComponents([...foundComponents]);
+                        setIsLoading(false);
+                    });
+                } else {
+                    setComponents([...foundComponents]);
+                    setIsLoading(false);
+                }
             }
         );
     }, []);
@@ -113,8 +155,12 @@ export default function BlockData({
                         parameters={[
                             { key: 'id', value: block._id },
                             { key: 'position', value: block.position },
+                            {
+                                key: 'backgroundImageId',
+                                value: block.backgroundImageId,
+                            },
                         ]}
-                        action={onBlockChange}
+                        action={handleSubmit}
                     >
                         <TextInput
                             isRequired
@@ -122,6 +168,13 @@ export default function BlockData({
                             label='Titre'
                             placeholder='Titre'
                             defaultValue={block?.title}
+                        />
+                        <FileInput
+                            name='backgroundImage'
+                            label='Image en arriére plan'
+                            defaultValue={initialFilePath}
+                            onChange={handleFileChange}
+                            allowedFileExtensions={['png, jpg, jpeg']}
                         />
                     </SaveForm>
                     <Box

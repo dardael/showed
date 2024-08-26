@@ -14,13 +14,18 @@ export async function GET(request: NextRequest, context: params) {
     if (!file) {
         return NextResponse.error();
     }
-    const data = fs.readFileSync(file.filepath);
-    const response = new NextResponse(data, {
-        status: 200,
-        headers: new Headers({ 'content-type': 'image/*' }),
-    });
-
-    return response;
+    const url = new URL(request.url);
+    const mustReturnData = url.searchParams.get('mustReturnData');
+    if (mustReturnData) {
+        return NextResponse.json(file);
+    } else {
+        const data = fs.readFileSync(file.filepath);
+        const response = new NextResponse(data, {
+            status: 200,
+            headers: new Headers({ 'content-type': 'image/*' }),
+        });
+        return response;
+    }
 }
 
 export async function DELETE(request: NextRequest, context: params) {

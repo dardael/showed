@@ -14,16 +14,18 @@ export default function File({
     initialFilePath,
     onChange,
     name,
+    allowedFileExtensions,
 }: {
     initialFilePath: string | null;
     onChange: (file: File | null) => void;
     name: string;
+    allowedFileExtensions: string[];
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<FileData | null>({
         name: initialFilePath?.split('/').pop() as string,
         type: initialFilePath?.split('.').pop() as string,
-        url: initialFilePath as string,
+        url: (initialFilePath as string).replace('public', ''),
     });
     const emptyFile = (): void => {
         onChange(null);
@@ -67,10 +69,14 @@ export default function File({
                     display={'none'}
                     name={name}
                     type='file'
-                    accept='.ico'
+                    accept={
+                        allowedFileExtensions
+                            .map((ext) => `.${ext}`)
+                            .join(',') || '*'
+                    }
                     onChange={handleFileChange}
                 />
-                <InputGroup>
+                <InputGroup minWidth={'300px'}>
                     <Input
                         placeholder='Ajouter un fichier'
                         type='text'
@@ -97,6 +103,8 @@ export default function File({
                     alt={selectedFile?.name}
                     paddingLeft={10}
                     flex={1}
+                    objectFit={'cover'}
+                    maxW={'calc(100% - 300px)'}
                 />
             </Flex>
         </>
