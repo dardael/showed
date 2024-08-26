@@ -67,6 +67,7 @@ export default function Appearance() {
                             name='logo'
                             label='Logo'
                             onChange={handleIconChange}
+                            allowedFileExtensions={['ico']}
                         />
                         <TextInput
                             name='title'
