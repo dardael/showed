@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { ThemeContext } from 'showed/app/providers';
 
@@ -10,6 +10,7 @@ export default function TimePartBlock({
     label: string;
 }) {
     const { theme } = useContext(ThemeContext);
+
     return (
         <SimpleGrid
             width={'82px'}

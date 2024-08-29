@@ -1,5 +1,5 @@
 'use client';
-import { Box, Flex, Spacer } from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import TimePartBlock from './coutdown/timePartBlock';
