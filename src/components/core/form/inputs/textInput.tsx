@@ -6,12 +6,14 @@ export default function TextInput({
     placeholder,
     defaultValue = '',
     isRequired = false,
+    readOnly = false,
 }: {
     label: string;
     name: string;
-    placeholder: string;
+    placeholder?: string;
     defaultValue?: string;
     isRequired?: boolean;
+    readOnly?: boolean;
 }) {
     return (
         <FormControl isRequired={isRequired} paddingBottom={5}>
@@ -19,8 +21,9 @@ export default function TextInput({
             <Input
                 type='text'
                 name={name}
-                placeholder={placeholder}
+                placeholder={placeholder ? placeholder : label}
                 defaultValue={defaultValue}
+                readOnly={readOnly}
             />
         </FormControl>
     );

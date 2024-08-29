@@ -209,29 +209,33 @@ export default function BlockData({
                                 Ajouter un composant
                             </MenuButton>
                             <MenuList>
-                                <MenuItem
-                                    onClick={() =>
-                                        addNewComponent(
-                                            ComponentType.RICH_TEXT_EDITOR
-                                        )
-                                    }
-                                >
-                                    Editeur de texte
-                                </MenuItem>
-                                <MenuItem
-                                    onClick={() =>
-                                        addNewComponent(ComponentType.COUNTDOWN)
-                                    }
-                                >
-                                    Compte à rebours
-                                </MenuItem>
+                                {ComponentType.getAll().map((componentType) => (
+                                    <MenuItem
+                                        key={componentType as string}
+                                        onClick={() =>
+                                            addNewComponent(
+                                                componentType as ComponentType
+                                            )
+                                        }
+                                    >
+                                        {ComponentType.getComponentTypeLabel(
+                                            componentType as ComponentType
+                                        )}
+                                    </MenuItem>
+                                ))}
                             </MenuList>
                         </Menu>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
                                 elements={components.map((component) => ({
                                     reference: component,
-                                    title: component.title,
+                                    title:
+                                        component.title +
+                                        ' (' +
+                                        ComponentType.getComponentTypeLabel(
+                                            component.componentType
+                                        ) +
+                                        ')',
                                     content: (
                                         <ComponentData
                                             component={component}
