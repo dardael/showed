@@ -1,4 +1,14 @@
-import { Box, Button, Divider, Spinner, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Divider,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Spinner,
+    useToast,
+} from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Block } from 'showed/lib/page/models/block';
@@ -188,18 +198,35 @@ export default function BlockData({
                         paddingLeft={'20px'}
                         paddingRight={'20px'}
                     >
-                        <Button
-                            title='Ajouter un composant'
-                            aria-label={'Ajouter un composant'}
-                            leftIcon={<FaPlus />}
-                            onClick={() =>
-                                addNewComponent(ComponentType.RICH_TEXT_EDITOR)
-                            }
-                            position='absolute'
-                            right='150px'
-                        >
-                            Ajouter un composant
-                        </Button>
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                leftIcon={<FaPlus />}
+                                aria-label={'Ajouter un composant'}
+                                position='absolute'
+                                right='150px'
+                            >
+                                Ajouter un composant
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem
+                                    onClick={() =>
+                                        addNewComponent(
+                                            ComponentType.RICH_TEXT_EDITOR
+                                        )
+                                    }
+                                >
+                                    Editeur de texte
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() =>
+                                        addNewComponent(ComponentType.COUNTDOWN)
+                                    }
+                                >
+                                    Compte à rebours
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
                                 elements={components.map((component) => ({
