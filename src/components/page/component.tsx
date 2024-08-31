@@ -18,19 +18,19 @@ export default async function Component({
     });
     return (
         <Box padding={'10px'}>
-            {component.componentType === 'RICH_TEXT_EDITOR' && (
+            {component.componentType === ComponentType.RICH_TEXT_EDITOR && (
                 <RichText component={component} />
             )}
-            {component.componentType === 'COUNTDOWN' && (
+            {component.componentType === ComponentType.COUNTDOWN && (
                 <Countdown component={component} />
             )}
-            {component.componentType === 'HEADER' && (
+            {component.componentType === ComponentType.HEADER && (
                 <Header component={component} />
             )}
-            {component.componentType === 'BOLD_TEXT' && (
+            {component.componentType === ComponentType.BOLD_TEXT && (
                 <BoldText component={component} />
             )}
-            {component.componentType === 'TEXT' && (
+            {component.componentType === ComponentType.TEXT && (
                 <Text component={component} />
             )}
             {component.componentType === ComponentType.STAINED_GLASS_PHOTO && (
