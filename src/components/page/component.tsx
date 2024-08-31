@@ -5,6 +5,8 @@ import Header from './component/header';
 import BoldText from './component/boldText';
 import Text from './component/text';
 import dynamic from 'next/dynamic';
+import { ComponentType } from 'showed/lib/page/models/componentType';
+import StainedGlassPhoto from './component/stainedGlassPhoto';
 
 export default async function Component({
     component,
@@ -30,6 +32,9 @@ export default async function Component({
             )}
             {component.componentType === 'TEXT' && (
                 <Text component={component} />
+            )}
+            {component.componentType === ComponentType.STAINED_GLASS_PHOTO && (
+                <StainedGlassPhoto component={component} />
             )}
         </Box>
     );

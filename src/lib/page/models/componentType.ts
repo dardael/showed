@@ -4,6 +4,7 @@ export enum ComponentType {
     TEXT = 'TEXT',
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
     COUNTDOWN = 'COUNTDOWN',
+    STAINED_GLASS_PHOTO = 'STAINED_GLASS_PHOTO',
 }
 export namespace ComponentType {
     export function getComponentTypeLabel(
@@ -20,6 +21,8 @@ export namespace ComponentType {
                 return 'Texte en gras';
             case ComponentType.TEXT:
                 return 'Texte';
+            case ComponentType.STAINED_GLASS_PHOTO:
+                return 'Photo vitrail';
             default:
                 throw new Error(`Unknown component type: ${componentType}`);
         }
@@ -31,6 +34,7 @@ export namespace ComponentType {
             ComponentType.HEADER,
             ComponentType.RICH_TEXT_EDITOR,
             ComponentType.TEXT,
+            ComponentType.STAINED_GLASS_PHOTO,
         ];
     }
 }

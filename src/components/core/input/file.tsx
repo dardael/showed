@@ -25,7 +25,7 @@ export default function File({
     const [selectedFile, setSelectedFile] = useState<FileData | null>({
         name: initialFilePath?.split('/').pop() as string,
         type: initialFilePath?.split('.').pop() as string,
-        url: (initialFilePath as string).replace('public', ''),
+        url: initialFilePath?.replace('public', '') as string,
     });
     const emptyFile = (): void => {
         onChange(null);
