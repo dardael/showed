@@ -1,5 +1,5 @@
 'use client';
-import { Flex, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Spacer } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import TimePartBlock from './coutdown/timePartBlock';
@@ -50,11 +50,11 @@ export default function Countdown({
         <Flex>
             <Spacer />
             <TimePartBlock value={timeLeft.days} label='Jours' />
-            <Spacer />
+            <Box width={'5px'} />
             <TimePartBlock value={timeLeft.hours} label='Heures' />
-            <Spacer />
+            <Box width={'5px'} />
             <TimePartBlock value={timeLeft.minutes} label='Minutes' />
-            <Spacer />
+            <Box width={'5px'} />
             <TimePartBlock value={timeLeft.seconds} label='Secondes' />
             <Spacer />
         </Flex>
