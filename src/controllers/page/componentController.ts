@@ -11,6 +11,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
     const content = data.get('content')?.toString();
     const position = data.get('position')?.toString();
     const title = data.get('title')?.toString() as string;
+    const link = data.get('link')?.toString() as string;
     if (!id) {
         return await Promise.reject(new Error('Component id is missing'));
     }
@@ -21,6 +22,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
     }
     const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.updateComponent(id, {
+        link,
         content,
         title,
         position: Number.parseInt(position),
@@ -36,6 +38,7 @@ export async function createComponent(
     return provider.createComponent({
         componentType,
         blockId,
+        link: '',
         title: 'Nouveau composant',
         content: '',
         position,

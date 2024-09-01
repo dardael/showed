@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import StainedGlassPhotoData from './stainedGlassPhotoData';
 import SpacerData from './spacerData';
+import CalendarButtonData from './calendarButtonData';
 
 export default function ComponentData({
     component,
@@ -118,6 +119,10 @@ export default function ComponentData({
                     )}
                     {component.componentType === ComponentType.SPACER && (
                         <SpacerData component={component} />
+                    )}
+                    {component.componentType ===
+                        ComponentType.CALENDAR_BUTTON && (
+                        <CalendarButtonData component={component} />
                     )}
                 </SaveForm>
             )}

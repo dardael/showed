@@ -7,12 +7,18 @@ export default interface ComponentProvider {
         blockId: string;
         componentType: ComponentType;
         content: string;
+        link?: string;
         title: string;
         position: number;
     }): Promise<Component>;
     updateComponent(
         id: string,
-        update: { title: string; content: string; position: number }
+        update: {
+            link?: string;
+            title: string;
+            content: string;
+            position: number;
+        }
     ): Promise<Component>;
     getComponents(blockId: string): Promise<Component[]>;
     deleteComponent(id: string): Promise<Component>;

@@ -6,6 +6,7 @@ export enum ComponentType {
     COUNTDOWN = 'COUNTDOWN',
     STAINED_GLASS_PHOTO = 'STAINED_GLASS_PHOTO',
     SPACER = 'SPACER',
+    CALENDAR_BUTTON = 'CALENDAR_BUTTON',
 }
 export namespace ComponentType {
     export function getComponentTypeLabel(
@@ -26,6 +27,8 @@ export namespace ComponentType {
                 return 'Photo vitrail';
             case ComponentType.SPACER:
                 return 'Espace vide';
+            case ComponentType.CALENDAR_BUTTON:
+                return 'Bouton calendrier';
             default:
                 throw new Error(`Unknown component type: ${componentType}`);
         }
@@ -39,6 +42,7 @@ export namespace ComponentType {
             ComponentType.TEXT,
             ComponentType.STAINED_GLASS_PHOTO,
             ComponentType.SPACER,
+            ComponentType.CALENDAR_BUTTON,
         ];
     }
 }

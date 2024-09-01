@@ -8,6 +8,7 @@ type Component = {
     content: string;
     title: string;
     position: number;
+    link?: string;
 };
 const ComponentSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
@@ -16,6 +17,7 @@ const ComponentSchema = new mongoose.Schema({
     position: { type: Number, required: true },
     title: { type: String },
     content: { type: String },
+    link: { type: String },
 });
 
 let ComponentModel: Model<Component> = mongoose.models.Component;

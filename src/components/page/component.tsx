@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import StainedGlassPhoto from './component/stainedGlassPhoto';
 import Spacer from './component/spacer';
+import CalendarButton from './component/calendarButton';
 
 export default async function Component({
     component,
@@ -39,6 +40,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.SPACER && (
                 <Spacer component={component} />
+            )}
+            {component.componentType === ComponentType.CALENDAR_BUTTON && (
+                <CalendarButton component={component} />
             )}
         </Box>
     );

@@ -13,13 +13,19 @@ export default class ComponentProvider implements ComponentProviderInterface {
         componentType: ComponentType;
         content: string;
         title: string;
+        link: string;
         position: number;
     }): Promise<Component> {
         return this.repository.createComponent(componentData);
     }
     public async updateComponent(
         id: string,
-        update: { title: string; content: string; position: number }
+        update: {
+            link: string;
+            title: string;
+            content: string;
+            position: number;
+        }
     ): Promise<Component> {
         return this.repository.updateComponent(id, update);
     }

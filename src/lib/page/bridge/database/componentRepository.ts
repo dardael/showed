@@ -26,6 +26,7 @@ export default class ComponentRepository
         componentType: ComponentType;
         title: string;
         content: string;
+        link?: string;
         position: number;
     }): Promise<Component> {
         return this.database.create<Component>(ComponentModel, componentData);
@@ -36,6 +37,7 @@ export default class ComponentRepository
         componentData: {
             title?: string;
             content?: string;
+            link?: string;
             position: number;
         }
     ): Promise<Component> {
