@@ -10,6 +10,7 @@ import BoldTextData from './boldTextData';
 import { useEffect, useState } from 'react';
 import { Spinner } from '@chakra-ui/react';
 import StainedGlassPhotoData from './stainedGlassPhotoData';
+import SpacerData from './spacerData';
 
 export default function ComponentData({
     component,
@@ -19,7 +20,7 @@ export default function ComponentData({
     onSave: (data: FormData) => Promise<Component>;
 }) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [hasIconChanged, setHasIconChanged] = useState<boolean>(true);
+    const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
     const [initialFilePath, setInitialFilePath] = useState<string | null>(null);
     const handleFileChange = async (file: File | null) => {
@@ -114,6 +115,9 @@ export default function ComponentData({
                             initialFilePath={initialFilePath}
                             onIconChange={handleFileChange}
                         />
+                    )}
+                    {component.componentType === ComponentType.SPACER && (
+                        <SpacerData component={component} />
                     )}
                 </SaveForm>
             )}
