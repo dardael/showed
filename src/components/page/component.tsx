@@ -39,7 +39,7 @@ export default async function Component({
             {component.componentType === ComponentType.STAINED_GLASS_PHOTO && (
                 <StainedGlassPhoto component={component} />
             )}
-{component.componentType === ComponentType.ROUND_PHOTO && (
+            {component.componentType === ComponentType.ROUND_PHOTO && (
                 <RoundPhoto component={component} />
             )}
             {component.componentType === ComponentType.SPACER && (

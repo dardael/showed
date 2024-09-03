@@ -24,6 +24,7 @@ export default class BlockRepository implements BlockRepositoryInterface {
         pageId: string;
         title: string;
         backgroundImageId?: string;
+        hasTransparentBackground?: boolean;
         position: number;
     }): Promise<Block> {
         return this.database.create<Block>(BlockModel, blockData);
@@ -33,6 +34,7 @@ export default class BlockRepository implements BlockRepositoryInterface {
         id: string,
         blockData: {
             title?: string;
+            hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;
         }

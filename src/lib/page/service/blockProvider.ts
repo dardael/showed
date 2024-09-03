@@ -7,10 +7,16 @@ export default interface BlockProvider {
         backgroundImageId?: string;
         title: string;
         position: number;
+        hasTransparentBackground: boolean;
     }): Promise<Block>;
     updateBlock(
         id: string,
-        update: { title: string; backgroundImageId?: string; position: number }
+        update: {
+            title: string;
+            backgroundImageId?: string;
+            position: number;
+            hasTransparentBackground: boolean;
+        }
     ): Promise<Block>;
     getBlocks(pageId: string): Promise<Block[]>;
     deleteBlock(id: string): Promise<Block>;

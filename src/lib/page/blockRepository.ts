@@ -3,6 +3,7 @@ export default interface BlockRepository {
     getBlocks(filter: { pageId: string }): Promise<Block[]>;
     createBlock(BlockData: {
         pageId: string;
+        hasTransparentBackground?: boolean;
         backgroundImageId?: string;
         title: string;
         position: number;
@@ -10,6 +11,7 @@ export default interface BlockRepository {
     updateBlock(
         id: string,
         blockData: {
+            hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;
             title?: string;

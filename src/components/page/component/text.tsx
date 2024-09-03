@@ -8,7 +8,9 @@ export default async function Text({
 }) {
     return (
         <Center>
-            <ChakraText textAlign={'center'} size={'md'}>{component.content}</ChakraText>
+            <ChakraText textAlign={'center'} size={'md'}>
+                {component.content}
+            </ChakraText>
         </Center>
     );
 }

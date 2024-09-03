@@ -49,6 +49,8 @@ export default function ComponentData({
 
                 formData.set('content', result.id);
             }
+            setHasIconChanged(false);
+            setFile(null);
         }
         return onSave(formData);
     };
@@ -118,8 +120,7 @@ export default function ComponentData({
                             onIconChange={handleFileChange}
                         />
                     )}
-{component.componentType ===
-                        ComponentType.ROUND_PHOTO && (
+                    {component.componentType === ComponentType.ROUND_PHOTO && (
                         <RoundPhotoData
                             initialFilePath={initialFilePath}
                             onIconChange={handleFileChange}

@@ -22,6 +22,7 @@ import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion'
 import { FaPlus } from 'react-icons/fa6';
 import ComponentData from 'showed/components/admin/page/component/componentData';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
+import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 
 export default function BlockData({
     block,
@@ -33,7 +34,7 @@ export default function BlockData({
     const notification = new Notification(useToast());
     const [components, setComponents] = useState<Component[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [hasIconChanged, setHasIconChanged] = useState<boolean>(true);
+    const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
     const [initialFilePath, setInitialFilePath] = useState<string | null>(null);
     const handleFileChange = async (file: File | null) => {
@@ -60,6 +61,8 @@ export default function BlockData({
 
                 formData.set('backgroundImageId', result.id);
             }
+            setHasIconChanged(false);
+            setFile(null);
         }
         return onBlockChange(formData);
     };
@@ -185,6 +188,11 @@ export default function BlockData({
                             defaultValue={initialFilePath}
                             onChange={handleFileChange}
                             allowedFileExtensions={['png, jpg, jpeg']}
+                        />
+                        <CheckBoxInput
+                            name='hasTransparentBackground'
+                            label='Fond transparent'
+                            defaultValue={block.hasTransparentBackground}
                         />
                     </SaveForm>
                     <Box

@@ -10,6 +10,9 @@ export async function saveBlock(data: FormData): Promise<Block> {
     const backgroundImageId = data.get('backgroundImageId')?.toString();
     const position = data.get('position')?.toString();
     const title = data.get('title')?.toString() as string;
+    const hasTransparentBackground = Boolean(
+        data.get('hasTransparentBackground')
+    );
     if (!id) {
         return await Promise.reject(new Error('Block id is missing'));
     }
@@ -21,6 +24,7 @@ export async function saveBlock(data: FormData): Promise<Block> {
         backgroundImageId,
         title,
         position: Number.parseInt(position),
+        hasTransparentBackground,
     });
 }
 
@@ -33,6 +37,7 @@ export async function createBlock(
         pageId,
         title: 'Nouveau block',
         position,
+        hasTransparentBackground: false,
     });
 }
 

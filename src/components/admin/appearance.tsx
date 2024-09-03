@@ -36,6 +36,8 @@ export default function Appearance() {
                     body: formData,
                 });
             }
+            setIcon(null);
+            setHasIconChanged(false);
         }
         return ThemeController.saveTheme(formData).then(
             async (updatedTheme) => {

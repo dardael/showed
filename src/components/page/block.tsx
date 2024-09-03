@@ -17,13 +17,23 @@ export default async function Block({ block }: { block: BlockModel }) {
             backgroundImage={backgroundImage}
             backgroundSize={'cover'}
             backgroundRepeat={'no-repeat'}
+            padding={'10px'}
         >
-            {components.map((component) => (
-                <Component
-                    component={component}
-                    key={component._id as string}
-                />
-            ))}
+            <Box
+                padding={'10px'}
+                borderRadius={'10px'}
+                {...(block.hasTransparentBackground && {
+                    backgroundColor: '#FFFFFFBD',
+                    boxShadow: '0px 0px 3px 0px rgba(0, 0, 0, 0.22)',
+                })}
+            >
+                {components.map((component) => (
+                    <Component
+                        component={component}
+                        key={component._id as string}
+                    />
+                ))}
+            </Box>
         </Box>
     );
 }

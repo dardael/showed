@@ -15,6 +15,7 @@ export default class BlockProvider implements BlockProviderInterface {
     public async createBlock(blockData: {
         pageId: string;
         backgroundImageId?: string;
+        hasTransparentBackground: boolean;
         title: string;
         position: number;
     }): Promise<Block> {
@@ -22,7 +23,12 @@ export default class BlockProvider implements BlockProviderInterface {
     }
     public async updateBlock(
         id: string,
-        update: { title: string; backgroundImageId?: string; position: number }
+        update: {
+            title: string;
+            backgroundImageId?: string;
+            position: number;
+            hasTransparentBackground: boolean;
+        }
     ): Promise<Block> {
         return this.repository.updateBlock(id, update);
     }
