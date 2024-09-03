@@ -1,6 +1,6 @@
 import type { Page } from 'showed/lib/page/models/page';
 export default interface PageRepository {
-    getPages(filter: { limit?: number }): Promise<Page[]>;
+    getPages(): Promise<Page[]>;
     createPage(pageData: {
         title: string;
         urlPart: string;

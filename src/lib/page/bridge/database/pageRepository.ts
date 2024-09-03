@@ -9,9 +9,8 @@ export default class PageRepository implements PageRepositoryInterface {
         this.database = database;
     }
 
-    public async getPages(filter: { limit?: number }): Promise<Page[]> {
+    public async getPages(): Promise<Page[]> {
         return this.database.find<Page>(PageModel, {
-            ...filter,
             sort: { position: SortOrder.ASC },
         });
     }

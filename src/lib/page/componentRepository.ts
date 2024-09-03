@@ -1,10 +1,7 @@
 import type { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from './models/componentType';
 export default interface ComponentRepository {
-    getComponents(filter: {
-        blockId: string;
-        limit?: number;
-    }): Promise<Component[]>;
+    getComponents(filter: { blockId: string }): Promise<Component[]>;
     createComponent(ComponentData: {
         componentType: ComponentType;
         blockId: string;

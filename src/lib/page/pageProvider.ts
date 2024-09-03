@@ -32,7 +32,7 @@ export default class PageProvider implements PageProviderInterface {
         });
     }
     public async getPages(): Promise<Page[]> {
-        const pages = await this.repository.getPages({});
+        const pages = await this.repository.getPages();
         return pages;
     }
     public async deletePage(id: string): Promise<Page> {
@@ -45,7 +45,7 @@ export default class PageProvider implements PageProviderInterface {
         page: Page,
         sortDirection: SortDirection
     ): Promise<void> {
-        const pages = await this.repository.getPages({});
+        const pages = await this.repository.getPages();
         const pageToMove = pages.find((p) => p._id === page._id);
         if (!pageToMove) {
             throw new Error('Page not found');
@@ -75,7 +75,7 @@ export default class PageProvider implements PageProviderInterface {
         });
     }
     private async updatePagesPosition(): Promise<Page[]> {
-        const pages = await this.repository.getPages({});
+        const pages = await this.repository.getPages();
         pages.forEach(async (page, index) => {
             page.position = index + 1;
             await this.repository.updatePage(page._id as string, {

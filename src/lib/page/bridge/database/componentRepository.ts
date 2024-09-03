@@ -13,10 +13,10 @@ export default class ComponentRepository
     }
     public async getComponents(filter: {
         blockId: string;
-        limit?: number;
     }): Promise<Component[]> {
+        console.log('filter', filter);
         return this.database.find<Component>(ComponentModel, {
-            ...filter,
+            model: filter,
             sort: { position: SortOrder.ASC },
         });
     }

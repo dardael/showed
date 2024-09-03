@@ -13,12 +13,9 @@ export default class BlockRepository implements BlockRepositoryInterface {
         this.database = database;
         this.componentRepository = componentRepository;
     }
-    public async getBlocks(filter: {
-        pageId: string;
-        limit?: number;
-    }): Promise<Block[]> {
+    public async getBlocks(filter: { pageId: string }): Promise<Block[]> {
         return this.database.find<Block>(BlockModel, {
-            ...filter,
+            model: filter,
             sort: { position: SortOrder.ASC },
         });
     }
