@@ -12,6 +12,7 @@ import { Spinner } from '@chakra-ui/react';
 import StainedGlassPhotoData from './stainedGlassPhotoData';
 import SpacerData from './spacerData';
 import CalendarButtonData from './calendarButtonData';
+import RoundPhotoData from './roundPhotoData';
 
 export default function ComponentData({
     component,
@@ -113,6 +114,13 @@ export default function ComponentData({
                     {component.componentType ===
                         ComponentType.STAINED_GLASS_PHOTO && (
                         <StainedGlassPhotoData
+                            initialFilePath={initialFilePath}
+                            onIconChange={handleFileChange}
+                        />
+                    )}
+{component.componentType ===
+                        ComponentType.ROUND_PHOTO && (
+                        <RoundPhotoData
                             initialFilePath={initialFilePath}
                             onIconChange={handleFileChange}
                         />

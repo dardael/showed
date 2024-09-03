@@ -5,6 +5,7 @@ export enum ComponentType {
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
     COUNTDOWN = 'COUNTDOWN',
     STAINED_GLASS_PHOTO = 'STAINED_GLASS_PHOTO',
+    ROUND_PHOTO = 'ROUND_PHOTO',
     SPACER = 'SPACER',
     CALENDAR_BUTTON = 'CALENDAR_BUTTON',
 }
@@ -25,6 +26,8 @@ export namespace ComponentType {
                 return 'Texte';
             case ComponentType.STAINED_GLASS_PHOTO:
                 return 'Photo vitrail';
+            case ComponentType.ROUND_PHOTO:
+                return 'Photo ronde';
             case ComponentType.SPACER:
                 return 'Espace vide';
             case ComponentType.CALENDAR_BUTTON:
@@ -41,6 +44,7 @@ export namespace ComponentType {
             ComponentType.RICH_TEXT_EDITOR,
             ComponentType.TEXT,
             ComponentType.STAINED_GLASS_PHOTO,
+            ComponentType.ROUND_PHOTO,
             ComponentType.SPACER,
             ComponentType.CALENDAR_BUTTON,
         ];

@@ -9,6 +9,7 @@ import { ComponentType } from 'showed/lib/page/models/componentType';
 import StainedGlassPhoto from './component/stainedGlassPhoto';
 import Spacer from './component/spacer';
 import CalendarButton from './component/calendarButton';
+import RoundPhoto from './component/roundPhoto';
 
 export default async function Component({
     component,
@@ -37,6 +38,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.STAINED_GLASS_PHOTO && (
                 <StainedGlassPhoto component={component} />
+            )}
+{component.componentType === ComponentType.ROUND_PHOTO && (
+                <RoundPhoto component={component} />
             )}
             {component.componentType === ComponentType.SPACER && (
                 <Spacer component={component} />
