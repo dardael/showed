@@ -7,10 +7,12 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "format": "prettier --write --ignore-path .gitignore .",
+        "format": "prettier --write",
         "prepare": "husky install",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "tsc": "tsc",
+        "eslint": "eslint"
     },
     "engine": {
         "node": ">=16.0.0"
@@ -73,6 +75,6 @@
         "tailwindcss": "^3.3.0",
         "ts-jest": "^29.1.5",
         "ts-node": "^10.9.2",
-        "typescript": "^5.4.5"
+        "typescript": "^5.6.2"
     }
 }

@@ -14,7 +14,8 @@ import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Block } from 'showed/lib/page/models/block';
 import { useEffect, useState } from 'react';
 import * as ComponentController from 'showed/controllers/page/componentController';
-import { Component } from 'showed/lib/page/models/component';
+import * as BlockController from 'showed/controllers/page/blockController';
+import { Component, isComponent } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import { Notification } from 'showed/components/core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
@@ -32,7 +33,7 @@ export default function BlockData({
     onBlockChange: (data: FormData) => Promise<any>;
 }) {
     const notification = new Notification(useToast());
-    const [components, setComponents] = useState<Component[]>([]);
+    const [childElements, setElements] = useState<(Component | Block)[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
@@ -70,19 +71,55 @@ export default function BlockData({
         const newComponent = await ComponentController.createComponent(
             block._id as string,
             componentType,
-            components.length + 1
+            childElements.length + 1
         );
-        components.push(newComponent);
-        setComponents([...components]);
+        childElements.push(newComponent);
+        setElements([...childElements]);
+    };
+    const addNewBlock = async () => {
+        const newBlock = await BlockController.createBlock(
+            childElements.length + 1,
+            undefined,
+            block._id as string
+        );
+        childElements.push(newBlock);
+        setElements([...childElements]);
+    };
+    const updateBlock = (updatedBlock: Block) => {
+        setElements([
+            ...childElements.map((element) =>
+                element._id === updatedBlock._id ? updatedBlock : element
+            ),
+        ]);
     };
     const updateComponent = (updatedComponent: Component) => {
-        setComponents([
-            ...components.map((component) =>
+        setElements([
+            ...childElements.map((component) =>
                 component._id === updatedComponent._id
                     ? updatedComponent
                     : component
             ),
         ]);
+    };
+    const deleteBlock = (blockToDelete: Block) => {
+        if (blockToDelete._id === undefined) {
+            return;
+        }
+        notification.handlePromise(
+            BlockController.deleteBlock(blockToDelete._id).then(async () => {
+                const orderedComponents = await updateElementsPosition();
+                setElements([
+                    ...orderedComponents.filter(
+                        (component) => component._id !== blockToDelete._id
+                    ),
+                ]);
+            }),
+            {
+                loading: 'Block en cours de suppression',
+                success: 'Le block a été supprimé avec succès',
+                error: 'Erreur lors de la suppression du block',
+            }
+        );
     };
     const deleteComponent = (componentToDelete: Component) => {
         if (componentToDelete._id === undefined) {
@@ -91,8 +128,8 @@ export default function BlockData({
         notification.handlePromise(
             ComponentController.deleteComponent(componentToDelete._id).then(
                 async () => {
-                    const orderedComponents = await updateComponentsPosition();
-                    setComponents([
+                    const orderedComponents = await updateElementsPosition();
+                    setElements([
                         ...orderedComponents.filter(
                             (component) =>
                                 component._id !== componentToDelete._id
@@ -107,28 +144,28 @@ export default function BlockData({
             }
         );
     };
-    const moveComponent = async (
-        componentToMove: Component,
+    const moveElement = async (
+        elementToMove: Block | Component,
         direction: SortDirection
     ) => {
         notification.handlePromise(
-            ComponentController.moveComponent(componentToMove, direction).then(
+            BlockController.moveChildElement(elementToMove, direction).then(
                 async () => {
-                    const orderedComponents = await updateComponentsPosition();
-                    setComponents([...orderedComponents]);
+                    const orderedElements = await updateElementsPosition();
+                    setElements([...orderedElements]);
                 }
             ),
             {
-                loading: 'Composant en cours de déplacement',
-                success: 'Le composant a été déplacé avec succès',
-                error: 'Erreur lors du déplacement du composant',
+                loading: 'Elément en cours de déplacement',
+                success: "L'élément a été déplacé avec succès",
+                error: 'Erreur lors du déplacement de lélément',
             }
         );
     };
-    const updateComponentsPosition = async () => {
+    const updateElementsPosition = async () => {
         const componentsWithUpdatedPosition =
             await ComponentController.getComponents(block._id as string);
-        components.forEach((component) => {
+        childElements.forEach((component) => {
             const updatedComponent = componentsWithUpdatedPosition.find(
                 (p) => p._id === component._id
             );
@@ -136,23 +173,23 @@ export default function BlockData({
                 component.position = updatedComponent.position;
             }
         });
-        components.sort((a, b) => a.position - b.position);
-        return components;
+        childElements.sort((a, b) => a.position - b.position);
+        return childElements;
     };
     useEffect(() => {
-        ComponentController.getComponents(block._id as string).then(
-            async (foundComponents: Component[]) => {
+        BlockController.getChildElements(block._id as string).then(
+            async (foundElements: (Block | Component)[]) => {
                 if (block.backgroundImageId) {
                     await fetch(
                         `api/image/${block.backgroundImageId}?mustReturnData=1`
                     ).then(async (response) => {
                         const result = await response.json();
                         setInitialFilePath(result.filepath);
-                        setComponents([...foundComponents]);
+                        setElements([...foundElements]);
                         setIsLoading(false);
                     });
                 } else {
-                    setComponents([...foundComponents]);
+                    setElements([...foundElements]);
                     setIsLoading(false);
                 }
             }
@@ -217,6 +254,13 @@ export default function BlockData({
                                 Ajouter un composant
                             </MenuButton>
                             <MenuList>
+                                {block.parentBlockId ? (
+                                    <></>
+                                ) : (
+                                    <MenuItem onClick={() => addNewBlock()}>
+                                        Block horizontal
+                                    </MenuItem>
+                                )}
                                 {ComponentType.getAll().map((componentType) => (
                                     <MenuItem
                                         key={componentType as string}
@@ -235,18 +279,20 @@ export default function BlockData({
                         </Menu>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
-                                elements={components.map((component) => ({
-                                    reference: component,
+                                elements={childElements.map((element) => ({
+                                    reference: element,
                                     title:
-                                        component.title +
+                                        element.title +
                                         ' (' +
-                                        ComponentType.getComponentTypeLabel(
-                                            component.componentType
-                                        ) +
+                                        (isComponent(element)
+                                            ? ComponentType.getComponentTypeLabel(
+                                                  element.componentType
+                                              )
+                                            : 'Block horizontal') +
                                         ')',
-                                    content: (
+                                    content: isComponent(element) ? (
                                         <ComponentData
-                                            component={component}
+                                            component={element as Component}
                                             onSave={async (data) => {
                                                 const pendingSave =
                                                     ComponentController.saveComponent(
@@ -258,35 +304,51 @@ export default function BlockData({
                                                 return pendingSave;
                                             }}
                                         />
+                                    ) : (
+                                        <BlockData
+                                            block={element as Block}
+                                            onBlockChange={async (
+                                                data: FormData
+                                            ) => {
+                                                const pendingSave =
+                                                    BlockController.saveBlock(
+                                                        data
+                                                    );
+                                                pendingSave.then(updateBlock);
+                                                return pendingSave;
+                                            }}
+                                        />
                                     ),
                                     buttons: {
                                         sort: {
                                             sortUp: {
-                                                title: 'Déplacer le composant vers le haut',
-                                                action: (component) => {
-                                                    moveComponent(
-                                                        component,
+                                                title: 'Déplacer vers le haut',
+                                                action: (element) => {
+                                                    moveElement(
+                                                        element,
                                                         SortDirection.UP
                                                     );
                                                 },
                                             },
                                             sortDown: {
-                                                title: 'Déplacer le composant vers le bas',
-                                                action: (component) => {
-                                                    moveComponent(
-                                                        component,
+                                                title: 'Déplacer vers le bas',
+                                                action: (element) => {
+                                                    moveElement(
+                                                        element,
                                                         SortDirection.DOWN
                                                     );
                                                 },
                                             },
                                         },
                                         delete: {
-                                            title: 'Supprimer la component',
-                                            action: (component) =>
-                                                deleteComponent(component),
+                                            title: 'Supprimer',
+                                            action: (element) =>
+                                                isComponent(element)
+                                                    ? deleteComponent(element)
+                                                    : deleteBlock(element),
                                             confirmation: {
-                                                title: 'Supprimer un composant',
-                                                content: `Souhaitez vous supprimer le composant "${component.title}" ?\nLe composant sera perdue.`,
+                                                title: 'Supprimer',
+                                                content: `Souhaitez vous supprimer l'élément "${element.title}" ?\nIl sera perdue.`,
                                                 acceptButtonTitle: 'Supprimer',
                                                 cancelButtonTitle: 'Annuler',
                                             },

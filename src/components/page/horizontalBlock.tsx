@@ -1,13 +1,16 @@
-import { Box, Center } from '@chakra-ui/react';
+import { Box, Center, Flex } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
 import { Block as BlockModel, isBlock } from 'showed/lib/page/models/block';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import Component from './component';
-import { getChildElements } from 'showed/controllers/page/blockController';
-import HorizontalBlock from './horizontalBlock';
+import { getComponents } from 'showed/controllers/page/componentController';
 
-export default async function Block({ block }: { block: BlockModel }) {
-    const elements = await getChildElements(block._id as string);
+export default async function HorizontalBlock({
+    block,
+}: {
+    block: BlockModel;
+}) {
+    const components = await getComponents(block._id as string);
     let backgroundImage: string | undefined = '';
     if (block.backgroundImageId) {
         backgroundImage = (
@@ -29,15 +32,13 @@ export default async function Block({ block }: { block: BlockModel }) {
                     boxShadow: '0px 0px 3px 0px rgba(0, 0, 0, 0.22)',
                 })}
             >
-                {elements.map((element) => (
-                    <Center key={element._id as string}>
-                        {isBlock(element) ? (
-                            <HorizontalBlock block={element} />
-                        ) : (
+                <Flex>
+                    {components.map((element) => (
+                        <Center key={element._id as string}>
                             <Component component={element as ComponentModel} />
-                        )}
-                    </Center>
-                ))}
+                        </Center>
+                    ))}
+                </Flex>
             </Box>
         </Box>
     );

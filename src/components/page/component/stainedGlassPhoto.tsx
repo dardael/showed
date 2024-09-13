@@ -14,18 +14,16 @@ export default async function StainedGlassPhoto({
     );
     const color = (await getTheme()).color;
     return (
-        <Center>
-            <Image
-                src={filepath}
-                alt='Photo couple'
-                width={'185px'}
-                height={'240px'}
-                borderTopLeftRadius={'140px'}
-                borderTopRightRadius={'140px'}
-                borderStyle={'solid'}
-                borderWidth={'4px'}
-                borderColor={color + '.400'}
-            />
-        </Center>
+        <Image
+            src={filepath}
+            alt='Photo couple'
+            width={'185px'}
+            height={'240px'}
+            borderTopLeftRadius={'140px'}
+            borderTopRightRadius={'140px'}
+            borderStyle={'solid'}
+            borderWidth={'4px'}
+            borderColor={color + '.400'}
+        />
     );
 }

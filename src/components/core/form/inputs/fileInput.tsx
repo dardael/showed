@@ -17,7 +17,7 @@ export default function FileInput({
     allowedFileExtensions: string[];
 }) {
     return (
-        <FormControl isRequired={isRequired} paddingBottom={5}>
+        <FormControl paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
             <File
                 onChange={onChange}

@@ -9,17 +9,15 @@ export default function CalendarButton({
     component: ComponentModel;
 }) {
     return (
-        <Center>
-            <ChakraButton
-                height={'29px'}
-                borderStyle={'solid'}
-                borderWidth={'2px'}
-                borderColor={'white'}
-                onClick={() => window.open(component.link, '_blank')}
-                leftIcon={<FaCalendar />}
-            >
-                {component.content}
-            </ChakraButton>
-        </Center>
+        <ChakraButton
+            height={'29px'}
+            borderStyle={'solid'}
+            borderWidth={'2px'}
+            borderColor={'white'}
+            onClick={() => window.open(component.link, '_blank')}
+            leftIcon={<FaCalendar />}
+        >
+            {component.content}
+        </ChakraButton>
     );
 }

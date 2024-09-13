@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 exec < /dev/tty
-docker-compose run --rm showed bash -c "npx tsc --noEmit && npx eslint" > /dev/tty
+docker compose run --rm showed bash -c "npm --no-update-notifier run test && npm --no-update-notifier run tsc --noEmit && npm --no-update-notifier run eslint" > /dev/tty
