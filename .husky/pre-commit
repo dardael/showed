@@ -1,4 +1,15 @@
 #!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 exec < /dev/tty
+git stash push -k --quiet -u
+
+FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.tsx' '*.ts' | sed 's| |\\ |g')
+[ -z "$FILES" ] && exit 0
+
+# Prettify all selected files
+echo "$FILES" | xargs docker-compose run --rm showed npm run format --ignore-unknown
+
+# Add back the modified/prettified files to staging
+echo "$FILES" | xargs git add
 docker-compose run --rm showed npx lint-staged --no-stash > /dev/tty
+docker-compose run --rm showed npm run test > /dev/tty

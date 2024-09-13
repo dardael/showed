@@ -52,7 +52,7 @@ export default class BlockProvider implements BlockProviderInterface {
         sortDirection: SortDirection
     ): Promise<void> {
         const blocks = await this.repository.getBlocks({
-            pageId: block.pageId,
+            pageId: block.pageId as string,
         });
         const blockToMove = blocks.find((p) => p._id === block._id);
         if (!blockToMove) {
