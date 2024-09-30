@@ -1,17 +1,15 @@
 #!/bin/sh
 . "$(dirname -- "$0")/_/husky.sh"
 exec < /dev/tty
-git stash push -k --quiet -u
 
 FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.tsx' '*.ts' | sed 's| |\\ |g')
 
 if ! [ -z "$FILES" ]; then
     # Prettify all selected files
-    echo "$FILES" | xargs docker-compose run --rm showed npm --no-update-notifier run format --ignore-unknown
+    echo "$FILES" | xargs docker compose run --rm showed npm --no-update-notifier run format --ignore-unknown
 
     # Add back the modified/prettified files to staging
     echo "$FILES" | xargs git add
 fi
 
-docker-compose run --rm showed npx --no-update-notifier lint-staged --no-stash > /dev/tty
-git stash pop --quiet && exit 0
+docker compose run --rm showed npx --no-update-notifier lint-staged > /dev/tty
