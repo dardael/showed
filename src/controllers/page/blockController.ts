@@ -29,12 +29,14 @@ export async function saveBlock(data: FormData): Promise<Block> {
 }
 
 export async function createBlock(
-    pageId: string,
-    position: number
+    position: number,
+    pageId?: string,
+    parentBlockId?: string,
 ): Promise<Block> {
     const provider: BlockProvider = Container.get('BlockProvider');
     return provider.createBlock({
         pageId,
+        parentBlockId,
         title: 'Nouveau block',
         position,
         hasTransparentBackground: false,

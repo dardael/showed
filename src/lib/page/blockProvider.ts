@@ -13,7 +13,8 @@ export default class BlockProvider implements BlockProviderInterface {
         this.componentRepository = componentRepository;
     }
     public async createBlock(blockData: {
-        pageId: string;
+        pageId?: string;
+        parentBlockId?: string;
         backgroundImageId?: string;
         hasTransparentBackground: boolean;
         title: string;
@@ -81,6 +82,10 @@ export default class BlockProvider implements BlockProviderInterface {
         await this.repository.updateBlock(blockToMove._id as string, {
             position: blockToMove.position,
         });
+    }
+
+    public async getChildBlocks(parentBlockId: string): Promise<Block[]> {
+        return this.repository.getBlocks({ parentBlockId });
     }
 
     private async updateBlocksPosition(pageId: string): Promise<Block[]> {

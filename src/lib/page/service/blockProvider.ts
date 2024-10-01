@@ -3,7 +3,8 @@ import { SortDirection } from '../models/sortDirection';
 
 export default interface BlockProvider {
     createBlock(blockData: {
-        pageId: string;
+        pageId?: string;
+        parentBlockId?: string;
         backgroundImageId?: string;
         title: string;
         position: number;
@@ -19,6 +20,7 @@ export default interface BlockProvider {
         }
     ): Promise<Block>;
     getBlocks(pageId: string): Promise<Block[]>;
+    getChildBlocks(parentBlockId: string): Promise<Block[]>;
     deleteBlock(id: string): Promise<Block>;
     moveBlock(block: Block, sortDirection: SortDirection): Promise<void>;
 }

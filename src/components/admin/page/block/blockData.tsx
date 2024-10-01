@@ -14,6 +14,7 @@ import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Block } from 'showed/lib/page/models/block';
 import { useEffect, useState } from 'react';
 import * as ComponentController from 'showed/controllers/page/componentController';
+import * as BlockController from 'showed/controllers/page/blockController';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import { Notification } from 'showed/components/core/feedback/notification';
@@ -32,7 +33,7 @@ export default function BlockData({
     onBlockChange: (data: FormData) => Promise<any>;
 }) {
     const notification = new Notification(useToast());
-    const [components, setComponents] = useState<Component[]>([]);
+    const [components, setComponents] = useState<(Component|Block)[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
@@ -75,6 +76,11 @@ export default function BlockData({
         components.push(newComponent);
         setComponents([...components]);
     };
+    const addNewBlock = async () => {
+        const newBlock = await BlockController.createBlock(components.length + 1, undefined, block._id as string);
+        components.push(newBlock);
+        setComponents([...components]);
+    }
     const updateComponent = (updatedComponent: Component) => {
         setComponents([
             ...components.map((component) =>
@@ -217,6 +223,12 @@ export default function BlockData({
                                 Ajouter un composant
                             </MenuButton>
                             <MenuList>
+                                <MenuItem
+                                    onClick={() =>
+                                        addNewBlock()
+                                    }>
+                                    Block horizontal
+                                </MenuItem>
                                 {ComponentType.getAll().map((componentType) => (
                                     <MenuItem
                                         key={componentType as string}
@@ -241,12 +253,13 @@ export default function BlockData({
                                         component.title +
                                         ' (' +
                                         ComponentType.getComponentTypeLabel(
-                                            component.componentType
+                                            (component instanceof Component) ? (component as Component).componentType : "Block vertical"
                                         ) +
                                         ')',
                                     content: (
+                                        {component instanceof Component ? (
                                         <ComponentData
-                                            component={component}
+                                            component={component as Component}
                                             onSave={async (data) => {
                                                 const pendingSave =
                                                     ComponentController.saveComponent(
@@ -257,7 +270,19 @@ export default function BlockData({
                                                 );
                                                 return pendingSave;
                                             }}
-                                        />
+                                        />) : (
+                                        <BlockData
+                                            block={component as Block}
+                                            onBlockChange={async (
+                                                data: FormData
+                                            ) => {
+                                                const pendingSave =
+                                                    BlockController.saveBlock(
+                                                        data
+                                                    );
+                                                pendingSave.then(updateComponent);
+                                                return pendingSave;
+                                            }} />)}
                                     ),
                                     buttons: {
                                         sort: {
