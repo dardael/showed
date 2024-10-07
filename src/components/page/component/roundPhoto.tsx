@@ -14,15 +14,13 @@ export default async function RoundPhoto({
     );
     const color = (await getTheme()).color;
     return (
-        <Center>
-            <Avatar
-                height={'169px'}
-                width={'169px'}
-                src={filepath}
-                borderStyle={'solid'}
-                borderWidth={'3px'}
-                borderColor={color + '.400'}
-            />
-        </Center>
+        <Avatar
+            height={'169px'}
+            width={'169px'}
+            src={filepath}
+            borderStyle={'solid'}
+            borderWidth={'3px'}
+            borderColor={color + '.400'}
+        />
     );
 }

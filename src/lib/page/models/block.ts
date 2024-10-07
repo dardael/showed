@@ -6,13 +6,13 @@ type Block = {
     backgroundImageId: string;
     title: string;
     position: number;
-    parentBlockId?: number;
+    parentBlockId?: string;
     hasTransparentBackground: boolean;
 };
 const BlockSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
     pageId: { type: String },
-    parentBlockId: { type: Number },
+    parentBlockId: { type: String },
     position: { type: Number, required: true },
     hasTransparentBackground: { type: Boolean, required: true },
     title: { type: String },
@@ -24,5 +24,16 @@ if (!BlockModel) {
     BlockModel = mongoose.model<Block>('Block', BlockSchema);
 }
 
-export { BlockModel };
+function isBlock(object: any): object is Block {
+    return (
+        (object.hasOwnProperty('parentBlockId') ||
+            object.hasOwnProperty('pageId')) &&
+        object.hasOwnProperty('position') &&
+        object.hasOwnProperty('hasTransparentBackground') &&
+        object.hasOwnProperty('title') &&
+        object.hasOwnProperty('backgroundImageId')
+    );
+}
+
+export { BlockModel, isBlock };
 export type { Block };

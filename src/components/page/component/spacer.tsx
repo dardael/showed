@@ -6,9 +6,5 @@ export default async function Spacer({
 }: {
     component: ComponentModel;
 }) {
-    return (
-        <Center>
-            <Box height={component.content + 'px'}></Box>
-        </Center>
-    );
+    return <Box height={component.content + 'px'}></Box>;
 }

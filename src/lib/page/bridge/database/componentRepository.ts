@@ -14,7 +14,6 @@ export default class ComponentRepository
     public async getComponents(filter: {
         blockId: string;
     }): Promise<Component[]> {
-        console.log('filter', filter);
         return this.database.find<Component>(ComponentModel, {
             model: filter,
             sort: { position: SortOrder.ASC },

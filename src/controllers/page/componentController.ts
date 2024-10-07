@@ -54,11 +54,3 @@ export async function deleteComponent(id: string): Promise<Component> {
     const provider: ComponentProvider = Container.get('ComponentProvider');
     return provider.deleteComponent(id);
 }
-
-export async function moveComponent(
-    component: Component,
-    direction: SortDirection
-): Promise<void> {
-    const provider: ComponentProvider = Container.get('ComponentProvider');
-    provider.moveComponent(component, direction);
-}

@@ -7,10 +7,8 @@ export default async function BoldText({
     component: ComponentModel;
 }) {
     return (
-        <Center>
-            <Heading fontWeight={'600'} size={'md'}>
-                {component.content}
-            </Heading>
-        </Center>
+        <Heading fontWeight={'600'} size={'md'}>
+            {component.content}
+        </Heading>
     );
 }

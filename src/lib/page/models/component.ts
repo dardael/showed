@@ -20,10 +20,19 @@ const ComponentSchema = new mongoose.Schema({
     link: { type: String },
 });
 
-let ComponentModel: Model<Component> = mongoose.models.Component;
+let ComponentModel: Model<Component> = mongoose.models?.Component;
 if (!ComponentModel) {
     ComponentModel = mongoose.model<Component>('Component', ComponentSchema);
 }
+function isComponent(object: any): object is Component {
+    return (
+        object.hasOwnProperty('blockId') &&
+        object.hasOwnProperty('componentType') &&
+        object.hasOwnProperty('content') &&
+        object.hasOwnProperty('title') &&
+        object.hasOwnProperty('position')
+    );
+}
 
-export { ComponentModel };
+export { ComponentModel, isComponent };
 export type { Component };

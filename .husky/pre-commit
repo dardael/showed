@@ -6,7 +6,7 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.tsx' '*.ts' | sed
 
 if ! [ -z "$FILES" ]; then
     # Prettify all selected files
-    echo "$FILES" | xargs docker compose run --rm showed npm --no-update-notifier run format --ignore-unknown
+    echo "$FILES" | xargs docker compose run --rm -T showed npm --no-update-notifier run format --ignore-unknown
 
     # Add back the modified/prettified files to staging
     echo "$FILES" | xargs git add

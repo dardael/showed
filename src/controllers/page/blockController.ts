@@ -4,6 +4,7 @@ import { Block } from 'showed/lib/page/models/block';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import { Container } from 'typedi';
+import { Component } from 'showed/lib/page/models/component';
 
 export async function saveBlock(data: FormData): Promise<Block> {
     const id = data.get('id')?.toString();
@@ -31,7 +32,7 @@ export async function saveBlock(data: FormData): Promise<Block> {
 export async function createBlock(
     position: number,
     pageId?: string,
-    parentBlockId?: string,
+    parentBlockId?: string
 ): Promise<Block> {
     const provider: BlockProvider = Container.get('BlockProvider');
     return provider.createBlock({
@@ -59,4 +60,19 @@ export async function moveBlock(
 ): Promise<void> {
     const provider: BlockProvider = Container.get('BlockProvider');
     provider.moveBlock(block, direction);
+}
+
+export async function moveChildElement(
+    element: Block | Component,
+    direction: SortDirection
+): Promise<void> {
+    const provider: BlockProvider = Container.get('BlockProvider');
+    provider.moveChildElement(element, direction);
+}
+
+export async function getChildElements(
+    parentBlockId: string
+): Promise<(Block | Component)[]> {
+    const provider: BlockProvider = Container.get('BlockProvider');
+    return provider.getChildElements(parentBlockId);
 }
