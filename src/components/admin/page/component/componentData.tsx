@@ -13,6 +13,7 @@ import StainedGlassPhotoData from './stainedGlassPhotoData';
 import SpacerData from './spacerData';
 import CalendarButtonData from './calendarButtonData';
 import RoundPhotoData from './roundPhotoData';
+import UnderlineAndAbovelineTextData from './underlinedAndAbovelinedTextData';
 
 export default function ComponentData({
     component,
@@ -106,6 +107,10 @@ export default function ComponentData({
                     )}
                     {component.componentType === ComponentType.HEADER && (
                         <HeaderData component={component} />
+                    )}
+                    {component.componentType ===
+                        ComponentType.UNDERLINED_ABOVELINED_TEXT && (
+                        <UnderlineAndAbovelineTextData component={component} />
                     )}
                     {component.componentType === ComponentType.BOLD_TEXT && (
                         <BoldTextData component={component} />

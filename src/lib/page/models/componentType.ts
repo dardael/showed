@@ -1,5 +1,6 @@
 export enum ComponentType {
     HEADER = 'HEADER',
+    UNDERLINED_ABOVELINED_TEXT = 'UNDERLINED_ABOVELINED_TEXT',
     BOLD_TEXT = 'BOLD_TEXT',
     TEXT = 'TEXT',
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
@@ -20,6 +21,8 @@ export namespace ComponentType {
                 return 'Compte à rebours';
             case ComponentType.HEADER:
                 return 'Titre';
+            case ComponentType.UNDERLINED_ABOVELINED_TEXT:
+                return 'Texte souligné et sur-ligné';
             case ComponentType.BOLD_TEXT:
                 return 'Texte en gras';
             case ComponentType.TEXT:
@@ -42,6 +45,7 @@ export namespace ComponentType {
             ComponentType.COUNTDOWN,
             ComponentType.HEADER,
             ComponentType.RICH_TEXT_EDITOR,
+            ComponentType.UNDERLINED_ABOVELINED_TEXT,
             ComponentType.TEXT,
             ComponentType.STAINED_GLASS_PHOTO,
             ComponentType.ROUND_PHOTO,

@@ -10,6 +10,7 @@ import StainedGlassPhoto from './component/stainedGlassPhoto';
 import Spacer from './component/spacer';
 import CalendarButton from './component/calendarButton';
 import RoundPhoto from './component/roundPhoto';
+import UnderlinedAndAbovelinedText from './component/underlinedAndAbovelinedText';
 
 export default async function Component({
     component,
@@ -29,6 +30,10 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.HEADER && (
                 <Header component={component} />
+            )}
+            {component.componentType ===
+                ComponentType.UNDERLINED_ABOVELINED_TEXT && (
+                <UnderlinedAndAbovelinedText component={component} />
             )}
             {component.componentType === ComponentType.BOLD_TEXT && (
                 <BoldText component={component} />
