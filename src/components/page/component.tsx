@@ -12,6 +12,7 @@ import CalendarButton from './component/calendarButton';
 import RoundPhoto from './component/roundPhoto';
 import UnderlinedAndAbovelinedText from './component/underlinedAndAbovelinedText';
 import HeaderWithColoredBackground from './component/headerWithColoredBackground';
+import Icon from './component/icon';
 
 export default async function Component({
     component,
@@ -56,6 +57,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.ROUND_PHOTO && (
                 <RoundPhoto component={component} />
+            )}
+            {component.componentType === ComponentType.ICON && (
+                <Icon component={component} />
             )}
             {component.componentType === ComponentType.SPACER && (
                 <Spacer component={component} />

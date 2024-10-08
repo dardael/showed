@@ -121,6 +121,8 @@ export default class BlockProvider implements BlockProviderInterface {
 
         elementToMove.position = elementToSwitch.position;
         elementToSwitch.position = currentElementToMoveIndex + 1;
+        console.log(elementToSwitch);
+        console.log(elementToMove);
         if (isBlock(elementToSwitch)) {
             await this.repository.updateBlock(elementToSwitch._id as string, {
                 position: elementToSwitch.position,

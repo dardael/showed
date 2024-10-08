@@ -16,6 +16,7 @@ import RoundPhotoData from './roundPhotoData';
 import UnderlineAndAbovelineTextData from './underlinedAndAbovelinedTextData';
 import HeaderWithColoredBackgroundData from './headerWithColoredBackgroundData';
 import NumberInput from 'showed/components/core/form/inputs/numberInput';
+import IconData from './iconData';
 
 export default function ComponentData({
     component,
@@ -143,6 +144,9 @@ export default function ComponentData({
                             initialFilePath={initialFilePath}
                             onIconChange={handleFileChange}
                         />
+                    )}
+                    {component.componentType === ComponentType.ICON && (
+                        <IconData component={component} />
                     )}
                     {component.componentType === ComponentType.SPACER && (
                         <SpacerData component={component} />

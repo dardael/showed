@@ -8,6 +8,7 @@ export enum ComponentType {
     COUNTDOWN = 'COUNTDOWN',
     STAINED_GLASS_PHOTO = 'STAINED_GLASS_PHOTO',
     ROUND_PHOTO = 'ROUND_PHOTO',
+    ICON = 'ICON',
     SPACER = 'SPACER',
     CALENDAR_BUTTON = 'CALENDAR_BUTTON',
 }
@@ -34,6 +35,8 @@ export namespace ComponentType {
                 return 'Photo vitrail';
             case ComponentType.ROUND_PHOTO:
                 return 'Photo ronde';
+            case ComponentType.ICON:
+                return 'Icône';
             case ComponentType.SPACER:
                 return 'Espace vide';
             case ComponentType.CALENDAR_BUTTON:
@@ -53,6 +56,7 @@ export namespace ComponentType {
             ComponentType.TEXT,
             ComponentType.STAINED_GLASS_PHOTO,
             ComponentType.ROUND_PHOTO,
+            ComponentType.ICON,
             ComponentType.SPACER,
             ComponentType.CALENDAR_BUTTON,
         ];
