@@ -17,6 +17,7 @@ export default interface ComponentRepository {
             link?: string;
             position: number;
             title?: string;
+            width?: number;
         }
     ): Promise<Component>;
     deleteComponent(id: string): Promise<Component>;

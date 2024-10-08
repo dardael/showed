@@ -10,6 +10,7 @@ export default interface ComponentProvider {
         link?: string;
         title: string;
         position: number;
+        width?: number;
     }): Promise<Component>;
     updateComponent(
         id: string,
@@ -18,6 +19,7 @@ export default interface ComponentProvider {
             title: string;
             content: string;
             position: number;
+            width?: number;
         }
     ): Promise<Component>;
     getComponents(blockId: string): Promise<Component[]>;

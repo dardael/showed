@@ -35,7 +35,10 @@ export default async function HorizontalBlock({
                 <Flex>
                     {components.map((element) => (
                         <Center key={element._id as string}>
-                            <Component component={element as ComponentModel} />
+                            <Component
+                                isInHorizontalBlock
+                                component={element as ComponentModel}
+                            />
                         </Center>
                     ))}
                 </Flex>

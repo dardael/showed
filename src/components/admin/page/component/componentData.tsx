@@ -14,6 +14,8 @@ import SpacerData from './spacerData';
 import CalendarButtonData from './calendarButtonData';
 import RoundPhotoData from './roundPhotoData';
 import UnderlineAndAbovelineTextData from './underlinedAndAbovelinedTextData';
+import HeaderWithColoredBackgroundData from './headerWithColoredBackgroundData';
+import NumberInput from 'showed/components/core/form/inputs/numberInput';
 
 export default function ComponentData({
     component,
@@ -98,6 +100,11 @@ export default function ComponentData({
                         )}
                         readOnly
                     />
+                    <NumberInput
+                        name='width'
+                        label='Largeur'
+                        defaultValue={component.width}
+                    />
                     {component.componentType ===
                         ComponentType.RICH_TEXT_EDITOR && (
                         <RichTextEditorData component={component} />
@@ -107,6 +114,12 @@ export default function ComponentData({
                     )}
                     {component.componentType === ComponentType.HEADER && (
                         <HeaderData component={component} />
+                    )}
+                    {component.componentType ===
+                        ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
+                        <HeaderWithColoredBackgroundData
+                            component={component}
+                        />
                     )}
                     {component.componentType ===
                         ComponentType.UNDERLINED_ABOVELINED_TEXT && (

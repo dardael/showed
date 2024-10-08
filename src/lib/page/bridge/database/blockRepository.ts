@@ -13,7 +13,10 @@ export default class BlockRepository implements BlockRepositoryInterface {
         this.database = database;
         this.componentRepository = componentRepository;
     }
-    public async getBlocks(filter: { pageId?: string, parentBlockId?: string }): Promise<Block[]> {
+    public async getBlocks(filter: {
+        pageId?: string;
+        parentBlockId?: string;
+    }): Promise<Block[]> {
         return this.database.find<Block>(BlockModel, {
             model: filter,
             sort: { position: SortOrder.ASC },
@@ -49,9 +52,7 @@ export default class BlockRepository implements BlockRepositoryInterface {
 
     public async deleteBlock(id: string): Promise<Block> {
         const childBlocks = await this.getBlocks({ parentBlockId: id });
-        childBlocks.forEach((block) =>
-            this.deleteBlock(block._id as string)
-        );
+        childBlocks.forEach((block) => this.deleteBlock(block._id as string));
         await this.componentRepository.deleteBlockComponents(id);
 
         return this.database.findByIdAndDelete<Block>(BlockModel, id);
@@ -59,8 +60,6 @@ export default class BlockRepository implements BlockRepositoryInterface {
 
     public async deletePageBlocks(pageId: string): Promise<void> {
         const blocks = await this.getBlocks({ pageId });
-        blocks.forEach((block) =>
-            this.deleteBlock(block._id as string)
-        );
+        blocks.forEach((block) => this.deleteBlock(block._id as string));
     }
 }

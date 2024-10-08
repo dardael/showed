@@ -1,5 +1,6 @@
 export enum ComponentType {
     HEADER = 'HEADER',
+    HEADER_WITH_COLORED_BACKGROUND = 'HEADER_WITH_COLORED_BACKGROUND',
     UNDERLINED_ABOVELINED_TEXT = 'UNDERLINED_ABOVELINED_TEXT',
     BOLD_TEXT = 'BOLD_TEXT',
     TEXT = 'TEXT',
@@ -21,6 +22,8 @@ export namespace ComponentType {
                 return 'Compte à rebours';
             case ComponentType.HEADER:
                 return 'Titre';
+            case ComponentType.HEADER_WITH_COLORED_BACKGROUND:
+                return 'Titre avec fond coloré';
             case ComponentType.UNDERLINED_ABOVELINED_TEXT:
                 return 'Texte souligné et sur-ligné';
             case ComponentType.BOLD_TEXT:
@@ -44,6 +47,7 @@ export namespace ComponentType {
             ComponentType.BOLD_TEXT,
             ComponentType.COUNTDOWN,
             ComponentType.HEADER,
+            ComponentType.HEADER_WITH_COLORED_BACKGROUND,
             ComponentType.RICH_TEXT_EDITOR,
             ComponentType.UNDERLINED_ABOVELINED_TEXT,
             ComponentType.TEXT,

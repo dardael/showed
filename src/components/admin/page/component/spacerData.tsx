@@ -9,7 +9,7 @@ export default function SpacerData({ component }: { component: Component }) {
                 name='content'
                 label="Taille de l'espacement"
                 placeholder="Taille de l'espacement en pixels"
-                defaultValue={component.content}
+                defaultValue={Number.parseInt(component.content)}
             />
         </>
     );

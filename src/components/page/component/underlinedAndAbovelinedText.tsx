@@ -18,11 +18,11 @@ export default async function UnderlinedAndAbovelinedText({
             textAlign={'center'}
             borderTop={'solid'}
             borderBottom={'solid'}
-            borderTopWidth={'2px'}
-            borderBottomWidth={'2px'}
+            borderTopWidth={'1px'}
+            borderBottomWidth={'1px'}
             borderColor={theme.color + '.500'}
         >
-            {component.content}
+            {component.content.replace('\r\n', '<br>')}
         </Heading>
     );
 }

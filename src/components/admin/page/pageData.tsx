@@ -24,7 +24,7 @@ export default function PageData({
     const addNewBlock = async () => {
         const newBlock = await BlockController.createBlock(
             blocks.length + 1,
-            page._id as string,
+            page._id as string
         );
         blocks.push(newBlock);
         setBlocks([...blocks]);

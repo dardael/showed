@@ -38,6 +38,7 @@ export default class ComponentRepository
             content?: string;
             link?: string;
             position: number;
+            width?: number;
         }
     ): Promise<Component> {
         return this.database.findByIdAndUpdate<Component>(

@@ -1,25 +1,24 @@
-import { FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { FormControl, FormLabel, Textarea } from '@chakra-ui/react';
 
-export default function NumberInput({
+export default function TextAreaInput({
     label,
     name,
     placeholder,
-    defaultValue = 0,
+    defaultValue = '',
     isRequired = false,
     readOnly = false,
 }: {
     label: string;
     name: string;
     placeholder?: string;
-    defaultValue?: number;
+    defaultValue?: string;
     isRequired?: boolean;
     readOnly?: boolean;
 }) {
     return (
         <FormControl isRequired={isRequired} paddingBottom={5}>
             <FormLabel>{label}</FormLabel>
-            <Input
-                type='number'
+            <Textarea
                 name={name}
                 placeholder={placeholder ? placeholder : label}
                 defaultValue={defaultValue}

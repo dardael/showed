@@ -34,7 +34,10 @@ export default async function Block({ block }: { block: BlockModel }) {
                         {isBlock(element) ? (
                             <HorizontalBlock block={element} />
                         ) : (
-                            <Component component={element as ComponentModel} />
+                            <Component
+                                isInHorizontalBlock={false}
+                                component={element as ComponentModel}
+                            />
                         )}
                     </Center>
                 ))}

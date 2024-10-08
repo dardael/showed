@@ -25,6 +25,7 @@ export default class ComponentProvider implements ComponentProviderInterface {
             title: string;
             content: string;
             position: number;
+            width: number;
         }
     ): Promise<Component> {
         return this.repository.updateComponent(id, update);

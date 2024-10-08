@@ -2,7 +2,6 @@
 import 'showed/lib/core/dependencyInjection/container';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
-import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import { Container } from 'typedi';
 
@@ -10,6 +9,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
     const id = data.get('id')?.toString();
     const content = data.get('content')?.toString();
     const position = data.get('position')?.toString();
+    const width = data.get('width')?.toString();
     const title = data.get('title')?.toString() as string;
     const link = data.get('link')?.toString() as string;
     if (!id) {
@@ -26,6 +26,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
         content,
         title,
         position: Number.parseInt(position),
+        width: width ? Number.parseInt(width) : 0,
     });
 }
 

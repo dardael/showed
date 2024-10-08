@@ -9,12 +9,14 @@ type Component = {
     title: string;
     position: number;
     link?: string;
+    width?: number;
 };
 const ComponentSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
     blockId: { type: String, required: true },
     componentType: { type: String, required: true },
     position: { type: Number, required: true },
+    width: { type: Number },
     title: { type: String },
     content: { type: String },
     link: { type: String },

@@ -11,17 +11,23 @@ import Spacer from './component/spacer';
 import CalendarButton from './component/calendarButton';
 import RoundPhoto from './component/roundPhoto';
 import UnderlinedAndAbovelinedText from './component/underlinedAndAbovelinedText';
+import HeaderWithColoredBackground from './component/headerWithColoredBackground';
 
 export default async function Component({
     component,
+    isInHorizontalBlock,
 }: {
     component: ComponentModel;
+    isInHorizontalBlock: boolean;
 }) {
     const Countdown = dynamic(() => import('./component/countdown'), {
         ssr: false,
     });
     return (
-        <Box padding={'10px'}>
+        <Box
+            padding={isInHorizontalBlock ? '5px' : '10px'}
+            width={component.width ? component.width + 'px' : 'unset'}
+        >
             {component.componentType === ComponentType.RICH_TEXT_EDITOR && (
                 <RichText component={component} />
             )}
@@ -30,6 +36,10 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.HEADER && (
                 <Header component={component} />
+            )}
+            {component.componentType ===
+                ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
+                <HeaderWithColoredBackground component={component} />
             )}
             {component.componentType ===
                 ComponentType.UNDERLINED_ABOVELINED_TEXT && (

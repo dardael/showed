@@ -1,4 +1,4 @@
-import { Center, Text as ChakraText } from '@chakra-ui/react';
+import { Text as ChakraText } from '@chakra-ui/react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
 export default async function Text({
