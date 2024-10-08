@@ -1,5 +1,6 @@
 export enum ComponentType {
     HEADER = 'HEADER',
+    ITALIC_HEADER = 'ITALIC_HEADER',
     HEADER_WITH_COLORED_BACKGROUND = 'HEADER_WITH_COLORED_BACKGROUND',
     UNDERLINED_ABOVELINED_TEXT = 'UNDERLINED_ABOVELINED_TEXT',
     BOLD_TEXT = 'BOLD_TEXT',
@@ -25,6 +26,8 @@ export namespace ComponentType {
                 return 'Titre';
             case ComponentType.HEADER_WITH_COLORED_BACKGROUND:
                 return 'Titre avec fond coloré';
+            case ComponentType.ITALIC_HEADER:
+                return 'Titre en italique';
             case ComponentType.UNDERLINED_ABOVELINED_TEXT:
                 return 'Texte souligné et sur-ligné';
             case ComponentType.BOLD_TEXT:
@@ -51,6 +54,7 @@ export namespace ComponentType {
             ComponentType.COUNTDOWN,
             ComponentType.HEADER,
             ComponentType.HEADER_WITH_COLORED_BACKGROUND,
+            ComponentType.ITALIC_HEADER,
             ComponentType.RICH_TEXT_EDITOR,
             ComponentType.UNDERLINED_ABOVELINED_TEXT,
             ComponentType.TEXT,

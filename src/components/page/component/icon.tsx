@@ -5,11 +5,7 @@ import { GiHearts, GiLinkedRings } from 'react-icons/gi';
 import { ThemeContext } from 'showed/app/providers';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
-export default async function Icon({
-    component,
-}: {
-    component: ComponentModel;
-}) {
+export default function Icon({ component }: { component: ComponentModel }) {
     const { theme } = useContext(ThemeContext);
     let icon: As;
     switch (component.content) {

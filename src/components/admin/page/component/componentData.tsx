@@ -17,6 +17,7 @@ import UnderlineAndAbovelineTextData from './underlinedAndAbovelinedTextData';
 import HeaderWithColoredBackgroundData from './headerWithColoredBackgroundData';
 import NumberInput from 'showed/components/core/form/inputs/numberInput';
 import IconData from './iconData';
+import ItalicHeaderData from './italicHeaderData';
 
 export default function ComponentData({
     component,
@@ -121,6 +122,10 @@ export default function ComponentData({
                         <HeaderWithColoredBackgroundData
                             component={component}
                         />
+                    )}
+                    {component.componentType ===
+                        ComponentType.ITALIC_HEADER && (
+                        <ItalicHeaderData component={component} />
                     )}
                     {component.componentType ===
                         ComponentType.UNDERLINED_ABOVELINED_TEXT && (

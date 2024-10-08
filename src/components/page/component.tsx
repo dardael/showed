@@ -13,6 +13,7 @@ import RoundPhoto from './component/roundPhoto';
 import UnderlinedAndAbovelinedText from './component/underlinedAndAbovelinedText';
 import HeaderWithColoredBackground from './component/headerWithColoredBackground';
 import Icon from './component/icon';
+import ItalicHeader from './component/italicHeader';
 
 export default async function Component({
     component,
@@ -41,6 +42,9 @@ export default async function Component({
             {component.componentType ===
                 ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
                 <HeaderWithColoredBackground component={component} />
+            )}
+            {component.componentType === ComponentType.ITALIC_HEADER && (
+                <ItalicHeader component={component} />
             )}
             {component.componentType ===
                 ComponentType.UNDERLINED_ABOVELINED_TEXT && (
