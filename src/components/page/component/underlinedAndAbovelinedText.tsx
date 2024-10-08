@@ -1,7 +1,5 @@
-'use client';
-import { Center, Text as ChakraText, Heading } from '@chakra-ui/react';
-import { useContext } from 'react';
-import { ThemeContext } from 'showed/app/providers';
+import { Heading } from '@chakra-ui/react';
+import { getTheme } from 'showed/controllers/theme/themeController';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
 export default async function UnderlinedAndAbovelinedText({
@@ -9,7 +7,7 @@ export default async function UnderlinedAndAbovelinedText({
 }: {
     component: ComponentModel;
 }) {
-    const { theme } = useContext(ThemeContext);
+    const theme = await getTheme();
     return (
         <Heading
             as='h2'
