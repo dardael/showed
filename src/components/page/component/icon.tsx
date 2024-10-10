@@ -1,7 +1,7 @@
 'use client';
 import { As, Icon as ChakraIcon } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { GiHearts, GiLinkedRings } from 'react-icons/gi';
+import { GiHearts, GiLinkedRings, GiLovers } from 'react-icons/gi';
 import { ThemeContext } from 'showed/app/providers';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
@@ -14,6 +14,9 @@ export default function Icon({ component }: { component: ComponentModel }) {
             break;
         case 'GiHearts':
             icon = GiHearts;
+            break;
+        case 'GiLovers':
+            icon = GiLovers;
             break;
         default:
             icon = GiLinkedRings;

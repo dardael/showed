@@ -1,6 +1,6 @@
 import SelectInput from 'showed/components/core/form/inputs/selectInput';
 import { Component } from 'showed/lib/page/models/component';
-import { GiLinkedRings, GiHearts } from 'react-icons/gi';
+import { GiLinkedRings, GiHearts, GiLovers } from 'react-icons/gi';
 
 export default function IconData({ component }: { component: Component }) {
     return (
@@ -17,6 +17,7 @@ export default function IconData({ component }: { component: Component }) {
                         icon: GiLinkedRings,
                     },
                     { label: 'Coeur', value: 'GiHearts', icon: GiHearts },
+                    { label: 'Couple', value: 'GiLovers', icon: GiLovers },
                 ]}
             />
         </>
