@@ -14,6 +14,7 @@ import UnderlinedAndAbovelinedText from './component/underlinedAndAbovelinedText
 import HeaderWithColoredBackground from './component/headerWithColoredBackground';
 import Icon from './component/icon';
 import ItalicHeader from './component/italicHeader';
+import ItalicText from './component/italicText';
 
 export default async function Component({
     component,
@@ -52,6 +53,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.BOLD_TEXT && (
                 <BoldText component={component} />
+            )}
+            {component.componentType === ComponentType.ITALIC_TEXT && (
+                <ItalicText component={component} />
             )}
             {component.componentType === ComponentType.TEXT && (
                 <Text component={component} />

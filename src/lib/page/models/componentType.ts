@@ -4,6 +4,7 @@ export enum ComponentType {
     HEADER_WITH_COLORED_BACKGROUND = 'HEADER_WITH_COLORED_BACKGROUND',
     UNDERLINED_ABOVELINED_TEXT = 'UNDERLINED_ABOVELINED_TEXT',
     BOLD_TEXT = 'BOLD_TEXT',
+    ITALIC_TEXT = 'ITALIC_TEXT',
     TEXT = 'TEXT',
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
     COUNTDOWN = 'COUNTDOWN',
@@ -32,6 +33,8 @@ export namespace ComponentType {
                 return 'Texte souligné et sur-ligné';
             case ComponentType.BOLD_TEXT:
                 return 'Texte en gras';
+            case ComponentType.ITALIC_TEXT:
+                return 'Texte en italique';
             case ComponentType.TEXT:
                 return 'Texte';
             case ComponentType.STAINED_GLASS_PHOTO:
@@ -50,19 +53,20 @@ export namespace ComponentType {
     }
     export function getAll(): ComponentType[] {
         return [
-            ComponentType.BOLD_TEXT,
-            ComponentType.COUNTDOWN,
             ComponentType.HEADER,
             ComponentType.HEADER_WITH_COLORED_BACKGROUND,
             ComponentType.ITALIC_HEADER,
-            ComponentType.RICH_TEXT_EDITOR,
-            ComponentType.UNDERLINED_ABOVELINED_TEXT,
             ComponentType.TEXT,
+            ComponentType.BOLD_TEXT,
+            ComponentType.ITALIC_TEXT,
+            ComponentType.UNDERLINED_ABOVELINED_TEXT,
+            ComponentType.RICH_TEXT_EDITOR,
             ComponentType.STAINED_GLASS_PHOTO,
             ComponentType.ROUND_PHOTO,
             ComponentType.ICON,
             ComponentType.SPACER,
             ComponentType.CALENDAR_BUTTON,
+            ComponentType.COUNTDOWN,
         ];
     }
 }

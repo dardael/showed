@@ -18,6 +18,7 @@ import HeaderWithColoredBackgroundData from './headerWithColoredBackgroundData';
 import NumberInput from 'showed/components/core/form/inputs/numberInput';
 import IconData from './iconData';
 import ItalicHeaderData from './italicHeaderData';
+import ItalicTextData from './italicTextData';
 
 export default function ComponentData({
     component,
@@ -136,6 +137,9 @@ export default function ComponentData({
                     )}
                     {component.componentType === ComponentType.TEXT && (
                         <TextData component={component} />
+                    )}
+                    {component.componentType === ComponentType.ITALIC_TEXT && (
+                        <ItalicTextData component={component} />
                     )}
                     {component.componentType ===
                         ComponentType.STAINED_GLASS_PHOTO && (

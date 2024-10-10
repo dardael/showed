@@ -254,13 +254,6 @@ export default function BlockData({
                                 Ajouter un composant
                             </MenuButton>
                             <MenuList>
-                                {block.parentBlockId ? (
-                                    <></>
-                                ) : (
-                                    <MenuItem onClick={() => addNewBlock()}>
-                                        Block horizontal
-                                    </MenuItem>
-                                )}
                                 {ComponentType.getAll().map((componentType) => (
                                     <MenuItem
                                         key={componentType as string}
@@ -275,6 +268,13 @@ export default function BlockData({
                                         )}
                                     </MenuItem>
                                 ))}
+                                {block.parentBlockId ? (
+                                    <></>
+                                ) : (
+                                    <MenuItem onClick={() => addNewBlock()}>
+                                        Block horizontal
+                                    </MenuItem>
+                                )}
                             </MenuList>
                         </Menu>
                         <Box paddingTop={'55px'}>
