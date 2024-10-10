@@ -13,6 +13,7 @@ export enum ComponentType {
     ICON = 'ICON',
     SPACER = 'SPACER',
     CALENDAR_BUTTON = 'CALENDAR_BUTTON',
+    POSITION_BUTTON = 'POSITION_BUTTON',
 }
 export namespace ComponentType {
     export function getComponentTypeLabel(
@@ -47,6 +48,8 @@ export namespace ComponentType {
                 return 'Espace vide';
             case ComponentType.CALENDAR_BUTTON:
                 return 'Bouton calendrier';
+            case ComponentType.POSITION_BUTTON:
+                return 'Bouton position';
             default:
                 throw new Error(`Unknown component type: ${componentType}`);
         }
@@ -66,6 +69,7 @@ export namespace ComponentType {
             ComponentType.ICON,
             ComponentType.SPACER,
             ComponentType.CALENDAR_BUTTON,
+            ComponentType.POSITION_BUTTON,
             ComponentType.COUNTDOWN,
         ];
     }

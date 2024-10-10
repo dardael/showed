@@ -15,6 +15,7 @@ import HeaderWithColoredBackground from './component/headerWithColoredBackground
 import Icon from './component/icon';
 import ItalicHeader from './component/italicHeader';
 import ItalicText from './component/italicText';
+import PositionButton from './component/positionButton';
 
 export default async function Component({
     component,
@@ -74,6 +75,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.CALENDAR_BUTTON && (
                 <CalendarButton component={component} />
+            )}
+            {component.componentType === ComponentType.POSITION_BUTTON && (
+                <PositionButton component={component} />
             )}
         </Box>
     );

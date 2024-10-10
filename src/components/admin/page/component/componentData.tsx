@@ -12,6 +12,7 @@ import { Spinner } from '@chakra-ui/react';
 import StainedGlassPhotoData from './stainedGlassPhotoData';
 import SpacerData from './spacerData';
 import CalendarButtonData from './calendarButtonData';
+import PositionButtonData from './positionButtonData';
 import RoundPhotoData from './roundPhotoData';
 import UnderlineAndAbovelineTextData from './underlinedAndAbovelinedTextData';
 import HeaderWithColoredBackgroundData from './headerWithColoredBackgroundData';
@@ -163,6 +164,10 @@ export default function ComponentData({
                     {component.componentType ===
                         ComponentType.CALENDAR_BUTTON && (
                         <CalendarButtonData component={component} />
+                    )}
+                    {component.componentType ===
+                        ComponentType.POSITION_BUTTON && (
+                        <PositionButtonData component={component} />
                     )}
                 </SaveForm>
             )}
