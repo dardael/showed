@@ -12,13 +12,19 @@ export default class Provider implements ProviderInterface {
         color: Color;
         title?: string;
         description?: string;
+        isMenuHidden?: boolean;
     }): Promise<Theme> {
         return this.repository.createTheme(themeData);
     }
 
     public async updateTheme(
         id: string,
-        update: { color: Color; description?: string; title?: string }
+        update: {
+            color: Color;
+            description?: string;
+            title?: string;
+            isMenuHidden?: boolean;
+        }
     ): Promise<Theme> {
         return this.repository.updateTheme(id, update);
     }

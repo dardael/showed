@@ -20,6 +20,7 @@ export default class Repository implements RepositoryInterface {
         color: Color;
         title?: string;
         description?: string;
+        isMenuHidden?: boolean;
     }): Promise<Theme> {
         return this.database.create<Theme>(ThemeModel, themeData);
     }
@@ -30,6 +31,7 @@ export default class Repository implements RepositoryInterface {
             color: Color;
             title?: string;
             description?: string;
+            isMenuHidden?: boolean;
         }
     ): Promise<Theme> {
         return this.database.findByIdAndUpdate<Theme>(

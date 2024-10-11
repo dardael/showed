@@ -14,7 +14,7 @@ export default function MenuBar({ pages }: { pages: Page[] }) {
     const [isMobile] = useMediaQuery('(max-width: 750px)');
     return (
         <>
-            {linkItems.length < 2 ? (
+            {theme.isMenuHidden ? (
                 <></>
             ) : (
                 <Box color={'white'} backgroundColor={theme.color + '.500'}>

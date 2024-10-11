@@ -6,10 +6,16 @@ export default interface Provider {
         color: Color;
         description?: string;
         title?: string;
+        isMenuHidden?: boolean;
     }): Promise<Theme>;
     updateTheme(
         id: string,
-        update: { color: Color; description?: string; title?: string }
+        update: {
+            color: Color;
+            description?: string;
+            title?: string;
+            isMenuHidden?: boolean;
+        }
     ): Promise<Theme>;
     getTheme(): Promise<Theme>;
 }

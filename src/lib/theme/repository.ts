@@ -6,6 +6,7 @@ export default interface Repository {
         color: Color;
         title?: string;
         description?: string;
+        isMenuHidden?: boolean;
     }): Promise<Theme>;
     updateTheme(
         id: string,
@@ -13,6 +14,7 @@ export default interface Repository {
             color: Color;
             title?: string;
             description?: string;
+            isMenuHidden?: boolean;
         }
     ): Promise<Theme>;
 }

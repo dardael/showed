@@ -6,12 +6,14 @@ type Theme = {
     color: Color;
     title?: string;
     description?: string;
+    isMenuHidden?: boolean;
 };
 const ThemeSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
     color: { type: String, required: true },
     title: { type: String },
     description: { type: String },
+    isMenuHidden: { type: Boolean },
 });
 
 let ThemeModel: Model<Theme> = mongoose.models.Theme;

@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import { ThemeContext } from 'showed/app/providers';
 import FileInput from '../core/form/inputs/fileInput';
 import TextInput from '../core/form/inputs/textInput';
+import CheckBoxInput from '../core/form/inputs/checkBoxInput';
 export default function Appearance() {
     const [theme, setTheme] = useState<Theme>({ color: Color.gray });
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -82,6 +83,11 @@ export default function Appearance() {
                             label='Description du site'
                             placeholder='Description du site'
                             defaultValue={theme.description}
+                        />
+                        <CheckBoxInput
+                            name='isMenuHidden'
+                            label='Masquer le menu'
+                            defaultValue={theme.isMenuHidden}
                         />
                     </SaveForm>
                 </Box>
