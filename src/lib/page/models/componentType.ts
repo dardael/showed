@@ -13,6 +13,7 @@ export enum ComponentType {
     ICON = 'ICON',
     SPACER = 'SPACER',
     CALENDAR_BUTTON = 'CALENDAR_BUTTON',
+    PAGE_LINK_BUTTON = 'PAGE_LINK_BUTTON',
     POSITION_BUTTON = 'POSITION_BUTTON',
 }
 export namespace ComponentType {
@@ -48,6 +49,8 @@ export namespace ComponentType {
                 return 'Espace vide';
             case ComponentType.CALENDAR_BUTTON:
                 return 'Bouton calendrier';
+            case ComponentType.PAGE_LINK_BUTTON:
+                return 'Bouton lien vers une page';
             case ComponentType.POSITION_BUTTON:
                 return 'Bouton position';
             default:
@@ -69,6 +72,7 @@ export namespace ComponentType {
             ComponentType.ICON,
             ComponentType.SPACER,
             ComponentType.CALENDAR_BUTTON,
+            ComponentType.PAGE_LINK_BUTTON,
             ComponentType.POSITION_BUTTON,
             ComponentType.COUNTDOWN,
         ];

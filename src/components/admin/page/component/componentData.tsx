@@ -20,6 +20,7 @@ import NumberInput from 'showed/components/core/form/inputs/numberInput';
 import IconData from './iconData';
 import ItalicHeaderData from './italicHeaderData';
 import ItalicTextData from './italicTextData';
+import PageLinkButtonData from './pageLinkButtonData';
 
 export default function ComponentData({
     component,
@@ -164,6 +165,10 @@ export default function ComponentData({
                     {component.componentType ===
                         ComponentType.CALENDAR_BUTTON && (
                         <CalendarButtonData component={component} />
+                    )}
+                    {component.componentType ===
+                        ComponentType.PAGE_LINK_BUTTON && (
+                        <PageLinkButtonData component={component} />
                     )}
                     {component.componentType ===
                         ComponentType.POSITION_BUTTON && (

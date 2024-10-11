@@ -1,27 +1,15 @@
-import {
-    As,
-    Box,
-    Checkbox,
-    FormControl,
-    FormLabel,
-    Icon,
-    Select,
-    SelectField,
-} from '@chakra-ui/react';
-import { ReactElement } from 'react';
+import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 
 export default function SelectInput({
     label,
     name,
-    placeholder,
     options,
     defaultValue,
     isRequired = false,
 }: {
     label: string;
     name: string;
-    placeholder?: string;
-    options: { label: string; value: string; icon: As }[];
+    options: { label: string; value: string }[];
     defaultValue?: string;
     isRequired?: boolean;
 }) {
