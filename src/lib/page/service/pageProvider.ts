@@ -5,7 +5,7 @@ export default interface PageProvider {
     createPage(pageData: { title: string; position: number }): Promise<Page>;
     updatePage(
         id: string,
-        update: { title: string; position: number }
+        update: { title: string; position: number; soundId?: string }
     ): Promise<Page>;
     getPages(): Promise<Page[]>;
     deletePage(id: string): Promise<Page>;

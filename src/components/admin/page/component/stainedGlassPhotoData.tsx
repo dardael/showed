@@ -1,4 +1,5 @@
 import FileInput from 'showed/components/core/form/inputs/fileInput';
+import { FileType } from 'showed/components/core/input/fileType';
 
 export default function StainedGlassPhotoData({
     onIconChange,
@@ -10,6 +11,7 @@ export default function StainedGlassPhotoData({
     return (
         <>
             <FileInput
+                fileType={FileType.IMAGE}
                 isRequired
                 name='photo'
                 label='Photo'

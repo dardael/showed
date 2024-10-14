@@ -24,6 +24,7 @@ import { FaPlus } from 'react-icons/fa6';
 import ComponentData from 'showed/components/admin/page/component/componentData';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
+import { FileType } from 'showed/components/core/input/fileType';
 
 export default function BlockData({
     block,
@@ -225,6 +226,7 @@ export default function BlockData({
                             defaultValue={initialFilePath}
                             onChange={handleFileChange}
                             allowedFileExtensions={['png, jpg, jpeg']}
+                            fileType={FileType.IMAGE}
                         />
                         <CheckBoxInput
                             name='hasTransparentBackground'

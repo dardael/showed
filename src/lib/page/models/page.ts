@@ -5,12 +5,14 @@ type Page = {
     title: string;
     urlPart: string;
     position: number;
+    soundId?: string;
 };
 const PageSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
     title: { type: String, required: true },
     urlPart: { type: String, required: true },
     position: { type: Number, required: true },
+    soundId: { type: String },
 });
 
 let PageModel: Model<Page> = mongoose.models.Page;

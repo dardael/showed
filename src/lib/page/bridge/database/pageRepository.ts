@@ -29,6 +29,7 @@ export default class PageRepository implements PageRepositoryInterface {
             title?: string;
             urlPart?: string;
             position: number;
+            soundId?: string;
         }
     ): Promise<Page> {
         return this.database.findByIdAndUpdate<Page>(PageModel, id, pageData);

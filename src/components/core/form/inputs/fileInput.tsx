@@ -1,5 +1,6 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import File from '../../input/file';
+import { FileType } from '../../input/fileType';
 
 export default function FileInput({
     label,
@@ -8,6 +9,7 @@ export default function FileInput({
     isRequired = false,
     onChange,
     allowedFileExtensions,
+    fileType,
 }: {
     label: string;
     name: string;
@@ -15,6 +17,7 @@ export default function FileInput({
     isRequired?: boolean;
     onChange: (file: File | null) => void;
     allowedFileExtensions: string[];
+    fileType: FileType;
 }) {
     return (
         <FormControl paddingBottom={5}>
@@ -24,6 +27,7 @@ export default function FileInput({
                 name={name}
                 initialFilePath={defaultValue}
                 allowedFileExtensions={allowedFileExtensions}
+                fileType={fileType}
             />
         </FormControl>
     );

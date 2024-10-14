@@ -1,4 +1,5 @@
 import FileInput from 'showed/components/core/form/inputs/fileInput';
+import { FileType } from 'showed/components/core/input/fileType';
 
 export default function RoundPhotoData({
     onIconChange,
@@ -16,6 +17,7 @@ export default function RoundPhotoData({
                 defaultValue={initialFilePath}
                 onChange={onIconChange}
                 allowedFileExtensions={['png', 'jpg', 'jpeg']}
+                fileType={FileType.IMAGE}
             />
         </>
     );

@@ -10,6 +10,8 @@ import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
 import { FaPlus } from 'react-icons/fa6';
 import BlockData from 'showed/components/admin/page/block/blockData';
+import { FileType } from 'showed/components/core/input/fileType';
+import FileInput from 'showed/components/core/form/inputs/fileInput';
 
 export default function PageData({
     page,
@@ -18,6 +20,38 @@ export default function PageData({
     page: Page;
     onPageChange: (data: FormData) => Promise<any>;
 }) {
+    const [hasSoundChanged, setHasSoundChanged] = useState<boolean>(false);
+    const [file, setFile] = useState<File | null>(null);
+    const [initialFilePath, setInitialFilePath] = useState<string | null>(null);
+    const handleFileChange = async (file: File | null) => {
+        setFile(file);
+        setHasSoundChanged(true);
+    };
+    const handleSubmit = async (formData: FormData) => {
+        if (hasSoundChanged) {
+            if (page.soundId) {
+                await fetch(`api/image/${page.soundId}`, {
+                    method: 'DELETE',
+                });
+                formData.delete('soundId');
+            }
+            if (file) {
+                const fileFormData = new FormData();
+                fileFormData.append('file', file);
+                const result = await (
+                    await fetch('api/sound', {
+                        method: 'POST',
+                        body: fileFormData,
+                    })
+                ).json();
+
+                formData.set('soundId', result.id);
+            }
+            setHasSoundChanged(false);
+            setFile(null);
+        }
+        return onPageChange(formData);
+    };
     const notification = new Notification(useToast());
     const [blocks, setBlocks] = useState<Block[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -87,8 +121,19 @@ export default function PageData({
     useEffect(() => {
         BlockController.getBlocks(page._id as string).then(
             async (foundBlocks: Block[]) => {
-                setBlocks([...foundBlocks]);
-                setIsLoading(false);
+                if (page.soundId) {
+                    await fetch(
+                        `api/sound/${page.soundId}?mustReturnData=1`
+                    ).then(async (response) => {
+                        const result = await response.json();
+                        setInitialFilePath(result.filepath);
+                        setBlocks([...foundBlocks]);
+                        setIsLoading(false);
+                    });
+                } else {
+                    setBlocks([...foundBlocks]);
+                    setIsLoading(false);
+                }
             }
         );
     }, []);
@@ -103,7 +148,7 @@ export default function PageData({
                             { key: 'id', value: page._id },
                             { key: 'position', value: page.position },
                         ]}
-                        action={onPageChange}
+                        action={handleSubmit}
                     >
                         <TextInput
                             isRequired
@@ -111,6 +156,14 @@ export default function PageData({
                             label='Titre'
                             placeholder='Titre affiché dans le menu'
                             defaultValue={page?.title}
+                        />
+                        <FileInput
+                            name='sound'
+                            label='Son'
+                            onChange={handleFileChange}
+                            defaultValue={initialFilePath}
+                            fileType={FileType.AUDIO}
+                            allowedFileExtensions={['mp3', 'mp4', 'wav']}
                         />
                     </SaveForm>
                     <Box

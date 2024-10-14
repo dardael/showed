@@ -9,17 +9,20 @@ import {
 import { useRef, useState } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import FileData from './fileData';
+import { FileType } from './fileType';
 
 export default function File({
     initialFilePath,
     onChange,
     name,
     allowedFileExtensions,
+    fileType,
 }: {
     initialFilePath: string | null;
     onChange: (file: File | null) => void;
     name: string;
     allowedFileExtensions: string[];
+    fileType: FileType;
 }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [selectedFile, setSelectedFile] = useState<FileData | null>({
@@ -98,14 +101,16 @@ export default function File({
                         />
                     </InputRightAddon>
                 </InputGroup>
-                <Image
-                    src={selectedFile?.url ? selectedFile.url : ''}
-                    alt={selectedFile?.name}
-                    paddingLeft={10}
-                    flex={1}
-                    objectFit={'cover'}
-                    maxW={'calc(100% - 300px)'}
-                />
+                {fileType === FileType.IMAGE && (
+                    <Image
+                        src={selectedFile?.url ? selectedFile.url : ''}
+                        alt={selectedFile?.name}
+                        paddingLeft={10}
+                        flex={1}
+                        objectFit={'cover'}
+                        maxW={'calc(100% - 300px)'}
+                    />
+                )}
             </Flex>
         </>
     );

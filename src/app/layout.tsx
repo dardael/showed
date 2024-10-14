@@ -36,6 +36,7 @@ export default async function RootLayout({
                         <Flex
                             direction='column'
                             flex='1'
+                            overflowX={'hidden'}
                             overflowY={'auto'}
                             sx={{
                                 '&::-webkit-scrollbar': {

@@ -3,11 +3,14 @@ import type PageRepository from 'showed/lib/page/pageRepository';
 import type BlockRepository from 'showed/lib/page/blockRepository';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
+import { deletePage } from 'showed/controllers/page/pageController';
+import Provider from '../file/provider';
 
 export default class PageProvider implements PageProviderInterface {
     constructor(
         private repository: PageRepository,
-        private blockRepository: BlockRepository
+        private blockRepository: BlockRepository,
+        private fileProvider: Provider
     ) {
         this.repository = repository;
         this.blockRepository = blockRepository;
@@ -24,7 +27,7 @@ export default class PageProvider implements PageProviderInterface {
     }
     public async updatePage(
         id: string,
-        update: { title: string; position: number }
+        update: { title: string; position: number; soundId?: string }
     ): Promise<Page> {
         return this.repository.updatePage(id, {
             ...update,
@@ -35,8 +38,12 @@ export default class PageProvider implements PageProviderInterface {
         const pages = await this.repository.getPages();
         return pages;
     }
+
     public async deletePage(id: string): Promise<Page> {
         const deletedPage = await this.repository.deletePage(id);
+        if (deletedPage.soundId) {
+            await this.fileProvider.deleteFile(deletedPage.soundId);
+        }
         await this.updatePagesPosition();
         await this.blockRepository.deletePageBlocks(id);
         return deletedPage;

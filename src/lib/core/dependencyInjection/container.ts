@@ -55,7 +55,11 @@ const blockRepository = new BlockRepository(database, componentRepository);
 const blockRepositoryToken = 'BlockRepository';
 Container.set(blockRepositoryToken, blockRepository);
 
-const pageProvider = new PageProvider(pageRepository, blockRepository);
+const pageProvider = new PageProvider(
+    pageRepository,
+    blockRepository,
+    fileProvider
+);
 const pageProviderToken = 'PageProvider';
 Container.set(pageProviderToken, pageProvider);
 

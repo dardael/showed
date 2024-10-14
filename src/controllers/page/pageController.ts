@@ -12,6 +12,7 @@ export async function savePage(data: FormData): Promise<Page> {
     const id = data.get('id')?.toString();
     const title = data.get('title')?.toString();
     const position = data.get('position')?.toString();
+    const soundId = data.get('soundId')?.toString();
     if (!id) {
         return await Promise.reject(new Error('Page id is missing'));
     }
@@ -24,6 +25,7 @@ export async function savePage(data: FormData): Promise<Page> {
     return provider.updatePage(id, {
         title,
         position: Number.parseInt(position),
+        soundId,
     });
 }
 

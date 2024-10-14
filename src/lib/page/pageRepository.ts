@@ -12,6 +12,7 @@ export default interface PageRepository {
             title?: string;
             urlPart?: string;
             position: number;
+            soundId?: string;
         }
     ): Promise<Page>;
     deletePage(id: string): Promise<Page>;
