@@ -21,6 +21,7 @@ import IconData from './iconData';
 import ItalicHeaderData from './italicHeaderData';
 import ItalicTextData from './italicTextData';
 import PageLinkButtonData from './pageLinkButtonData';
+import MapData from './mapData';
 
 export default function ComponentData({
     component,
@@ -173,6 +174,9 @@ export default function ComponentData({
                     {component.componentType ===
                         ComponentType.POSITION_BUTTON && (
                         <PositionButtonData component={component} />
+                    )}
+                    {component.componentType === ComponentType.MAP && (
+                        <MapData component={component} />
                     )}
                 </SaveForm>
             )}

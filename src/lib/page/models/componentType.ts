@@ -8,6 +8,7 @@ export enum ComponentType {
     TEXT = 'TEXT',
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
     COUNTDOWN = 'COUNTDOWN',
+    MAP = 'MAP',
     STAINED_GLASS_PHOTO = 'STAINED_GLASS_PHOTO',
     ROUND_PHOTO = 'ROUND_PHOTO',
     ICON = 'ICON',
@@ -23,6 +24,8 @@ export namespace ComponentType {
         switch (componentType) {
             case ComponentType.RICH_TEXT_EDITOR:
                 return 'Block de texte';
+            case ComponentType.MAP:
+                return 'Carte';
             case ComponentType.COUNTDOWN:
                 return 'Compte à rebours';
             case ComponentType.HEADER:
@@ -75,6 +78,7 @@ export namespace ComponentType {
             ComponentType.PAGE_LINK_BUTTON,
             ComponentType.POSITION_BUTTON,
             ComponentType.COUNTDOWN,
+            ComponentType.MAP,
         ];
     }
 }
