@@ -12,6 +12,7 @@ import { FaPlus } from 'react-icons/fa6';
 import BlockData from 'showed/components/admin/page/block/blockData';
 import { FileType } from 'showed/components/core/input/fileType';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
+import { getFile } from 'showed/controllers/image/imageController';
 
 export default function PageData({
     page,
@@ -122,14 +123,10 @@ export default function PageData({
         BlockController.getBlocks(page._id as string).then(
             async (foundBlocks: Block[]) => {
                 if (page.soundId) {
-                    await fetch(
-                        `api/sound/${page.soundId}?mustReturnData=1`
-                    ).then(async (response) => {
-                        const result = await response.json();
-                        setInitialFilePath(result.filepath);
-                        setBlocks([...foundBlocks]);
-                        setIsLoading(false);
-                    });
+                    const file = await getFile(page.soundId);
+                    setInitialFilePath(file?.filepath as string);
+                    setBlocks([...foundBlocks]);
+                    setIsLoading(false);
                 } else {
                     setBlocks([...foundBlocks]);
                     setIsLoading(false);
