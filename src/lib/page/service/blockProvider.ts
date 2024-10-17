@@ -1,6 +1,7 @@
 import type { Block } from 'showed/lib/page/models/block';
 import { SortDirection } from '../models/sortDirection';
 import { Component } from '../models/component';
+import { BlockType } from '../models/blockType';
 
 export default interface BlockProvider {
     createBlock(blockData: {
@@ -10,6 +11,7 @@ export default interface BlockProvider {
         title: string;
         position: number;
         hasTransparentBackground: boolean;
+        blockType?: BlockType;
     }): Promise<Block>;
     updateBlock(
         id: string,

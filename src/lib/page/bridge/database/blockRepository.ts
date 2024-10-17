@@ -4,6 +4,7 @@ import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 import type { Block } from '../../models/block';
 import { BlockModel } from 'showed/lib/page/models/block';
 import ComponentRepository from '../../componentRepository';
+import { BlockType } from '../../models/blockType';
 
 export default class BlockRepository implements BlockRepositoryInterface {
     constructor(
@@ -30,6 +31,7 @@ export default class BlockRepository implements BlockRepositoryInterface {
         backgroundImageId?: string;
         hasTransparentBackground?: boolean;
         position: number;
+        blockType?: BlockType;
     }): Promise<Block> {
         return this.database.create<Block>(BlockModel, blockData);
     }

@@ -8,10 +8,11 @@ import {
     MenuList,
     Spinner,
     useToast,
+    Flex,
 } from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
-import { Block } from 'showed/lib/page/models/block';
+import { Block, isBlock } from 'showed/lib/page/models/block';
 import { useEffect, useState } from 'react';
 import * as ComponentController from 'showed/controllers/page/componentController';
 import * as BlockController from 'showed/controllers/page/blockController';
@@ -25,6 +26,7 @@ import ComponentData from 'showed/components/admin/page/component/componentData'
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 import { FileType } from 'showed/components/core/input/fileType';
+import { BlockType } from 'showed/lib/page/models/blockType';
 
 export default function BlockData({
     block,
@@ -77,11 +79,12 @@ export default function BlockData({
         childElements.push(newComponent);
         setElements([...childElements]);
     };
-    const addNewBlock = async () => {
+    const addNewBlock = async (blockType?: BlockType) => {
         const newBlock = await BlockController.createBlock(
             childElements.length + 1,
             undefined,
-            block._id as string
+            block._id as string,
+            blockType
         );
         childElements.push(newBlock);
         setElements([...childElements]);
@@ -245,40 +248,196 @@ export default function BlockData({
                         paddingLeft={'20px'}
                         paddingRight={'20px'}
                     >
-                        <Menu>
-                            <MenuButton
-                                as={Button}
-                                leftIcon={<FaPlus />}
-                                aria-label={'Ajouter un composant'}
-                                position='absolute'
-                                right='150px'
-                            >
-                                Ajouter un composant
-                            </MenuButton>
-                            <MenuList>
-                                {ComponentType.getAll().map((componentType) => (
-                                    <MenuItem
-                                        key={componentType as string}
-                                        onClick={() =>
-                                            addNewComponent(
-                                                componentType as ComponentType
-                                            )
-                                        }
+                        <Flex direction={'row-reverse'} gap={'10px'}>
+                            {block.parentBlockId ? (
+                                <></>
+                            ) : (
+                                <Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        leftIcon={<FaPlus />}
+                                        aria-label={'Ajouter un sous-block'}
                                     >
-                                        {ComponentType.getComponentTypeLabel(
-                                            componentType as ComponentType
-                                        )}
-                                    </MenuItem>
-                                ))}
-                                {block.parentBlockId ? (
-                                    <></>
-                                ) : (
-                                    <MenuItem onClick={() => addNewBlock()}>
-                                        Block horizontal
-                                    </MenuItem>
-                                )}
-                            </MenuList>
-                        </Menu>
+                                        Ajouter un sous-block
+                                    </MenuButton>
+                                    <MenuList>
+                                        {[
+                                            BlockType.HORIZONTAL,
+                                            BlockType.LINKED,
+                                        ].map((blockType) => (
+                                            <MenuItem
+                                                key={blockType as string}
+                                                onClick={() =>
+                                                    addNewBlock(blockType)
+                                                }
+                                            >
+                                                {BlockType.getBlockTypeLabel(
+                                                    blockType
+                                                )}
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                </Menu>
+                            )}
+                            {block.blockType === BlockType.LINKED && (
+                                <Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        leftIcon={<FaPlus />}
+                                        aria-label={'Ajouter un texte'}
+                                    >
+                                        Ajouter un texte
+                                    </MenuButton>
+                                    <MenuList>
+                                        <MenuItem
+                                            onClick={() =>
+                                                addNewComponent(
+                                                    ComponentType.RICH_TEXT_EDITOR
+                                                )
+                                            }
+                                        >
+                                            {ComponentType.getComponentTypeLabel(
+                                                ComponentType.RICH_TEXT_EDITOR
+                                            )}
+                                        </MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            )}
+                            {(block.pageId ||
+                                block.blockType === BlockType.HORIZONTAL) && (
+                                <>
+                                    <Menu>
+                                        <MenuButton
+                                            as={Button}
+                                            leftIcon={<FaPlus />}
+                                            aria-label={'Ajouter un composant'}
+                                        >
+                                            Ajouter un composant
+                                        </MenuButton>
+                                        <MenuList>
+                                            {[
+                                                ComponentType.MAP,
+                                                ComponentType.COUNTDOWN,
+                                                ComponentType.SPACER,
+                                            ].map((componentType) => (
+                                                <MenuItem
+                                                    key={
+                                                        componentType as string
+                                                    }
+                                                    onClick={() =>
+                                                        addNewComponent(
+                                                            componentType as ComponentType
+                                                        )
+                                                    }
+                                                >
+                                                    {ComponentType.getComponentTypeLabel(
+                                                        componentType as ComponentType
+                                                    )}
+                                                </MenuItem>
+                                            ))}
+                                        </MenuList>
+                                    </Menu>
+                                    <Menu>
+                                        <MenuButton
+                                            as={Button}
+                                            leftIcon={<FaPlus />}
+                                            aria-label={'Ajouter un bouton'}
+                                        >
+                                            Ajouter un bouton
+                                        </MenuButton>
+                                        <MenuList>
+                                            {[
+                                                ComponentType.CALENDAR_BUTTON,
+                                                ComponentType.POSITION_BUTTON,
+                                                ComponentType.PAGE_LINK_BUTTON,
+                                            ].map((componentType) => (
+                                                <MenuItem
+                                                    key={
+                                                        componentType as string
+                                                    }
+                                                    onClick={() =>
+                                                        addNewComponent(
+                                                            componentType as ComponentType
+                                                        )
+                                                    }
+                                                >
+                                                    {ComponentType.getComponentTypeLabel(
+                                                        componentType as ComponentType
+                                                    )}
+                                                </MenuItem>
+                                            ))}
+                                        </MenuList>
+                                    </Menu>
+                                    <Menu>
+                                        <MenuButton
+                                            as={Button}
+                                            leftIcon={<FaPlus />}
+                                            aria-label={'Ajouter une image'}
+                                        >
+                                            Ajouter une image
+                                        </MenuButton>
+                                        <MenuList>
+                                            {[
+                                                ComponentType.ICON,
+                                                ComponentType.ROUND_PHOTO,
+                                                ComponentType.STAINED_GLASS_PHOTO,
+                                            ].map((componentType) => (
+                                                <MenuItem
+                                                    key={
+                                                        componentType as string
+                                                    }
+                                                    onClick={() =>
+                                                        addNewComponent(
+                                                            componentType as ComponentType
+                                                        )
+                                                    }
+                                                >
+                                                    {ComponentType.getComponentTypeLabel(
+                                                        componentType as ComponentType
+                                                    )}
+                                                </MenuItem>
+                                            ))}
+                                        </MenuList>
+                                    </Menu>
+                                    <Menu>
+                                        <MenuButton
+                                            as={Button}
+                                            leftIcon={<FaPlus />}
+                                            aria-label={'Ajouter un texte'}
+                                        >
+                                            Ajouter un texte
+                                        </MenuButton>
+                                        <MenuList>
+                                            {[
+                                                ComponentType.TEXT,
+                                                ComponentType.ITALIC_TEXT,
+                                                ComponentType.BOLD_TEXT,
+                                                ComponentType.UNDERLINED_ABOVELINED_TEXT,
+                                                ComponentType.HEADER,
+                                                ComponentType.ITALIC_HEADER,
+                                                ComponentType.HEADER_WITH_COLORED_BACKGROUND,
+                                                ComponentType.RICH_TEXT_EDITOR,
+                                            ].map((componentType) => (
+                                                <MenuItem
+                                                    key={
+                                                        componentType as string
+                                                    }
+                                                    onClick={() =>
+                                                        addNewComponent(
+                                                            componentType as ComponentType
+                                                        )
+                                                    }
+                                                >
+                                                    {ComponentType.getComponentTypeLabel(
+                                                        componentType as ComponentType
+                                                    )}
+                                                </MenuItem>
+                                            ))}
+                                        </MenuList>
+                                    </Menu>
+                                </>
+                            )}
+                        </Flex>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
                                 elements={childElements.map((element) => ({
@@ -290,7 +449,12 @@ export default function BlockData({
                                             ? ComponentType.getComponentTypeLabel(
                                                   element.componentType
                                               )
-                                            : 'Block horizontal') +
+                                            : '') +
+                                        (isBlock(element) && element.blockType
+                                            ? BlockType.getBlockTypeLabel(
+                                                  element.blockType as BlockType
+                                              )
+                                            : '') +
                                         ')',
                                     content: isComponent(element) ? (
                                         <ComponentData

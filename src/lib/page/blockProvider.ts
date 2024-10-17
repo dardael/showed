@@ -4,6 +4,7 @@ import { isBlock, type Block } from 'showed/lib/page/models/block';
 import { SortDirection } from './models/sortDirection';
 import ComponentRepository from './componentRepository';
 import { Component } from './models/component';
+import { BlockType } from './models/blockType';
 
 export default class BlockProvider implements BlockProviderInterface {
     constructor(
@@ -20,6 +21,7 @@ export default class BlockProvider implements BlockProviderInterface {
         hasTransparentBackground: boolean;
         title: string;
         position: number;
+        blockType?: BlockType;
     }): Promise<Block> {
         return this.repository.createBlock(blockData);
     }

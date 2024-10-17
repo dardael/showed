@@ -5,6 +5,7 @@ import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import { Container } from 'typedi';
 import { Component } from 'showed/lib/page/models/component';
+import { BlockType } from 'showed/lib/page/models/blockType';
 
 export async function saveBlock(data: FormData): Promise<Block> {
     const id = data.get('id')?.toString();
@@ -32,7 +33,8 @@ export async function saveBlock(data: FormData): Promise<Block> {
 export async function createBlock(
     position: number,
     pageId?: string,
-    parentBlockId?: string
+    parentBlockId?: string,
+    blockType?: BlockType
 ): Promise<Block> {
     const provider: BlockProvider = Container.get('BlockProvider');
     return provider.createBlock({
@@ -40,6 +42,7 @@ export async function createBlock(
         parentBlockId,
         title: 'Nouveau block',
         position,
+        blockType,
         hasTransparentBackground: false,
     });
 }
