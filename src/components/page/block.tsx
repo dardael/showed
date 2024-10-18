@@ -5,6 +5,8 @@ import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import Component from './component';
 import { getChildElements } from 'showed/controllers/page/blockController';
 import HorizontalBlock from './horizontalBlock';
+import { BlockType } from 'showed/lib/page/models/blockType';
+import LinkedBlock from './linkedBlock';
 
 export default async function Block({ block }: { block: BlockModel }) {
     const elements = await getChildElements(block._id as string);
@@ -32,7 +34,11 @@ export default async function Block({ block }: { block: BlockModel }) {
                 {elements.map((element) => (
                     <Center key={element._id as string}>
                         {isBlock(element) ? (
-                            <HorizontalBlock block={element} />
+                            element.blockType === BlockType.HORIZONTAL ? (
+                                <HorizontalBlock block={element} />
+                            ) : (
+                                <LinkedBlock block={element} />
+                            )
                         ) : (
                             <Component
                                 isInHorizontalBlock={false}
