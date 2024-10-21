@@ -17,14 +17,15 @@ const nextConfig = {
                 options: {
                     parseMap: true,
                     // sourceMaps: false,
-                    env: {
-                        exclude: ['transform-async-to-generator'],
-                    },
+                    //env: {
+                    //    exclude: ['transform-async-to-generator'],
+                    //},
                     // You can add additional SWC options here
                     jsc: {
                         parser: {
                             syntax: 'typescript',
                         },
+                        target: "es2022",
                         transform: {
                             react: {
                                 runtime: 'automatic',
