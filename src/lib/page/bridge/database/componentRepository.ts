@@ -4,6 +4,7 @@ import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 import type { Component } from '../../models/component';
 import { ComponentModel } from 'showed/lib/page/models/component';
 import { ComponentType } from '../../models/componentType';
+import { Font } from 'showed/lib/theme/models/font';
 
 export default class ComponentRepository
     implements ComponentRepositoryInterface
@@ -25,7 +26,6 @@ export default class ComponentRepository
         componentType: ComponentType;
         title: string;
         content: string;
-        link?: string;
         position: number;
     }): Promise<Component> {
         return this.database.create<Component>(ComponentModel, componentData);
@@ -39,6 +39,7 @@ export default class ComponentRepository
             link?: string;
             position: number;
             width?: number;
+            font?: Font;
         }
     ): Promise<Component> {
         return this.database.findByIdAndUpdate<Component>(

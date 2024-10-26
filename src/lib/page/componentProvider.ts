@@ -3,6 +3,7 @@ import type ComponentRepository from 'showed/lib/page/componentRepository';
 import type { Component } from 'showed/lib/page/models/component';
 import { SortDirection } from './models/sortDirection';
 import { ComponentType } from './models/componentType';
+import { Font } from '../theme/models/font';
 
 export default class ComponentProvider implements ComponentProviderInterface {
     constructor(private repository: ComponentRepository) {
@@ -13,7 +14,6 @@ export default class ComponentProvider implements ComponentProviderInterface {
         componentType: ComponentType;
         content: string;
         title: string;
-        link: string;
         position: number;
     }): Promise<Component> {
         return this.repository.createComponent(componentData);
@@ -21,11 +21,12 @@ export default class ComponentProvider implements ComponentProviderInterface {
     public async updateComponent(
         id: string,
         update: {
-            link: string;
             title: string;
             content: string;
             position: number;
-            width: number;
+            link?: string;
+            width?: number;
+            font?: Font;
         }
     ): Promise<Component> {
         return this.repository.updateComponent(id, update);

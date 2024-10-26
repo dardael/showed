@@ -1,5 +1,6 @@
 import { Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import FontSelect from 'showed/components/core/font/fontSelect';
 import SelectInput from 'showed/components/core/form/inputs/selectInput';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { getPages } from 'showed/controllers/page/pageController';
@@ -31,6 +32,11 @@ export default function PageLinkButtonData({
                 <Spinner size='xl' />
             ) : (
                 <>
+                    <FontSelect
+                        name='font'
+                        label='Police'
+                        defaultValue={component.font?.toString()}
+                    />
                     <TextInput
                         isRequired
                         name='content'

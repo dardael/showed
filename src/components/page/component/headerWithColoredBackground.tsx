@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import { ThemeContext } from 'showed/app/providers';
+import getFontFamily from 'showed/components/core/font/font';
 
 export default function HeaderWithColoredBackground({
     component,
@@ -20,6 +21,7 @@ export default function HeaderWithColoredBackground({
             color={'white'}
             borderRadius={'10px'}
             key={component._id}
+            fontFamily={getFontFamily(component.font)}
             dangerouslySetInnerHTML={{
                 __html: component.content,
             }}

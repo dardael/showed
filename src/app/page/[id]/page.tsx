@@ -8,6 +8,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     const response = await getPages();
     const page = response.find((page) => page.urlPart === params.id);
     const blocks = await getBlocks(page?._id as string);
+    console.log(page?.soundId);
     return (
         <Box>
             {page?.soundId && <SoundPlayer soundId={page?.soundId as string} />}
