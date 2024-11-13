@@ -16,6 +16,7 @@ export default function IconData({ component }: { component: Component }) {
                     },
                     { label: 'Coeur', value: 'GiHearts' },
                     { label: 'Couple', value: 'GiLovers' },
+                    { label: 'Maison', value: 'BsHouseHeartFill' },
                 ]}
             />
         </>
