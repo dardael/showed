@@ -11,6 +11,7 @@ import { Container } from 'typedi';
 export async function savePage(data: FormData): Promise<Page> {
     const id = data.get('id')?.toString();
     const title = data.get('title')?.toString();
+    const width = data.get('width')?.toString();
     const position = data.get('position')?.toString();
     const soundId = data.get('soundId')?.toString();
     if (!id) {
@@ -24,6 +25,7 @@ export async function savePage(data: FormData): Promise<Page> {
     const provider: PageProvider = Container.get('PageProvider');
     return provider.updatePage(id, {
         title,
+        width: width ? Number.parseInt(width) : 0,
         position: Number.parseInt(position),
         soundId,
     });

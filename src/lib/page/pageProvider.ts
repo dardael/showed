@@ -27,7 +27,12 @@ export default class PageProvider implements PageProviderInterface {
     }
     public async updatePage(
         id: string,
-        update: { title: string; position: number; soundId?: string }
+        update: {
+            title: string;
+            width?: number;
+            position: number;
+            soundId?: string;
+        }
     ): Promise<Page> {
         return this.repository.updatePage(id, {
             ...update,

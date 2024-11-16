@@ -6,6 +6,7 @@ type Page = {
     urlPart: string;
     position: number;
     soundId?: string;
+    width?: number;
 };
 const PageSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
@@ -13,6 +14,7 @@ const PageSchema = new mongoose.Schema({
     urlPart: { type: String, required: true },
     position: { type: Number, required: true },
     soundId: { type: String },
+    width: { type: Number },
 });
 
 let PageModel: Model<Page> = mongoose.models.Page;

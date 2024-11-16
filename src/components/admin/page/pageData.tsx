@@ -13,6 +13,7 @@ import BlockData from 'showed/components/admin/page/block/blockData';
 import { FileType } from 'showed/components/core/input/fileType';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import { getFile } from 'showed/controllers/image/imageController';
+import NumberInput from 'showed/components/core/form/inputs/numberInput';
 
 export default function PageData({
     page,
@@ -161,6 +162,12 @@ export default function PageData({
                             defaultValue={initialFilePath}
                             fileType={FileType.AUDIO}
                             allowedFileExtensions={['mp3', 'mp4', 'wav']}
+                        />
+                        <NumberInput
+                            name='width'
+                            label='Largeur'
+                            placeholder='Largeur de la page'
+                            defaultValue={page?.width}
                         />
                     </SaveForm>
                     <Box
