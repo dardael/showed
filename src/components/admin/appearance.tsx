@@ -12,8 +12,13 @@ import FileInput from '../core/form/inputs/fileInput';
 import TextInput from '../core/form/inputs/textInput';
 import CheckBoxInput from '../core/form/inputs/checkBoxInput';
 import { FileType } from '../core/input/fileType';
+import { WebsiteMode } from 'showed/lib/theme/models/websiteMode';
+import SelectInput from '../core/form/inputs/selectInput';
 export default function Appearance() {
-    const [theme, setTheme] = useState<Theme>({ color: Color.gray });
+    const [theme, setTheme] = useState<Theme>({
+        color: Color.gray,
+        websiteMode: WebsiteMode.ONLINE_STOREFRONT,
+    });
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [icon, setIcon] = useState<File | null>(null);
     const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
@@ -65,6 +70,20 @@ export default function Appearance() {
                             colors={Object.keys(Color).map(
                                 (color) => getThemeColor(color as Color)[500]
                             )}
+                        />
+                        <SelectInput
+                            name='websiteMode'
+                            label='Mode'
+                            defaultValue={theme.websiteMode}
+                            options={[
+                                WebsiteMode.ONLINE_STOREFRONT,
+                                WebsiteMode.INVITATION,
+                            ].map((websiteMode) => ({
+                                label: WebsiteMode.getWebsiteModeLabel(
+                                    websiteMode
+                                ),
+                                value: websiteMode,
+                            }))}
                         />
                         <FileInput
                             defaultValue={'/favicon.ico'}

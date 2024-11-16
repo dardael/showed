@@ -2,6 +2,7 @@ import ProviderInterface from 'showed/lib/theme/service/provider';
 import type Repository from 'showed/lib/theme/repository';
 import type { Theme } from 'showed/lib/theme/models/theme';
 import { Color } from './models/color';
+import { WebsiteMode } from './models/websiteMode';
 
 export default class Provider implements ProviderInterface {
     constructor(private repository: Repository) {
@@ -10,6 +11,7 @@ export default class Provider implements ProviderInterface {
 
     public async createTheme(themeData: {
         color: Color;
+        websiteMode: WebsiteMode;
         title?: string;
         description?: string;
         isMenuHidden?: boolean;
@@ -21,6 +23,7 @@ export default class Provider implements ProviderInterface {
         id: string,
         update: {
             color: Color;
+            websiteMode: WebsiteMode;
             description?: string;
             title?: string;
             isMenuHidden?: boolean;

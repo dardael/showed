@@ -3,6 +3,7 @@ import type { Theme } from 'showed/lib/theme/models/theme';
 import RepositoryInterface from 'showed/lib/theme/repository';
 import type Database from 'showed/lib/core/database/service/database';
 import { Color } from '../../models/color';
+import { WebsiteMode } from '../../models/websiteMode';
 
 export default class Repository implements RepositoryInterface {
     constructor(private database: Database) {
@@ -18,6 +19,7 @@ export default class Repository implements RepositoryInterface {
 
     public async createTheme(themeData: {
         color: Color;
+        websiteMode: WebsiteMode;
         title?: string;
         description?: string;
         isMenuHidden?: boolean;
@@ -29,6 +31,7 @@ export default class Repository implements RepositoryInterface {
         id: string,
         themeData: {
             color: Color;
+            websiteMode: WebsiteMode;
             title?: string;
             description?: string;
             isMenuHidden?: boolean;

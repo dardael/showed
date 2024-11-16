@@ -3,6 +3,7 @@ import getThemeColor from 'showed/components/core/theme/color';
 import 'showed/lib/core/dependencyInjection/container';
 import { Color } from 'showed/lib/theme/models/color';
 import type { Theme } from 'showed/lib/theme/models/theme';
+import { WebsiteMode } from 'showed/lib/theme/models/websiteMode';
 import Provider from 'showed/lib/theme/provider';
 import { Container } from 'typedi';
 
@@ -14,6 +15,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
     }
     const provider: Provider = Container.get('ThemeProvider');
     const color = getColorFromHex(hexColor);
+    const websiteMode = data.get('websiteMode')?.toString() as WebsiteMode;
     const title = data.get('title')?.toString();
     const description = data.get('description')?.toString();
     const isMenuHidden = Boolean(data.get('isMenuHidden'));
@@ -21,6 +23,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
     if (id) {
         updatedTheme = await provider.updateTheme(id, {
             color,
+            websiteMode,
             title,
             description,
             isMenuHidden,
@@ -28,6 +31,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
     } else {
         updatedTheme = await provider.createTheme({
             color,
+            websiteMode,
             title,
             description,
             isMenuHidden,
@@ -39,7 +43,9 @@ export async function saveTheme(data: FormData): Promise<Theme> {
 export async function getTheme(): Promise<Theme> {
     const provider: Provider = Container.get('ThemeProvider');
     const theme = await provider.getTheme();
-    return theme ? theme : { color: Color.gray };
+    return theme
+        ? theme
+        : { color: Color.gray, websiteMode: WebsiteMode.ONLINE_STOREFRONT };
 }
 
 function getColorFromHex(hex: string): Color {

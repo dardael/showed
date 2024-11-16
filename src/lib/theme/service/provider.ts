@@ -1,9 +1,11 @@
 import type { Theme } from 'showed/lib/theme/models/theme';
 import { Color } from '../models/color';
+import { WebsiteMode } from '../models/websiteMode';
 
 export default interface Provider {
     createTheme(themeData: {
         color: Color;
+        websiteMode: WebsiteMode;
         description?: string;
         title?: string;
         isMenuHidden?: boolean;
@@ -12,6 +14,7 @@ export default interface Provider {
         id: string,
         update: {
             color: Color;
+            websiteMode: WebsiteMode;
             description?: string;
             title?: string;
             isMenuHidden?: boolean;
