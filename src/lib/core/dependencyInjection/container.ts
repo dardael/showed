@@ -5,9 +5,11 @@ import ThemeProvider from 'showed/lib/theme/provider';
 import MaintainerRepository from 'showed/lib/maintainer/bridge/database/repository';
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/pageRepository';
+import PersonRepository from 'showed/lib/invitation/bridge/database/personRepository';
 import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
 import BlockRepository from 'showed/lib/page/bridge/database/blockRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
+import PersonProvider from 'showed/lib/invitation/personProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
@@ -55,6 +57,10 @@ const blockRepository = new BlockRepository(database, componentRepository);
 const blockRepositoryToken = 'BlockRepository';
 Container.set(blockRepositoryToken, blockRepository);
 
+const personRepository = new PersonRepository(database);
+const personRepositoryToken = 'PersonRepository';
+Container.set(personRepositoryToken, personRepository);
+
 const pageProvider = new PageProvider(
     pageRepository,
     blockRepository,
@@ -70,6 +76,10 @@ Container.set(blockProviderToken, blockProvider);
 const componentProvider = new ComponentProvider(componentRepository);
 const componentProviderToken = 'ComponentProvider';
 Container.set(componentProviderToken, componentProvider);
+
+const personProvider = new PersonProvider(personRepository);
+const personProviderToken = 'PersonProvider';
+Container.set(personProviderToken, personProvider);
 
 const socialNetworkRepository = new SocialNetworkRepository(database);
 const socialNetworkRepositoryToken = 'SocialNetworkRepository';

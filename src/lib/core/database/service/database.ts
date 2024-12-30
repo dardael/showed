@@ -7,6 +7,7 @@ export default interface Database {
             limit?: number;
             model?: any;
             sort?: any;
+            isLike?: boolean;
         }
     ): Promise<U[]>;
     create<U>(model: Model<U>, data: any): Promise<U>;

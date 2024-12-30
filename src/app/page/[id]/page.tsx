@@ -1,8 +1,10 @@
 import { Box, Center } from '@chakra-ui/react';
 import { SoundPlayer } from 'showed/components/core/player/soundPlayer';
 import Block from 'showed/components/page/block';
+import InvitationBlock from 'showed/components/page/invitationBlock';
 import { getBlocks } from 'showed/controllers/page/blockController';
 import { getPages } from 'showed/controllers/page/pageController';
+import { BlockType } from 'showed/lib/page/models/blockType';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const response = await getPages();
@@ -17,7 +19,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <SoundPlayer soundId={page?.soundId as string} />
                     )}
                     {blocks.map((block) => (
-                        <Block key={block._id as string} block={block} />
+                        <>
+                            {(!block.blockType ||
+                                block.blockType === BlockType.VERTICAL) && (
+                                <Block
+                                    key={block._id as string}
+                                    block={block}
+                                />
+                            )}
+                            {block.blockType === BlockType.INVITATION && (
+                                <InvitationBlock
+                                    key={block._id as string}
+                                    block={block}
+                                />
+                            )}
+                        </>
                     ))}
                 </Box>
             )}
@@ -32,7 +48,21 @@ export default async function Page({ params }: { params: { id: string } }) {
                             <SoundPlayer soundId={page?.soundId as string} />
                         )}
                         {blocks.map((block) => (
-                            <Block key={block._id as string} block={block} />
+                            <>
+                                {(!block.blockType ||
+                                    block.blockType === BlockType.VERTICAL) && (
+                                    <Block
+                                        key={block._id as string}
+                                        block={block}
+                                    />
+                                )}
+                                {block.blockType === BlockType.INVITATION && (
+                                    <InvitationBlock
+                                        key={block._id as string}
+                                        block={block}
+                                    />
+                                )}
+                            </>
                         ))}
                     </Box>
                 </Center>

@@ -2,7 +2,6 @@ import DatabaseInterface from 'showed/lib/core/database/service/database';
 import connectToDb from 'showed/lib/core/database/connection';
 import { Model } from 'mongoose';
 import { nanoid } from 'nanoid';
-import { any } from 'jest-mock-extended';
 
 export default class Database implements DatabaseInterface {
     public async find<U>(
@@ -11,19 +10,29 @@ export default class Database implements DatabaseInterface {
             limit?: number;
             model?: any;
             sort?: any;
+            isLike?: boolean;
         }
     ): Promise<U[]> {
         await connectToDb();
 
         const limit = filter.limit ?? 10;
-
-        const foundItems = await model
-            .find(filter.model)
-            .limit(limit)
-            .sort(filter.sort)
-            .lean()
-            .exec();
-
+        let foundItems;
+        if (filter.isLike) {
+            foundItems = await model
+                .find(filter.model)
+                .collation({ locale: 'en_US', strength: 1 })
+                .limit(limit)
+                .sort(filter.sort)
+                .lean()
+                .exec();
+        } else {
+            foundItems = await model
+                .find(filter.model)
+                .limit(limit)
+                .sort(filter.sort)
+                .lean()
+                .exec();
+        }
         return foundItems as U[];
     }
 
@@ -55,6 +64,7 @@ export default class Database implements DatabaseInterface {
 
         const updatedObject = await model.findByIdAndUpdate(id, data, {
             new: true,
+            overwrite: true,
         });
         return updatedObject?.toObject() as U;
     }

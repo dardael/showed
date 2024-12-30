@@ -1,4 +1,11 @@
-import { Box, Button, Divider, Spinner, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Divider,
+    Flex,
+    Spinner,
+    useToast,
+} from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
@@ -14,6 +21,9 @@ import { FileType } from 'showed/components/core/input/fileType';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import { getFile } from 'showed/controllers/image/imageController';
 import NumberInput from 'showed/components/core/form/inputs/numberInput';
+import DropdownButton from 'showed/components/core/button/dropdownButton';
+import { BlockType } from 'showed/lib/page/models/blockType';
+import InvitationBlockData from './block/invitationBlockData';
 
 export default function PageData({
     page,
@@ -57,10 +67,12 @@ export default function PageData({
     const notification = new Notification(useToast());
     const [blocks, setBlocks] = useState<Block[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const addNewBlock = async () => {
+    const addNewBlock = async (blockType: BlockType) => {
         const newBlock = await BlockController.createBlock(
             blocks.length + 1,
-            page._id as string
+            page._id as string,
+            undefined,
+            blockType
         );
         blocks.push(newBlock);
         setBlocks([...blocks]);
@@ -181,35 +193,72 @@ export default function PageData({
                         paddingLeft={'20px'}
                         paddingRight={'20px'}
                     >
-                        <Button
-                            title='Ajouter un block'
-                            aria-label={'Ajouter un block'}
-                            leftIcon={<FaPlus />}
-                            onClick={addNewBlock}
-                            position='absolute'
-                            right='70px'
-                        >
-                            Ajouter un block
-                        </Button>
+                        <Flex direction={'row-reverse'} gap={'10px'}>
+                            <DropdownButton
+                                label={'Ajouter un block'}
+                                icon={<FaPlus />}
+                                onSelectedItem={addNewBlock}
+                                items={[
+                                    {
+                                        key: BlockType.VERTICAL,
+                                        label: BlockType.getBlockTypeLabel(
+                                            BlockType.VERTICAL
+                                        ),
+                                    },
+                                    {
+                                        key: BlockType.INVITATION,
+                                        label: BlockType.getBlockTypeLabel(
+                                            BlockType.INVITATION
+                                        ),
+                                    },
+                                ]}
+                            />
+                        </Flex>
                         <Box paddingTop={'55px'}>
                             <DynamicAccordion
                                 elements={blocks.map((block) => ({
                                     reference: block,
                                     title: block.title,
                                     content: (
-                                        <BlockData
-                                            block={block}
-                                            onBlockChange={async (
-                                                data: FormData
-                                            ) => {
-                                                const pendingSave =
-                                                    BlockController.saveBlock(
-                                                        data
-                                                    );
-                                                pendingSave.then(updateBlock);
-                                                return pendingSave;
-                                            }}
-                                        />
+                                        <>
+                                            {(!block.blockType ||
+                                                block.blockType ===
+                                                    BlockType.VERTICAL) && (
+                                                <BlockData
+                                                    block={block}
+                                                    onBlockChange={async (
+                                                        data: FormData
+                                                    ) => {
+                                                        const pendingSave =
+                                                            BlockController.saveBlock(
+                                                                data
+                                                            );
+                                                        pendingSave.then(
+                                                            updateBlock
+                                                        );
+                                                        return pendingSave;
+                                                    }}
+                                                />
+                                            )}
+                                            {block.blockType ===
+                                                BlockType.INVITATION && (
+                                                <InvitationBlockData
+                                                    block={block}
+                                                    onBlockChange={async (
+                                                        data: FormData
+                                                    ) => {
+                                                        const pendingSave =
+                                                            BlockController.saveBlock(
+                                                                data
+                                                            );
+                                                        pendingSave.then(
+                                                            updateBlock
+                                                        );
+                                                        return pendingSave;
+                                                    }}
+                                                />
+                                            )}
+                                        </>
                                     ),
                                     buttons: {
                                         sort: {
