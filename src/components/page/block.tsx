@@ -18,6 +18,7 @@ export default async function Block({ block }: { block: BlockModel }) {
     }
     return (
         <Box
+            flexGrow={1}
             backgroundImage={backgroundImage}
             backgroundSize={'cover'}
             backgroundRepeat={'no-repeat'}
