@@ -5,6 +5,11 @@ export default interface PersonProvider {
         name: string;
         surname: string;
     }): Promise<Person[]>;
+    savePersonInCache(filters: {
+        name: string;
+        surname: string;
+    }): Promise<void>;
+    getPersonInCache(): Promise<Person | undefined>;
     updateFamilyMembers(
         familyMembers: {
             personId: string;

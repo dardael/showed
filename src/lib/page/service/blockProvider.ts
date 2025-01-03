@@ -19,6 +19,8 @@ export default interface BlockProvider {
             title: string;
             backgroundImageId?: string;
             position: number;
+            isVisibleOnlyWhenInvitedToMeal: boolean;
+            isVisibleOnlyWhenInvitedToReception: boolean;
             hasTransparentBackground: boolean;
         }
     ): Promise<Block>;

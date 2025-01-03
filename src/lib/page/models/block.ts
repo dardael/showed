@@ -9,6 +9,8 @@ type Block = {
     parentBlockId?: string;
     hasTransparentBackground: boolean;
     blockType?: string;
+    isVisibleOnlyWhenInvitedToReception?: boolean;
+    isVisibleOnlyWhenInvitedToMeal?: boolean;
 };
 const BlockSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
@@ -19,6 +21,8 @@ const BlockSchema = new mongoose.Schema({
     title: { type: String, required: true },
     backgroundImageId: { type: String },
     blockType: { type: String },
+    isVisibleOnlyWhenInvitedToReception: { type: Boolean },
+    isVisibleOnlyWhenInvitedToMeal: { type: Boolean },
 });
 
 let BlockModel: Model<Block> = mongoose?.models?.Block;

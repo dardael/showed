@@ -7,6 +7,7 @@ import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import PageProvider from 'showed/lib/page/pageProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import { Container } from 'typedi';
+import { revalidatePath } from 'next/cache';
 
 export async function savePage(data: FormData): Promise<Page> {
     const id = data.get('id')?.toString();
@@ -56,4 +57,13 @@ export async function movePage(
 ): Promise<void> {
     const provider: PageProvider = Container.get('PageProvider');
     provider.movePage(page, direction);
+}
+
+export async function reloadPage(id: string): Promise<void> {
+    const provider: PageProvider = Container.get('PageProvider');
+    const page = (await provider.getPages()).find((p) => p._id === id);
+    if (!page) {
+        return await Promise.reject(new Error('Page not found'));
+    }
+    revalidatePath('/page/' + page.urlPart + '?id=' + page.urlPart);
 }

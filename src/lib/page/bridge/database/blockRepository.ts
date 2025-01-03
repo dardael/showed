@@ -40,6 +40,8 @@ export default class BlockRepository implements BlockRepositoryInterface {
         id: string,
         blockData: {
             title?: string;
+            isVisibleOnlyWhenInvitedToMeal?: boolean;
+            isVisibleOnlyWhenInvitedToReception?: boolean;
             hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;

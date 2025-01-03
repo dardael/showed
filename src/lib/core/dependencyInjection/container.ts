@@ -14,12 +14,17 @@ import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
 import SocialNetworkProvider from 'showed/lib/socialNetwork/provider';
+import Cache from 'showed/lib/core/cache/cache';
 import { Container } from 'typedi';
 import Database from 'showed/lib/core/database/database';
 
 const database = new Database();
 const databaseToken = 'Database';
 Container.set(databaseToken, database);
+
+const cache = new Cache();
+const cacheToken = 'Cache';
+Container.set(cacheToken, cache);
 
 const fileRepository = new FileRepository(database);
 const fileRepositoryToken = 'FileRepository';
@@ -77,7 +82,7 @@ const componentProvider = new ComponentProvider(componentRepository);
 const componentProviderToken = 'ComponentProvider';
 Container.set(componentProviderToken, componentProvider);
 
-const personProvider = new PersonProvider(personRepository);
+const personProvider = new PersonProvider(personRepository, cache);
 const personProviderToken = 'PersonProvider';
 Container.set(personProviderToken, personProvider);
 

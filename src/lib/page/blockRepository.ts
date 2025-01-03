@@ -17,6 +17,8 @@ export default interface BlockRepository {
     updateBlock(
         id: string,
         blockData: {
+            isVisibleOnlyWhenInvitedToMeal?: boolean;
+            isVisibleOnlyWhenInvitedToReception?: boolean;
             hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;

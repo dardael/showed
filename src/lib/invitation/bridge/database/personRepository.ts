@@ -12,14 +12,23 @@ export default class PersonRepository implements PersonRepositoryInterface {
         name: string;
         surname: string;
     }): Promise<Person[]> {
-        const user = await this.database.find<Person>(PersonModel, {
-            model: filters,
-            isLike: true,
-        });
+        const user = await this.getPerson(filters);
         const familyMembers = await this.database.find<Person>(PersonModel, {
-            model: { familyId: user[0].familyId as String },
+            model: { familyId: user.familyId as String },
         });
         return familyMembers;
+    }
+
+    public async getPerson(filters: {
+        name: string;
+        surname: string;
+    }): Promise<Person> {
+        return (
+            await this.database.find<Person>(PersonModel, {
+                model: filters,
+                isLike: true,
+            })
+        )[0];
     }
     public async updateFamilyMembers(
         familyMembers: {

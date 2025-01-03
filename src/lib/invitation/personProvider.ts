@@ -1,10 +1,15 @@
 import PersonRepository from './personRepository';
 import PersonProviderInterface from './service/personProvider';
 import { Person } from './models/person';
+import Cache from '../core/cache/service/cache';
 
 export default class PersonProvider implements PersonProviderInterface {
-    constructor(private repository: PersonRepository) {
+    constructor(
+        private repository: PersonRepository,
+        private cache: Cache
+    ) {
         this.repository = repository;
+        this.cache = cache;
     }
 
     public getFamilyMembers(filters: {
@@ -12,6 +17,21 @@ export default class PersonProvider implements PersonProviderInterface {
         surname: string;
     }): Promise<Person[]> {
         return this.repository.getFamilyMembers(filters);
+    }
+
+    public savePersonInCache(filters: {
+        name: string;
+        surname: string;
+    }): Promise<void> {
+        const promise = this.repository
+            .getPerson(filters)
+            .then((person) => this.cache.set<Person>('person', person));
+        return promise;
+    }
+
+    public getPersonInCache(): Promise<Person | undefined> {
+        const person = this.cache.get<Person>('person');
+        return Promise.resolve(person);
     }
 
     public updateFamilyMembers(

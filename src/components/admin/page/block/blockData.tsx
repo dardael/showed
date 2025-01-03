@@ -17,6 +17,7 @@ import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 import { FileType } from 'showed/components/core/input/fileType';
 import { BlockType } from 'showed/lib/page/models/blockType';
 import DropdownButton from 'showed/components/core/button/dropdownButton';
+import SwitchInput from 'showed/components/core/form/inputs/switchInput';
 
 export default function BlockData({
     block,
@@ -225,6 +226,18 @@ export default function BlockData({
                             name='hasTransparentBackground'
                             label='Fond transparent'
                             defaultValue={block.hasTransparentBackground}
+                        />
+                        <SwitchInput
+                            name='isVisibleOnlyWhenInvitedToMeal'
+                            label="Visible seulement si invité au vin d'honneur"
+                            defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
+                        />
+                        <SwitchInput
+                            name='isVisibleOnlyWhenInvitedToReception'
+                            label='Visible seulement si invité au repas'
+                            defaultValue={
+                                block.isVisibleOnlyWhenInvitedToReception
+                            }
                         />
                     </SaveForm>
                     <Box

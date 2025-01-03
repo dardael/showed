@@ -5,6 +5,7 @@ export default interface PersonRepository {
         name: string;
         surname: string;
     }): Promise<Person[]>;
+    getPerson(filters: { name: string; surname: string }): Promise<Person>;
     updateFamilyMembers(
         familyMembers: {
             personId: string;

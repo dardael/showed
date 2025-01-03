@@ -15,6 +15,13 @@ export async function saveBlock(data: FormData): Promise<Block> {
     const hasTransparentBackground = Boolean(
         data.get('hasTransparentBackground')
     );
+    const isVisibleOnlyWhenInvitedToMeal = Boolean(
+        data.get('isVisibleOnlyWhenInvitedToMeal')
+    );
+    const isVisibleOnlyWhenInvitedToReception = Boolean(
+        data.get('isVisibleOnlyWhenInvitedToReception')
+    );
+
     if (!id) {
         return await Promise.reject(new Error('Block id is missing'));
     }
@@ -27,6 +34,8 @@ export async function saveBlock(data: FormData): Promise<Block> {
         title,
         position: Number.parseInt(position),
         hasTransparentBackground,
+        isVisibleOnlyWhenInvitedToMeal,
+        isVisibleOnlyWhenInvitedToReception,
     });
 }
 

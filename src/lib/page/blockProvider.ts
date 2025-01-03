@@ -30,6 +30,8 @@ export default class BlockProvider implements BlockProviderInterface {
         update: {
             title: string;
             backgroundImageId?: string;
+            isVisibleOnlyWhenInvitedToMeal: boolean;
+            isVisibleOnlyWhenInvitedToReception: boolean;
             position: number;
             hasTransparentBackground: boolean;
         }
