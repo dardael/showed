@@ -113,7 +113,7 @@ export default class BlockProvider implements BlockProviderInterface {
             if (currentElementToMoveIndex === 0) {
                 throw new Error('Cannot move element up');
             }
-            elementToSwitch = blocks[currentElementToMoveIndex - 1];
+            elementToSwitch = elements[currentElementToMoveIndex - 1];
         } else if (sortDirection === SortDirection.DOWN) {
             if (currentElementToMoveIndex === elements.length - 1) {
                 throw new Error('Cannot move element down');
@@ -125,8 +125,7 @@ export default class BlockProvider implements BlockProviderInterface {
 
         elementToMove.position = elementToSwitch.position;
         elementToSwitch.position = currentElementToMoveIndex + 1;
-        console.log(elementToSwitch);
-        console.log(elementToMove);
+
         if (isBlock(elementToSwitch)) {
             await this.repository.updateBlock(elementToSwitch._id as string, {
                 position: elementToSwitch.position,

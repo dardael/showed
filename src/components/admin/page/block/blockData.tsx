@@ -169,6 +169,7 @@ export default function BlockData({
             }
         });
         childElements.sort((a, b) => a.position - b.position);
+        debugger;
         return childElements;
     };
     useEffect(() => {
@@ -446,6 +447,7 @@ export default function BlockData({
                                         ')',
                                     content: isComponent(element) ? (
                                         <ComponentData
+                                            key={element._id}
                                             component={element as Component}
                                             onSave={async (data) => {
                                                 const pendingSave =
@@ -460,6 +462,7 @@ export default function BlockData({
                                         />
                                     ) : (
                                         <BlockData
+                                            key={element._id}
                                             block={element as Block}
                                             onBlockChange={async (
                                                 data: FormData
