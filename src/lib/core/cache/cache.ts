@@ -9,17 +9,9 @@ export default class Cache implements CacheInterface {
         this.userCache = new NodeCache();
     }
     public get<U>(key: string): U | undefined {
-        return this.userCache.get<U>(this.getCacheKey(key));
+        return this.userCache.get<U>(key);
     }
     public set<U>(key: string, value: U): void {
-        this.userCache.set<U>(this.getCacheKey(key), value);
-    }
-
-    private getCacheKey(key: string): string {
-        const sessionId = cookies().get('sessionId')?.value;
-        if (!sessionId) {
-            throw new Error('SessionId is unavailable');
-        }
-        return sessionId + key;
+        this.userCache.set<U>(key, value);
     }
 }

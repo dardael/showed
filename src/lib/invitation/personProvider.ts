@@ -19,18 +19,23 @@ export default class PersonProvider implements PersonProviderInterface {
         return this.repository.getFamilyMembers(filters);
     }
 
-    public savePersonInCache(filters: {
-        name: string;
-        surname: string;
-    }): Promise<void> {
+    public savePersonInCache(
+        sessionId: string,
+        filters: {
+            name: string;
+            surname: string;
+        }
+    ): Promise<void> {
         const promise = this.repository
             .getPerson(filters)
-            .then((person) => this.cache.set<Person>('person', person));
+            .then((person) =>
+                this.cache.set<Person>(sessionId + 'person', person)
+            );
         return promise;
     }
 
-    public getPersonInCache(): Promise<Person | undefined> {
-        const person = this.cache.get<Person>('person');
+    public getPersonInCache(sessionId: string): Promise<Person | undefined> {
+        const person = this.cache.get<Person>(sessionId + 'person');
         return Promise.resolve(person);
     }
 
