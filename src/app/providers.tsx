@@ -47,6 +47,9 @@ export function Providers({
             colors: {
                 Colors,
             },
+
+            initialColorMode: 'light',
+            useSystemColorMode: false,
         }
     );
     return (
