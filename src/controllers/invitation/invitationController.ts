@@ -34,7 +34,7 @@ export async function updateFamilyMembers(
 }
 
 export async function savePersonInCache(data: FormData): Promise<void> {
-    const sessionId = await getSessionId();
+    const sessionId = (await getSessionId(true)) as string;
     const name = data.get('name')?.toString() as string;
     const surname = data.get('surname')?.toString() as string;
     const personService: PersonProvider = Container.get('PersonProvider');
@@ -44,5 +44,8 @@ export async function savePersonInCache(data: FormData): Promise<void> {
 export async function getPersonInCache(): Promise<Person | undefined> {
     const personService: PersonProvider = Container.get('PersonProvider');
     const sessionId = await getSessionId();
+    if (!sessionId) {
+        return undefined;
+    }
     return personService.getPersonInCache(sessionId);
 }
