@@ -21,6 +21,7 @@ export default interface BlockProvider {
             position: number;
             isVisibleOnlyWhenInvitedToMeal: boolean;
             isVisibleOnlyWhenInvitedToReception: boolean;
+            isVisibleOnlyWhenInvitedToTownHall: boolean;
             hasTransparentBackground: boolean;
         }
     ): Promise<Block>;

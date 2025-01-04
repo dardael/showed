@@ -10,6 +10,7 @@ type Person = {
     hasAcceptedMealInvitation?: boolean;
     isInvitedToReception?: boolean;
     hasAcceptedReceptionInvitation?: boolean;
+    isInvitedToTownHall?: boolean;
 };
 const PersonSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
@@ -21,6 +22,7 @@ const PersonSchema = new mongoose.Schema({
     isInvitedToReception: { type: Boolean },
     hasAcceptedMealInvitation: { type: Boolean },
     hasAcceptedReceptionInvitation: { type: Boolean },
+    isInvitedToTownHall: { type: Boolean },
 });
 
 let PersonModel: Model<Person> = mongoose?.models?.Person;

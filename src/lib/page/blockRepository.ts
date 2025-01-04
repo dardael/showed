@@ -19,6 +19,7 @@ export default interface BlockRepository {
         blockData: {
             isVisibleOnlyWhenInvitedToMeal?: boolean;
             isVisibleOnlyWhenInvitedToReception?: boolean;
+            isVisibleOnlyWhenInvitedToTownHall?: boolean;
             hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;

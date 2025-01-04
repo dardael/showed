@@ -21,7 +21,9 @@ export async function saveBlock(data: FormData): Promise<Block> {
     const isVisibleOnlyWhenInvitedToReception = Boolean(
         data.get('isVisibleOnlyWhenInvitedToReception')
     );
-
+    const isVisibleOnlyWhenInvitedToTownHall = Boolean(
+        data.get('isVisibleOnlyWhenInvitedToTownHall')
+    );
     if (!id) {
         return await Promise.reject(new Error('Block id is missing'));
     }
@@ -36,6 +38,7 @@ export async function saveBlock(data: FormData): Promise<Block> {
         hasTransparentBackground,
         isVisibleOnlyWhenInvitedToMeal,
         isVisibleOnlyWhenInvitedToReception,
+        isVisibleOnlyWhenInvitedToTownHall,
     });
 }
 

@@ -6,6 +6,37 @@ import { getPersonInCache } from 'showed/controllers/invitation/invitationContro
 import { getBlocks } from 'showed/controllers/page/blockController';
 import { getPages } from 'showed/controllers/page/pageController';
 import { BlockType } from 'showed/lib/page/models/blockType';
+import { Block as BlockModel } from 'showed/lib/page/models/block';
+import { Person } from 'showed/lib/invitation/models/person';
+
+const fillReceptionDisplayRule = (
+    block: BlockModel,
+    person: Person | undefined
+) => {
+    return (
+        !block.isVisibleOnlyWhenInvitedToReception ||
+        (block.isVisibleOnlyWhenInvitedToReception &&
+            person?.isInvitedToReception)
+    );
+};
+
+const fillMealDisplayRule = (block: BlockModel, person: Person | undefined) => {
+    return (
+        !block.isVisibleOnlyWhenInvitedToMeal ||
+        (block.isVisibleOnlyWhenInvitedToMeal && person?.isInvitedToMeal)
+    );
+};
+
+const fillTownHallDisplayRule = (
+    block: BlockModel,
+    person: Person | undefined
+) => {
+    return (
+        !block.isVisibleOnlyWhenInvitedToTownHall ||
+        (block.isVisibleOnlyWhenInvitedToTownHall &&
+            person?.isInvitedToTownHall)
+    );
+};
 
 export default async function Page({ params }: { params: { id: string } }) {
     const response = await getPages();
@@ -13,18 +44,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     const person = await getPersonInCache();
     const blocks = (await getBlocks(page?._id as string)).filter(
         (block) =>
-            (!block.isVisibleOnlyWhenInvitedToMeal &&
-                !block.isVisibleOnlyWhenInvitedToReception) ||
-            (!block.isVisibleOnlyWhenInvitedToMeal &&
-                block.isVisibleOnlyWhenInvitedToReception &&
-                person?.isInvitedToReception) ||
-            (!block.isVisibleOnlyWhenInvitedToReception &&
-                block.isVisibleOnlyWhenInvitedToMeal &&
-                person?.isInvitedToMeal) ||
-            (block.isVisibleOnlyWhenInvitedToMeal &&
-                person?.isInvitedToMeal &&
-                block.isVisibleOnlyWhenInvitedToReception &&
-                person?.isInvitedToReception)
+            fillReceptionDisplayRule(block, person) &&
+            fillMealDisplayRule(block, person) &&
+            fillTownHallDisplayRule(block, person)
     );
     const blockComponents = blocks.map((block) => (
         <>

@@ -11,6 +11,7 @@ type Block = {
     blockType?: string;
     isVisibleOnlyWhenInvitedToReception?: boolean;
     isVisibleOnlyWhenInvitedToMeal?: boolean;
+    isVisibleOnlyWhenInvitedToTownHall?: boolean;
 };
 const BlockSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
@@ -23,6 +24,7 @@ const BlockSchema = new mongoose.Schema({
     blockType: { type: String },
     isVisibleOnlyWhenInvitedToReception: { type: Boolean },
     isVisibleOnlyWhenInvitedToMeal: { type: Boolean },
+    isVisibleOnlyWhenInvitedToTownHall: { type: Boolean },
 });
 
 let BlockModel: Model<Block> = mongoose?.models?.Block;

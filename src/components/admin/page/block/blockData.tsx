@@ -240,6 +240,13 @@ export default function BlockData({
                                 block.isVisibleOnlyWhenInvitedToReception
                             }
                         />
+                        <SwitchInput
+                            name='isVisibleOnlyWhenInvitedToTownHall'
+                            label='Visible seulement si invité a la mairie'
+                            defaultValue={
+                                block.isVisibleOnlyWhenInvitedToTownHall
+                            }
+                        />
                     </SaveForm>
                     <Box
                         paddingTop={'20px'}

@@ -42,6 +42,7 @@ export default class BlockRepository implements BlockRepositoryInterface {
             title?: string;
             isVisibleOnlyWhenInvitedToMeal?: boolean;
             isVisibleOnlyWhenInvitedToReception?: boolean;
+            isVisibleOnlyWhenInvitedToTownHall?: boolean;
             hasTransparentBackground?: boolean;
             backgroundImageId?: string;
             position: number;
