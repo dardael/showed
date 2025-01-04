@@ -62,7 +62,7 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
         if (familyMembers.length === 0) {
             setMustShowNoUserFoundAlert(true);
         }
-        savePersonInCache(formData);
+        await savePersonInCache(formData);
         reloadPage(block.pageId as string);
     };
 
