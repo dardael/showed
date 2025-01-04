@@ -34,7 +34,7 @@ services:
         depends_on:
             - mongodb
         ports:
-            - '8081:8081'
+            - '8082:8081'
         networks:
             - showed-network
     showed-prod:
