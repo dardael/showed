@@ -15,24 +15,14 @@ export default class Database implements DatabaseInterface {
     ): Promise<U[]> {
         await connectToDb();
 
-        const limit = filter.limit ?? 10;
-        let foundItems;
+        let query = model.find(filter.model).sort(filter.sort);
         if (filter.isLike) {
-            foundItems = await model
-                .find(filter.model)
-                .collation({ locale: 'en_US', strength: 1 })
-                .limit(limit)
-                .sort(filter.sort)
-                .lean()
-                .exec();
-        } else {
-            foundItems = await model
-                .find(filter.model)
-                .limit(limit)
-                .sort(filter.sort)
-                .lean()
-                .exec();
+            query = query.collation({ locale: 'en_US', strength: 1 });
         }
+        if (filter.limit) {
+            query = query.limit(filter.limit);
+        }
+        const foundItems = await query.lean().exec();
         return foundItems as U[];
     }
 
