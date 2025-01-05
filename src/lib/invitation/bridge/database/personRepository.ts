@@ -13,7 +13,6 @@ export default class PersonRepository implements PersonRepositoryInterface {
         surname: string;
     }): Promise<Person[]> {
         const user = await this.getPerson(filters);
-        console.log(user);
         if (!user) {
             return [];
         }
@@ -29,7 +28,10 @@ export default class PersonRepository implements PersonRepositoryInterface {
     }): Promise<Person> {
         return (
             await this.database.find<Person>(PersonModel, {
-                model: filters,
+                model: {
+                    name: filters.name.trim(),
+                    surname: filters.surname.trim(),
+                },
                 isLike: true,
             })
         )[0];
