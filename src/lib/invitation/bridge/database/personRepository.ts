@@ -13,6 +13,10 @@ export default class PersonRepository implements PersonRepositoryInterface {
         surname: string;
     }): Promise<Person[]> {
         const user = await this.getPerson(filters);
+        console.log(user);
+        if (!user) {
+            return [];
+        }
         const familyMembers = await this.database.find<Person>(PersonModel, {
             model: { familyId: user.familyId as String },
         });
