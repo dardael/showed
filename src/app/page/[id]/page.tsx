@@ -1,4 +1,4 @@
-import { Box, Center, Flex } from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 import { SoundPlayer } from 'showed/components/core/player/soundPlayer';
 import Block from 'showed/components/page/block';
 import InvitationBlock from 'showed/components/page/invitationBlock';

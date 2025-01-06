@@ -2,10 +2,10 @@ import mongoose, { Model } from 'mongoose';
 import { LifeStage } from './lifeStage';
 type Person = {
     _id?: string;
-    familyId: string;
-    name: string;
-    surname: string;
-    lifeStage: LifeStage;
+    familyId?: string;
+    name?: string;
+    surname?: string;
+    lifeStage?: LifeStage;
     isInvitedToMeal?: boolean;
     hasAcceptedMealInvitation?: boolean;
     isInvitedToReception?: boolean;
@@ -14,10 +14,10 @@ type Person = {
 };
 const PersonSchema = new mongoose.Schema({
     _id: { type: String, require: true, unique: true },
-    familyId: { type: String, required: true },
-    name: { type: String, required: true },
-    surname: { type: String, required: true },
-    lifeStage: { type: String, required: true },
+    familyId: { type: String },
+    name: { type: String },
+    surname: { type: String },
+    lifeStage: { type: String },
     isInvitedToMeal: { type: Boolean },
     isInvitedToReception: { type: Boolean },
     hasAcceptedMealInvitation: { type: Boolean },

@@ -47,11 +47,12 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
 
         getPersonInCache().then((person) => {
             if (person?._id) {
-                getFamilyMembersFromNameAndSurname(person).then(
-                    (familyMembers) => {
-                        setFamilyMembers(familyMembers);
-                    }
-                );
+                getFamilyMembersFromNameAndSurname({
+                    name: person.name as string,
+                    surname: person.surname as string,
+                }).then((familyMembers) => {
+                    setFamilyMembers(familyMembers);
+                });
             }
             setIsLoading(false);
         });

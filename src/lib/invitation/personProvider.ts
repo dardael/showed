@@ -12,6 +12,14 @@ export default class PersonProvider implements PersonProviderInterface {
         this.cache = cache;
     }
 
+    public async updatePerson(person: Person): Promise<void> {
+        return this.repository.updatePerson(person);
+    }
+
+    public getAllInvitedPeople(): Promise<Person[]> {
+        return this.repository.getAllInvitedPeople();
+    }
+
     public getFamilyMembers(filters: {
         name: string;
         surname: string;
@@ -47,5 +55,13 @@ export default class PersonProvider implements PersonProviderInterface {
         }[]
     ): Promise<void> {
         return this.repository.updateFamilyMembers(familyMembers);
+    }
+
+    public async createPerson(): Promise<Person> {
+        return this.repository.createPerson();
+    }
+
+    public async deletePerson(personId: string): Promise<void> {
+        return this.repository.deletePerson(personId);
     }
 }

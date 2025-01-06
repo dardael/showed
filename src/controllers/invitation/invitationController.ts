@@ -1,10 +1,14 @@
 'use server';
-import { nanoid } from 'nanoid';
 import 'showed/lib/core/dependencyInjection/container';
 import { Person } from 'showed/lib/invitation/models/person';
 import PersonProvider from 'showed/lib/invitation/service/personProvider';
 import { Container } from 'typedi';
 import { getSessionId } from '../cookies/sessionController';
+
+export async function getAllInvitedPeople(): Promise<Person[]> {
+    const personService: PersonProvider = Container.get('PersonProvider');
+    return personService.getAllInvitedPeople();
+}
 
 export async function getFamilyMembers(data: FormData): Promise<Person[]> {
     const name = data.get('name')?.toString() as string;
@@ -31,6 +35,21 @@ export async function updateFamilyMembers(
 ): Promise<void> {
     const personService: PersonProvider = Container.get('PersonProvider');
     return personService.updateFamilyMembers(familyMembers);
+}
+
+export async function updatePerson(person: Person): Promise<void> {
+    const personService: PersonProvider = Container.get('PersonProvider');
+    return personService.updatePerson(person);
+}
+
+export async function createPerson(): Promise<Person> {
+    const personService: PersonProvider = Container.get('PersonProvider');
+    return personService.createPerson();
+}
+
+export async function deletePerson(personId: string): Promise<void> {
+    const personService: PersonProvider = Container.get('PersonProvider');
+    return personService.deletePerson(personId);
 }
 
 export async function savePersonInCache(data: FormData): Promise<void> {

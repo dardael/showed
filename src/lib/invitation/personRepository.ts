@@ -1,6 +1,7 @@
 import { Person } from './models/person';
 
 export default interface PersonRepository {
+    getAllInvitedPeople(): Promise<Person[]>;
     getFamilyMembers(filters: {
         name: string;
         surname: string;
@@ -13,4 +14,7 @@ export default interface PersonRepository {
             hasAcceptedReceptionInvitation: boolean;
         }[]
     ): Promise<void>;
+    updatePerson(person: Person): Promise<void>;
+    createPerson(): Promise<Person>;
+    deletePerson(personId: string): Promise<void>;
 }
