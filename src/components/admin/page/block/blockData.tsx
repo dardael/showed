@@ -169,7 +169,6 @@ export default function BlockData({
             }
         });
         childElements.sort((a, b) => a.position - b.position);
-        debugger;
         return childElements;
     };
     useEffect(() => {
@@ -231,14 +230,14 @@ export default function BlockData({
                         <SwitchInput
                             name='isVisibleOnlyWhenInvitedToMeal'
                             label="Visible seulement si invité au vin d'honneur"
-                            defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
+                            defaultValue={
+                                block.isVisibleOnlyWhenInvitedToReception
+                            }
                         />
                         <SwitchInput
                             name='isVisibleOnlyWhenInvitedToReception'
                             label='Visible seulement si invité au repas'
-                            defaultValue={
-                                block.isVisibleOnlyWhenInvitedToReception
-                            }
+                            defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
                         />
                         <SwitchInput
                             name='isVisibleOnlyWhenInvitedToTownHall'

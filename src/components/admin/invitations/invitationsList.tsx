@@ -183,23 +183,23 @@ export default function InvitationsList() {
                             <Th maxW={'210px'}>
                                 <Switch
                                     onChange={(event) =>
-                                        updatePersonIsInvitedToMeal(
-                                            person,
-                                            event.target.checked
-                                        )
-                                    }
-                                    defaultChecked={person.isInvitedToMeal}
-                                />
-                            </Th>
-                            <Th maxW={'160px'}>
-                                <Switch
-                                    onChange={(event) =>
                                         updatePersonIsInvitedToReception(
                                             person,
                                             event.target.checked
                                         )
                                     }
                                     defaultChecked={person.isInvitedToReception}
+                                />
+                            </Th>
+                            <Th maxW={'160px'}>
+                                <Switch
+                                    onChange={(event) =>
+                                        updatePersonIsInvitedToMeal(
+                                            person,
+                                            event.target.checked
+                                        )
+                                    }
+                                    defaultChecked={person.isInvitedToMeal}
                                 />
                             </Th>
                             <Th>
