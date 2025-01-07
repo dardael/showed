@@ -16,6 +16,7 @@ export default interface PersonProvider {
             surname: string;
         }
     ): Promise<void>;
+    deletePersonInCache(sessionId: string): Promise<void>;
     getPersonInCache(sessionId: string): Promise<Person | undefined>;
     updateFamilyMembers(
         familyMembers: {

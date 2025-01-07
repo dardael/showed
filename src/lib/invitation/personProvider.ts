@@ -42,6 +42,11 @@ export default class PersonProvider implements PersonProviderInterface {
         return promise;
     }
 
+    public async deletePersonInCache(sessionId: string): Promise<void> {
+        this.cache.delete(sessionId + 'person');
+        return Promise.resolve();
+    }
+
     public getPersonInCache(sessionId: string): Promise<Person | undefined> {
         const person = this.cache.get<Person>(sessionId + 'person');
         return Promise.resolve(person);

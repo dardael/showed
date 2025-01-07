@@ -4,6 +4,7 @@ import {
     Button,
     Center,
     Heading,
+    IconButton,
     SimpleGrid,
     Switch,
     Text,
@@ -13,6 +14,7 @@ import { getFile } from 'showed/controllers/image/imageController';
 import { Block as BlockModel } from 'showed/lib/page/models/block';
 import TextInput from '../core/form/inputs/textInput';
 import {
+    deletePersonInCache,
     getFamilyMembers,
     getFamilyMembersFromNameAndSurname,
     getPersonInCache,
@@ -28,6 +30,8 @@ import getFontFamily from '../core/font/font';
 import { ThemeContext } from 'showed/app/providers';
 import { Notification } from '../core/feedback/notification';
 import { reloadPage } from 'showed/controllers/page/pageController';
+import { IoMdLogOut } from 'react-icons/io';
+import { title } from 'process';
 
 export default function InvitationBlock({ block }: { block: BlockModel }) {
     const notification = new Notification(useToast());
@@ -114,6 +118,11 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
         );
     };
 
+    const logout = async () => {
+        await deletePersonInCache();
+        reloadPage(block.pageId as string);
+    };
+
     return (
         <>
             {isLoading && <Box></Box>}
@@ -193,6 +202,15 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                         )}
                         {!!familyMembers.length && (
                             <>
+                                <IconButton
+                                    variant={'ghost'}
+                                    icon={<IoMdLogOut />}
+                                    aria-label={'Se déconnecter'}
+                                    onClick={logout}
+                                    float={'right'}
+                                    size={'lg'}
+                                    title={'Se déconnecter'}
+                                />
                                 <Center>
                                     <Heading
                                         as='h1'

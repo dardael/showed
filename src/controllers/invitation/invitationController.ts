@@ -60,6 +60,12 @@ export async function savePersonInCache(data: FormData): Promise<void> {
     personService.savePersonInCache(sessionId, { name, surname });
 }
 
+export async function deletePersonInCache(): Promise<void> {
+    const sessionId = (await getSessionId(true)) as string;
+    const personService: PersonProvider = Container.get('PersonProvider');
+    personService.deletePersonInCache(sessionId);
+}
+
 export async function getPersonInCache(): Promise<Person | undefined> {
     const personService: PersonProvider = Container.get('PersonProvider');
     const sessionId = await getSessionId();

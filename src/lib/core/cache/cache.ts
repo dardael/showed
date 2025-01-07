@@ -1,5 +1,3 @@
-import { Error } from 'mongoose';
-import { cookies } from 'next/headers';
 import NodeCache from 'node-cache';
 import CacheInterface from 'showed/lib/core/cache/service/cache';
 
@@ -10,6 +8,9 @@ export default class Cache implements CacheInterface {
     }
     public get<U>(key: string): U | undefined {
         return this.userCache.get<U>(key);
+    }
+    public delete(key: string): void {
+        this.userCache.del(key);
     }
     public set<U>(key: string, value: U): void {
         this.userCache.set<U>(key, value);
