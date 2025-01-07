@@ -8,6 +8,7 @@ import {
     TableCaption,
     TableContainer,
     Tbody,
+    Td,
     Th,
     Thead,
     Tr,
@@ -110,7 +111,7 @@ export default function InvitationsList() {
                 <Tbody>
                     {invitedPeople.map((person) => (
                         <Tr key={person._id}>
-                            <Th>
+                            <Td>
                                 <Input
                                     onChange={(event) =>
                                         updatePersonName(
@@ -118,12 +119,11 @@ export default function InvitationsList() {
                                             event.target.value
                                         )
                                     }
-                                    fontWeight={'initial'}
                                     size={'sm'}
                                     defaultValue={person.name}
                                 />
-                            </Th>
-                            <Th>
+                            </Td>
+                            <Td>
                                 <Input
                                     onChange={(event) =>
                                         updatePersonSurname(
@@ -131,12 +131,11 @@ export default function InvitationsList() {
                                             event.target.value
                                         )
                                     }
-                                    fontWeight={'initial'}
                                     size={'sm'}
                                     defaultValue={person.surname}
                                 />
-                            </Th>
-                            <Th maxW={'150px'}>
+                            </Td>
+                            <Td maxW={'150px'}>
                                 <Select
                                     onChange={(event) =>
                                         updatePersonLifeStage(
@@ -144,7 +143,6 @@ export default function InvitationsList() {
                                             event.target.value as LifeStage
                                         )
                                     }
-                                    fontWeight={'initial'}
                                     size={'sm'}
                                     defaultValue={person.lifeStage}
                                 >
@@ -155,8 +153,8 @@ export default function InvitationsList() {
                                         Enfant
                                     </option>
                                 </Select>
-                            </Th>
-                            <Th maxW={'120px'}>
+                            </Td>
+                            <Td maxW={'120px'}>
                                 <Input
                                     onChange={(event) =>
                                         updatePersonFamilyId(
@@ -164,12 +162,11 @@ export default function InvitationsList() {
                                             event.target.value
                                         )
                                     }
-                                    fontWeight={'initial'}
                                     size={'sm'}
                                     defaultValue={person.familyId}
                                 />
-                            </Th>
-                            <Th maxW={'170px'}>
+                            </Td>
+                            <Td maxW={'170px'}>
                                 <Switch
                                     onChange={(event) =>
                                         updatePersonIsInvitedToTownHall(
@@ -179,8 +176,8 @@ export default function InvitationsList() {
                                     }
                                     defaultChecked={person.isInvitedToTownHall}
                                 />
-                            </Th>
-                            <Th maxW={'210px'}>
+                            </Td>
+                            <Td maxW={'210px'}>
                                 <Switch
                                     onChange={(event) =>
                                         updatePersonIsInvitedToReception(
@@ -190,8 +187,8 @@ export default function InvitationsList() {
                                     }
                                     defaultChecked={person.isInvitedToReception}
                                 />
-                            </Th>
-                            <Th maxW={'160px'}>
+                            </Td>
+                            <Td maxW={'160px'}>
                                 <Switch
                                     onChange={(event) =>
                                         updatePersonIsInvitedToMeal(
@@ -201,15 +198,15 @@ export default function InvitationsList() {
                                     }
                                     defaultChecked={person.isInvitedToMeal}
                                 />
-                            </Th>
-                            <Th>
+                            </Td>
+                            <Td>
                                 <IconButton
                                     variant={'ghost'}
                                     aria-label='Supprimer un invité'
                                     icon={<FaTrash />}
                                     onClick={() => cancelInvitation(person)}
                                 />
-                            </Th>
+                            </Td>
                         </Tr>
                     ))}
                 </Tbody>
