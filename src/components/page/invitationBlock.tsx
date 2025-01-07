@@ -160,10 +160,9 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                                             textAlign={'center'}
                                             size={'md'}
                                         >
-                                            Pour pouvoir visualiser votre
-                                            invitation et confirmer votre
-                                            présence ainsi que celle des membres
-                                            de votre famille.
+                                            {
+                                                'Pour pouvoir visualiser votre invitation et confirmer votre présence ainsi que celle des membres de votre famille. Réponse souhaitée avant le 15 février 2025.'
+                                            }
                                         </Text>
                                     </Center>
                                     <SearchForm action={searchInvitedUsers}>
@@ -222,16 +221,19 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                                             {familyMembers[0].isInvitedToMeal &&
                                                 !familyMembers[0]
                                                     .isInvitedToReception &&
-                                                'Nous avons le plaisir de vous convier au repas'}
+                                                'Nous avons le plaisir de vous convier au repas.'}
                                             {!familyMembers[0]
                                                 .isInvitedToMeal &&
                                                 familyMembers[0]
                                                     .isInvitedToReception &&
-                                                "Nous avons le plaisir de vous convier au vin d'honneur"}
+                                                "Nous avons le plaisir de vous convier au vin d'honneur."}
                                             {familyMembers[0].isInvitedToMeal &&
                                                 familyMembers[0]
                                                     .isInvitedToReception &&
-                                                "Nous avons le plaisir de vous convier au vin d'honneur ainsi qu'au repas"}
+                                                "Nous avons le plaisir de vous convier au vin d'honneur ainsi qu'au repas."}
+                                            {
+                                                ' Réponse souhaitée avant le 15 février 2025.'
+                                            }
                                         </Text>
                                     </Center>
                                     {familyMembers.map((person) => (
