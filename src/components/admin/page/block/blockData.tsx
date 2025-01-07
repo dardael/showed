@@ -228,14 +228,14 @@ export default function BlockData({
                             defaultValue={block.hasTransparentBackground}
                         />
                         <SwitchInput
-                            name='isVisibleOnlyWhenInvitedToMeal'
+                            name='isVisibleOnlyWhenInvitedToReception'
                             label="Visible seulement si invité au vin d'honneur"
                             defaultValue={
                                 block.isVisibleOnlyWhenInvitedToReception
                             }
                         />
                         <SwitchInput
-                            name='isVisibleOnlyWhenInvitedToReception'
+                            name='isVisibleOnlyWhenInvitedToMeal'
                             label='Visible seulement si invité au repas'
                             defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
                         />
