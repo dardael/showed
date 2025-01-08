@@ -96,6 +96,19 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
         ]);
     };
 
+    const updateTownHallInvitationResponse = async (
+        personId: string,
+        hasAccepted: boolean
+    ) => {
+        setFamilyMembers([
+            ...familyMembers.map((person) =>
+                person._id === personId
+                    ? { ...person, hasAcceptedTownHallInvitation: hasAccepted }
+                    : person
+            ),
+        ]);
+    };
+
     const submitInvitationResponses = async () => {
         notification.handlePromise(
             updateFamilyMembers(
@@ -106,6 +119,8 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                             !!person.hasAcceptedMealInvitation,
                         hasAcceptedReceptionInvitation:
                             !!person.hasAcceptedReceptionInvitation,
+                        hasAcceptedTownHallInvitation:
+                            !!person.hasAcceptedTownHallInvitation,
                     };
                 })
             ),
@@ -239,16 +254,42 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                                             {familyMembers[0].isInvitedToMeal &&
                                                 !familyMembers[0]
                                                     .isInvitedToReception &&
+                                                !familyMembers[0]
+                                                    .isInvitedToTownHall &&
                                                 'Nous avons le plaisir de vous convier au repas.'}
                                             {!familyMembers[0]
                                                 .isInvitedToMeal &&
                                                 familyMembers[0]
                                                     .isInvitedToReception &&
+                                                !familyMembers[0]
+                                                    .isInvitedToTownHall &&
                                                 "Nous avons le plaisir de vous convier au vin d'honneur."}
                                             {familyMembers[0].isInvitedToMeal &&
                                                 familyMembers[0]
                                                     .isInvitedToReception &&
+                                                !familyMembers[0]
+                                                    .isInvitedToTownHall &&
                                                 "Nous avons le plaisir de vous convier au vin d'honneur ainsi qu'au repas."}
+                                            {familyMembers[0].isInvitedToMeal &&
+                                                familyMembers[0]
+                                                    .isInvitedToTownHall &&
+                                                !familyMembers[0]
+                                                    .isInvitedToReception &&
+                                                "Nous avons le plaisir de vous convier à la mairie ainsi qu'au repas."}
+                                            {familyMembers[0]
+                                                .isInvitedToReception &&
+                                                !familyMembers[0]
+                                                    .isInvitedToMeal &&
+                                                familyMembers[0]
+                                                    .isInvitedToTownHall &&
+                                                "Nous avons le plaisir de vous convier à la mairie ainsi qu'au vin d'honneur."}
+
+                                            {familyMembers[0].isInvitedToMeal &&
+                                                familyMembers[0]
+                                                    .isInvitedToReception &&
+                                                familyMembers[0]
+                                                    .isInvitedToTownHall &&
+                                                "Nous avons le plaisir de vous convier à la mairie, au vin d'honneur ainsi qu'au repas."}
                                             {
                                                 ' Réponse souhaitée avant le 15 février 2025.'
                                             }
@@ -273,6 +314,35 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                                                 paddingLeft={5}
                                                 paddingRight={5}
                                             >
+                                                {person.isInvitedToTownHall && (
+                                                    <Text
+                                                        fontFamily={getFontFamily(
+                                                            Font.ROBOTO_FLEX
+                                                        )}
+                                                        size={'md'}
+                                                    >
+                                                        {'à la mairie'}
+                                                    </Text>
+                                                )}
+                                                {person.isInvitedToTownHall && (
+                                                    <Switch
+                                                        isChecked={
+                                                            person.hasAcceptedTownHallInvitation
+                                                        }
+                                                        title={
+                                                            person.hasAcceptedTownHallInvitation
+                                                                ? 'Présence confirmée'
+                                                                : 'Invitation déclinée'
+                                                        }
+                                                        onChange={(isChecked) =>
+                                                            updateTownHallInvitationResponse(
+                                                                person._id as string,
+                                                                isChecked.target
+                                                                    .checked
+                                                            )
+                                                        }
+                                                    />
+                                                )}
                                                 {person.isInvitedToReception && (
                                                     <Text
                                                         fontFamily={getFontFamily(

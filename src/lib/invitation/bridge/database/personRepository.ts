@@ -63,6 +63,7 @@ export default class PersonRepository implements PersonRepositoryInterface {
             personId: string;
             hasAcceptedMealInvitation: boolean;
             hasAcceptedReceptionInvitation: boolean;
+            hasAcceptedTownHallInvitation: boolean;
         }[]
     ): Promise<void> {
         familyMembers.forEach(async (familyMember) => {
@@ -75,6 +76,8 @@ export default class PersonRepository implements PersonRepositoryInterface {
                         familyMember.hasAcceptedMealInvitation,
                     hasAcceptedReceptionInvitation:
                         familyMember.hasAcceptedReceptionInvitation,
+                    hasAcceptedTownHallInvitation:
+                        familyMember.hasAcceptedTownHallInvitation,
                 }
             );
         });

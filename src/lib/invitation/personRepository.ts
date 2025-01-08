@@ -12,6 +12,7 @@ export default interface PersonRepository {
             personId: string;
             hasAcceptedMealInvitation: boolean;
             hasAcceptedReceptionInvitation: boolean;
+            hasAcceptedTownHallInvitation: boolean;
         }[]
     ): Promise<void>;
     updatePerson(person: Person): Promise<void>;

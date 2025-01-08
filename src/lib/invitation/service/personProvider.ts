@@ -23,6 +23,7 @@ export default interface PersonProvider {
             personId: string;
             hasAcceptedMealInvitation: boolean;
             hasAcceptedReceptionInvitation: boolean;
+            hasAcceptedTownHallInvitation: boolean;
         }[]
     ): Promise<void>;
 }

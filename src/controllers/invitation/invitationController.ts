@@ -31,6 +31,7 @@ export async function updateFamilyMembers(
         personId: string;
         hasAcceptedMealInvitation: boolean;
         hasAcceptedReceptionInvitation: boolean;
+        hasAcceptedTownHallInvitation: boolean;
     }[]
 ): Promise<void> {
     const personService: PersonProvider = Container.get('PersonProvider');

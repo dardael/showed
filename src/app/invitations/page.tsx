@@ -13,6 +13,7 @@ export default function Home() {
                     <Tab>{'Liste des invités à la mairie'}</Tab>
                     <Tab>{"Liste des invités au vin d'honneur"}</Tab>
                     <Tab>{'Liste des invités au repas'}</Tab>
+                    <Tab>{'Liste des invités venant à la mairie'}</Tab>
                     <Tab>{"Liste des invités venant au vin d'honneur"}</Tab>
                     <Tab>{'Liste des invités venant au repas'}</Tab>
                 </TabList>
@@ -53,7 +54,18 @@ export default function Home() {
                             }}
                         />
                     </TabPanel>
-
+                    <TabPanel>
+                        <InvitatedPeople
+                            loadInvitedPeople={async () => {
+                                const invitedPeople =
+                                    await getAllInvitedPeople();
+                                return invitedPeople.filter(
+                                    (person) =>
+                                        person.hasAcceptedTownHallInvitation
+                                );
+                            }}
+                        />
+                    </TabPanel>
                     <TabPanel>
                         <InvitatedPeople
                             loadInvitedPeople={async () => {

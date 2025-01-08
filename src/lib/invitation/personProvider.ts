@@ -57,6 +57,7 @@ export default class PersonProvider implements PersonProviderInterface {
             personId: string;
             hasAcceptedMealInvitation: boolean;
             hasAcceptedReceptionInvitation: boolean;
+            hasAcceptedTownHallInvitation: boolean;
         }[]
     ): Promise<void> {
         return this.repository.updateFamilyMembers(familyMembers);
