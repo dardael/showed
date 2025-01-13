@@ -25,7 +25,7 @@ const nextConfig = {
                         parser: {
                             syntax: 'typescript',
                         },
-                        target: "es2022",
+                        target: 'es2022',
                         transform: {
                             react: {
                                 runtime: 'automatic',

@@ -12,7 +12,14 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "tsc": "tsc",
-        "eslint": "eslint"
+        "eslint": "eslint",
+        "eslint-fix": "eslint --fix"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx,json,md}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
     },
     "engine": {
         "node": ">=16.0.0"
@@ -64,10 +71,14 @@
         "@types/react": "^18.3.3",
         "@types/react-color": "^3.0.12",
         "@types/react-dom": "^18.3.0",
+        "@typescript-eslint/eslint-plugin": "^8.19.1",
+        "@typescript-eslint/parser": "^8.19.1",
         "autoprefixer": "^10.0.1",
         "eslint": "^8",
         "eslint-config-next": "14.0.4",
         "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-jsonc": "^2.18.2",
+        "eslint-plugin-unused-imports": "^4.1.4",
         "husky": "^8.0.3",
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
