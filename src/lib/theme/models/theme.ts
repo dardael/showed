@@ -11,7 +11,7 @@ type Theme = {
     isMenuHidden?: boolean;
 };
 const ThemeSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     color: { type: String, required: true },
     websiteMode: { type: String, required: true },
     title: { type: String },

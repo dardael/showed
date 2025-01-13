@@ -14,7 +14,7 @@ type Block = {
     isVisibleOnlyWhenInvitedToTownHall?: boolean;
 };
 const BlockSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     pageId: { type: String },
     parentBlockId: { type: String },
     position: { type: Number, required: true },

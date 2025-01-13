@@ -7,7 +7,7 @@ type Maintainer = {
     surname?: string;
 };
 const MaintainerSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     name: { type: String },
     surname: { type: String },

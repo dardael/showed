@@ -9,7 +9,7 @@ type Page = {
     width?: number;
 };
 const PageSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     title: { type: String, required: true },
     urlPart: { type: String, required: true },
     position: { type: Number, required: true },

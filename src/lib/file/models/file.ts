@@ -5,7 +5,7 @@ type File = {
     filepath: string;
 };
 const FileSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     filepath: { type: String, required: true },
 });
 

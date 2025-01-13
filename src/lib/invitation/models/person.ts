@@ -14,7 +14,7 @@ type Person = {
     hasAcceptedTownHallInvitation?: boolean;
 };
 const PersonSchema = new mongoose.Schema({
-    _id: { type: String, require: true, unique: true },
+    _id: { type: String, required: true },
     familyId: { type: String },
     name: { type: String },
     surname: { type: String },

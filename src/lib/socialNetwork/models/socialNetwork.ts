@@ -8,7 +8,7 @@ type SocialNetwork = {
     link?: string;
 };
 const SocialNetworkSchema = new mongoose.Schema({
-    _id: { type: String, required: true, unique: true },
+    _id: { type: String, required: true },
     name: { type: String, required: true, unique: true },
     text: { type: String },
     link: { type: String },
