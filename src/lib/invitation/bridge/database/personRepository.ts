@@ -67,7 +67,6 @@ export default class PersonRepository implements PersonRepositoryInterface {
         }[]
     ): Promise<void> {
         familyMembers.forEach(async (familyMember) => {
-            console.log(familyMember);
             await this.database.findByIdAndUpdate<Person>(
                 PersonModel,
                 familyMember.personId,
