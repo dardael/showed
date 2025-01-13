@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer, Link, Center } from '@chakra-ui/react';
+import { Flex, Spacer, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import LinkItem from 'showed/components/footer/entities/link';
 import React from 'react';

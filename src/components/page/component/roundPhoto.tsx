@@ -1,4 +1,4 @@
-import { Avatar, Center } from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
 import { getTheme } from 'showed/controllers/theme/themeController';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';

@@ -31,7 +31,7 @@ export default function SocialNetworkData({
             setIsLoading(false);
         });
     }, [name]);
-    let formParameters = [
+    const formParameters = [
         { key: 'id', value: socialNetwork?._id },
         { key: 'name', value: name },
     ];

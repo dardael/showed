@@ -1,6 +1,5 @@
 'use client';
 import { Button as ChakraButton, Spinner } from '@chakra-ui/react';
-import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getPages } from 'showed/controllers/page/pageController';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';

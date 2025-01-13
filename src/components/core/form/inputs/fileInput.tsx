@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import File from '../../input/file';
 import { FileType } from '../../input/fileType';
 
@@ -6,7 +6,6 @@ export default function FileInput({
     label,
     name,
     defaultValue = null,
-    isRequired = false,
     onChange,
     allowedFileExtensions,
     fileType,

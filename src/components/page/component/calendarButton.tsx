@@ -1,5 +1,5 @@
 'use client';
-import { Center, Button as ChakraButton } from '@chakra-ui/react';
+import { Button as ChakraButton } from '@chakra-ui/react';
 import { FaCalendar } from 'react-icons/fa6';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 

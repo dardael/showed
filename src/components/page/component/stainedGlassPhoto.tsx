@@ -1,4 +1,4 @@
-import { Center, Image } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
 import { getTheme } from 'showed/controllers/theme/themeController';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';

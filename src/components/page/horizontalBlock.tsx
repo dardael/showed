@@ -1,6 +1,6 @@
 import { Box, Center, Flex } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
-import { Block as BlockModel, isBlock } from 'showed/lib/page/models/block';
+import { Block as BlockModel } from 'showed/lib/page/models/block';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import Component from './component';
 import { getComponents } from 'showed/controllers/page/componentController';

@@ -16,7 +16,7 @@ export default function Countdown({
     component: ComponentModel;
 }) {
     const calculateTimeLeft = (endDate: string): CountdownDate => {
-        let difference = +new Date(endDate) - +new Date();
+        const difference = +new Date(endDate) - +new Date();
         let timeLeft = {
             days: 0,
             hours: 0,

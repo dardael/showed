@@ -3,7 +3,6 @@ import type PageRepository from 'showed/lib/page/pageRepository';
 import type BlockRepository from 'showed/lib/page/blockRepository';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
-import { deletePage } from 'showed/controllers/page/pageController';
 import Provider from '../file/provider';
 
 export default class PageProvider implements PageProviderInterface {

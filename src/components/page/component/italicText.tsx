@@ -1,4 +1,4 @@
-import { Center, Heading } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 import getFontFamily from 'showed/components/core/font/font';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 

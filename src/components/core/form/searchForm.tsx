@@ -1,5 +1,5 @@
-import { Box, Button, Input, useToast } from '@chakra-ui/react';
-import { Notification } from '../feedback/notification';
+import { Box, Button, Input } from '@chakra-ui/react';
+import { Mixed } from 'mongoose';
 
 export default function SearchForm({
     children,
@@ -7,8 +7,8 @@ export default function SearchForm({
     parameters = [],
 }: {
     children: React.ReactNode;
-    action: (data: FormData) => Promise<any>;
-    parameters?: { key: string; value: any }[];
+    action: (data: FormData) => Promise<Mixed>;
+    parameters?: { key: string; value: string }[];
 }) {
     return (
         <>

@@ -1,4 +1,4 @@
-import { Box, Center } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
 export default async function Spacer({

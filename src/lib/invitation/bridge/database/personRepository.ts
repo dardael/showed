@@ -39,7 +39,7 @@ export default class PersonRepository implements PersonRepositoryInterface {
             return [];
         }
         const familyMembers = await this.database.find<Person>(PersonModel, {
-            model: { familyId: user.familyId as String },
+            model: { familyId: user.familyId as string },
         });
         return familyMembers;
     }

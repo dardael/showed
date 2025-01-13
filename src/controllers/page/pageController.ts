@@ -1,11 +1,8 @@
 'use server';
 import 'showed/lib/core/dependencyInjection/container';
-import { Component } from 'showed/lib/page/models/component';
-import { ComponentType } from 'showed/lib/page/models/componentType';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import PageProvider from 'showed/lib/page/pageProvider';
-import ComponentProvider from 'showed/lib/page/componentProvider';
 import { Container } from 'typedi';
 import { revalidatePath } from 'next/cache';
 

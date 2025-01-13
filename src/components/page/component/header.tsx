@@ -1,5 +1,5 @@
 'use client';
-import { Center, Heading } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import { ThemeContext } from 'showed/app/providers';

@@ -1,5 +1,5 @@
 'use client';
-import { Button, IconButton } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 import { useState } from 'react';
 import { GiSoundOff, GiSoundOn } from 'react-icons/gi';
 import { getFile } from 'showed/controllers/image/imageController';
