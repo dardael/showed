@@ -21,7 +21,7 @@ export default function PageLinkButton({
             );
             setIsLoading(false);
         });
-    }, []);
+    }, [component.link]);
 
     return (
         <>

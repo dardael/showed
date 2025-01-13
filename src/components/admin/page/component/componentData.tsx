@@ -78,7 +78,7 @@ export default function ComponentData({
         } else {
             setIsLoading(false);
         }
-    }, []);
+    }, [component.content, component.componentType]);
     return (
         <>
             {isLoading ? (

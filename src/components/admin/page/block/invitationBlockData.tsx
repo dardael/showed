@@ -60,7 +60,7 @@ export default function InvitationBlockData({
         } else {
             setIsLoading(false);
         }
-    }, []);
+    }, [block.backgroundImageId]);
     return (
         <>
             {isLoading ? (

@@ -4,7 +4,6 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Center,
     Divider,
     Heading,
     Stack,
@@ -33,7 +32,7 @@ export default function InvitatedPeople({
         loadInvitedPeople().then((people) => {
             setInvitedPeople(people);
         });
-    }, []);
+    }, [loadInvitedPeople]);
     return (
         <>
             <Card>

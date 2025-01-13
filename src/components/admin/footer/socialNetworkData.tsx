@@ -30,7 +30,7 @@ export default function SocialNetworkData({
             setSocialNetwork(foundSocialNetwork);
             setIsLoading(false);
         });
-    }, []);
+    }, [name]);
     let formParameters = [
         { key: 'id', value: socialNetwork?._id },
         { key: 'name', value: name },

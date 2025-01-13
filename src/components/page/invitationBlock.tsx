@@ -31,7 +31,6 @@ import { ThemeContext } from 'showed/app/providers';
 import { Notification } from '../core/feedback/notification';
 import { reloadPage } from 'showed/controllers/page/pageController';
 import { IoMdLogOut } from 'react-icons/io';
-import { title } from 'process';
 
 export default function InvitationBlock({ block }: { block: BlockModel }) {
     const notification = new Notification(useToast());
@@ -60,7 +59,7 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
             }
             setIsLoading(false);
         });
-    }, []);
+    }, [block.backgroundImageId]);
     const { theme } = useContext(ThemeContext);
     const searchInvitedUsers = async (formData: FormData) => {
         const familyMembers = await getFamilyMembers(formData);

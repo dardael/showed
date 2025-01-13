@@ -189,7 +189,7 @@ export default function BlockData({
                 }
             }
         );
-    }, []);
+    }, [block._id, block.backgroundImageId]);
     return (
         <>
             {isLoading ? (

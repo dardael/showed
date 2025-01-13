@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    Divider,
-    Flex,
-    Spinner,
-    useToast,
-} from '@chakra-ui/react';
+import { Box, Divider, Flex, Spinner, useToast } from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
@@ -146,7 +139,7 @@ export default function PageData({
                 }
             }
         );
-    }, []);
+    }, [page.soundId, page._id]);
     return (
         <>
             {isLoading ? (
