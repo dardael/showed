@@ -9,7 +9,7 @@ export default function RichTextEditor({
     initialData,
     onChange,
 }: {
-    initialData: any;
+    initialData?: string;
     onChange: (model: string) => void;
 }) {
     return (
@@ -23,7 +23,7 @@ export default function RichTextEditor({
                     imageUploadMethod: 'POST',
                     imageAllowedTypes: ['jpeg', 'jpg', 'png'],
                     events: {
-                        'image.removed': (image: any) => {
+                        'image.removed': (image: { src: string }[]) => {
                             fetch(image[0].src, {
                                 method: 'DELETE',
                             });

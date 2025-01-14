@@ -1,7 +1,10 @@
 'use server';
 import 'showed/lib/core/dependencyInjection/container';
 import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
-import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
+import {
+    SocialNetworkName,
+    getSocialNetworkName,
+} from 'showed/lib/socialNetwork/models/socialNetworkName';
 import Provider from 'showed/lib/socialNetwork/provider';
 import { Container } from 'typedi';
 
@@ -9,9 +12,7 @@ export async function saveSocialNetwork(
     data: FormData
 ): Promise<SocialNetwork> {
     const id = data.get('id')?.toString();
-    const name = SocialNetworkName.getSocialNetworkName(
-        data.get('name')?.toString()
-    );
+    const name = getSocialNetworkName(data.get('name')?.toString());
     const text = data.get('text')?.toString();
     const link = data.get('link')?.toString();
 

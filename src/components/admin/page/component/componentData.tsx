@@ -1,7 +1,10 @@
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import SaveForm from 'showed/components/core/form/saveForm';
 import { Component } from 'showed/lib/page/models/component';
-import { ComponentType } from 'showed/lib/page/models/componentType';
+import {
+    ComponentType,
+    getComponentTypeLabel,
+} from 'showed/lib/page/models/componentType';
 import RichTextEditorData from 'showed/components/admin/page/component/richTextEditorData';
 import CountdownData from 'showed/components/admin/page/component/coutdownData';
 import HeaderData from './headerData';
@@ -87,7 +90,10 @@ export default function ComponentData({
                 <SaveForm
                     parameters={[
                         { key: 'id', value: component._id },
-                        { key: 'position', value: component.position },
+                        {
+                            key: 'position',
+                            value: component.position.toString(),
+                        },
                     ]}
                     action={handleSubmit}
                 >
@@ -101,7 +107,7 @@ export default function ComponentData({
                     <TextInput
                         name='description'
                         label='Type de composant'
-                        defaultValue={ComponentType.getComponentTypeLabel(
+                        defaultValue={getComponentTypeLabel(
                             component.componentType
                         )}
                         readOnly

@@ -1,18 +1,18 @@
 import Provider from 'showed/lib/page/pageProvider';
-import type PageRepository from 'showed/lib/page/pageRepository';
-import type BlockRepository from 'showed/lib/page/blockRepository';
-import type FileProvider from 'showed/lib/file/provider';
+import type PageRepositoryInterface from 'showed/lib/page/pageRepository';
+import type BlockRepositoryInterface from 'showed/lib/page/blockRepository';
+import type FileProviderInterface from 'showed/lib/file/service/provider';
 
 describe('Provider', () => {
-    let pageRepository: PageRepository;
-    let blockRepository: BlockRepository;
-    let fileProvider: FileProvider;
+    let pageRepository: PageRepositoryInterface;
+    let blockRepository: BlockRepositoryInterface;
+    let fileProvider: FileProviderInterface;
     let provider: Provider;
 
     beforeEach(() => {
-        pageRepository = {} as any;
-        blockRepository = {} as any;
-        fileProvider = {} as any;
+        pageRepository = {} as PageRepositoryInterface;
+        blockRepository = {} as BlockRepositoryInterface;
+        fileProvider = {} as FileProviderInterface;
         provider = new Provider(pageRepository, blockRepository, fileProvider);
     });
 
@@ -20,7 +20,7 @@ describe('Provider', () => {
         const title = 'Test Page 1';
         const expectedUri = 'test-page-1';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });
@@ -29,7 +29,7 @@ describe('Provider', () => {
         const title = 'Test@Page#1';
         const expectedUri = 'test-page-1';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });
@@ -38,7 +38,7 @@ describe('Provider', () => {
         const title = 'Test Page 1';
         const expectedUri = 'test-page-1';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });
@@ -47,7 +47,7 @@ describe('Provider', () => {
         const title = 'TestPage';
         const expectedUri = 'testpage';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });
@@ -55,7 +55,7 @@ describe('Provider', () => {
         const title = 'Áccéntéd';
         const expectedUri = 'accented';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });
@@ -63,7 +63,7 @@ describe('Provider', () => {
         const title = "Test'Page";
         const expectedUri = 'test-page';
 
-        const result = (provider as any).getUriFromPage(title);
+        const result = provider['getUriFromPage'](title);
 
         expect(result).toEqual(expectedUri);
     });

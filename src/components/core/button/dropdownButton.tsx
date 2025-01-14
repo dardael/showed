@@ -9,7 +9,7 @@ export default function DropdownButton({
 }: {
     label: string;
     icon: ReactElement;
-    onSelectedItem: (item: any) => void;
+    onSelectedItem: (itemKey: string) => Promise<void>;
     items: { key: string; label: string }[];
 }) {
     return (

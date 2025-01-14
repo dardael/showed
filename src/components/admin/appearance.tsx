@@ -12,7 +12,10 @@ import FileInput from '../core/form/inputs/fileInput';
 import TextInput from '../core/form/inputs/textInput';
 import CheckBoxInput from '../core/form/inputs/checkBoxInput';
 import { FileType } from '../core/input/fileType';
-import { WebsiteMode } from 'showed/lib/theme/models/websiteMode';
+import {
+    WebsiteMode,
+    getWebsiteModeLabel,
+} from 'showed/lib/theme/models/websiteMode';
 import SelectInput from '../core/form/inputs/selectInput';
 export default function Appearance() {
     const [theme, setTheme] = useState<Theme>({
@@ -79,9 +82,7 @@ export default function Appearance() {
                                 WebsiteMode.ONLINE_STOREFRONT,
                                 WebsiteMode.INVITATION,
                             ].map((websiteMode) => ({
-                                label: WebsiteMode.getWebsiteModeLabel(
-                                    websiteMode
-                                ),
+                                label: getWebsiteModeLabel(websiteMode),
                                 value: websiteMode,
                             }))}
                         />

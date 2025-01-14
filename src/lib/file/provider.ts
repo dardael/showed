@@ -20,7 +20,7 @@ export default class Provider implements ProviderInterface {
         return this.repository.updateFile(id, update);
     }
     public async getFile(id: string): Promise<File | undefined> {
-        const files = await this.repository.getFiles({ _id: id });
+        const files = await this.repository.getFiles(id);
         return files?.pop();
     }
 }

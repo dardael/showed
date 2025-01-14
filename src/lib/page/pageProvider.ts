@@ -3,7 +3,7 @@ import type PageRepository from 'showed/lib/page/pageRepository';
 import type BlockRepository from 'showed/lib/page/blockRepository';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from './models/sortDirection';
-import Provider from '../file/provider';
+import Provider from '../file/service/provider';
 
 export default class PageProvider implements PageProviderInterface {
     constructor(

@@ -169,9 +169,7 @@ describe('Provider', () => {
                 { name: SocialNetworkName.Email },
             ];
 
-            const result = (provider as any).sortSocialNetworks(
-                unsortedNetworks
-            );
+            const result = provider['sortSocialNetworks'](unsortedNetworks);
 
             expect(result).toEqual(sortedNetworks);
         });

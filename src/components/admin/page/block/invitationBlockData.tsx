@@ -7,12 +7,12 @@ import FileInput from 'showed/components/core/form/inputs/fileInput';
 import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 import { FileType } from 'showed/components/core/input/fileType';
 
-export default function InvitationBlockData({
+export default function InvitationBlockData<U>({
     block,
     onBlockChange,
 }: {
     block: Block;
-    onBlockChange: (data: FormData) => Promise<any>;
+    onBlockChange: (data: FormData) => Promise<U>;
 }) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export default function InvitationBlockData({
         setFile(file);
         setHasIconChanged(true);
     };
-    const handleSubmit = async (formData: FormData) => {
+    const handleSubmit = async (formData: FormData): Promise<U> => {
         if (hasIconChanged) {
             if (block.backgroundImageId) {
                 await fetch(`api/image/${block.backgroundImageId}`, {
@@ -69,8 +69,11 @@ export default function InvitationBlockData({
                 <Box padding={'40px'}>
                     <SaveForm
                         parameters={[
-                            { key: 'id', value: block._id },
-                            { key: 'position', value: block.position },
+                            { key: 'id', value: block._id as string },
+                            {
+                                key: 'position',
+                                value: block.position.toString(),
+                            },
                             {
                                 key: 'backgroundImageId',
                                 value: block.backgroundImageId,

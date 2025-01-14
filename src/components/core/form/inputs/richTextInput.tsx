@@ -20,7 +20,7 @@ export default function RichTextInput({
 }) {
     const [editorData, setEditorData] = useState(defaultValue);
 
-    const handleEditorChange = (data: any) => {
+    const handleEditorChange = (data: string) => {
         setEditorData(data);
     };
     return (

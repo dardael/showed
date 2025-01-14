@@ -2,8 +2,8 @@ import { useToast } from '@chakra-ui/react';
 
 export class Notification {
     constructor(private toast: ReturnType<typeof useToast>) {}
-    public handlePromise(
-        promise: Promise<any>,
+    public handlePromise<U>(
+        promise: Promise<U>,
         messages: { success: string; error: string; loading: string }
     ) {
         return this.toast.promise(promise, {

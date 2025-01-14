@@ -10,8 +10,8 @@ export default class Repository implements RepositoryInterface {
     public async deleteFile(id: string): Promise<File> {
         return this.database.findByIdAndDelete<File>(FileModel, id);
     }
-    public async getFiles(filter: any): Promise<File[]> {
-        return this.database.find<File>(FileModel, { model: filter });
+    public async getFiles(id: string): Promise<File[]> {
+        return this.database.find<File>(FileModel, { model: { _id: id } });
     }
 
     public async createFile(fileData: { filepath: string }): Promise<File> {

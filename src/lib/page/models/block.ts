@@ -32,13 +32,15 @@ if (!BlockModel) {
     BlockModel = mongoose.model<Block>('Block', BlockSchema);
 }
 
-function isBlock(object: any): object is Block {
+function isBlock(object: unknown): object is Block {
+    if (typeof object !== 'object' || object === null) {
+        return false;
+    }
     return (
-        (object.hasOwnProperty('parentBlockId') ||
-            object.hasOwnProperty('pageId')) &&
-        object.hasOwnProperty('position') &&
-        object.hasOwnProperty('hasTransparentBackground') &&
-        object.hasOwnProperty('title')
+        ('parentBlockId' in object || 'pageId' in object) &&
+        'position' in object &&
+        'hasTransparentBackground' in object &&
+        'title' in object
     );
 }
 

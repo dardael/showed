@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import * as ComponentController from 'showed/controllers/page/componentController';
 import * as BlockController from 'showed/controllers/page/blockController';
 import { Component, isComponent } from 'showed/lib/page/models/component';
-import { ComponentType } from 'showed/lib/page/models/componentType';
+import {
+    ComponentType,
+    getComponentTypeLabel,
+} from 'showed/lib/page/models/componentType';
 import { Notification } from 'showed/components/core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from 'showed/components/core/accordion/dynamicAccordion';
@@ -15,16 +18,16 @@ import ComponentData from 'showed/components/admin/page/component/componentData'
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 import { FileType } from 'showed/components/core/input/fileType';
-import { BlockType } from 'showed/lib/page/models/blockType';
+import { BlockType, getBlockTypeLabel } from 'showed/lib/page/models/blockType';
 import DropdownButton from 'showed/components/core/button/dropdownButton';
 import SwitchInput from 'showed/components/core/form/inputs/switchInput';
 
-export default function BlockData({
+export default function BlockData<U>({
     block,
     onBlockChange,
 }: {
     block: Block;
-    onBlockChange: (data: FormData) => Promise<any>;
+    onBlockChange: (data: FormData) => Promise<U>;
 }) {
     const notification = new Notification(useToast());
     const [childElements, setElements] = useState<(Component | Block)[]>([]);
@@ -199,7 +202,10 @@ export default function BlockData({
                     <SaveForm
                         parameters={[
                             { key: 'id', value: block._id },
-                            { key: 'position', value: block.position },
+                            {
+                                key: 'position',
+                                value: block.position.toString(),
+                            },
                             {
                                 key: 'backgroundImageId',
                                 value: block.backgroundImageId,
@@ -265,17 +271,19 @@ export default function BlockData({
                                 <DropdownButton
                                     label={'Ajouter un sous-block'}
                                     icon={<FaPlus />}
-                                    onSelectedItem={addNewBlock}
+                                    onSelectedItem={(key) =>
+                                        addNewBlock(key as BlockType)
+                                    }
                                     items={[
                                         {
                                             key: BlockType.HORIZONTAL,
-                                            label: BlockType.getBlockTypeLabel(
+                                            label: getBlockTypeLabel(
                                                 BlockType.HORIZONTAL
                                             ),
                                         },
                                         {
                                             key: BlockType.LINKED,
-                                            label: BlockType.getBlockTypeLabel(
+                                            label: getBlockTypeLabel(
                                                 BlockType.LINKED
                                             ),
                                         },
@@ -286,11 +294,13 @@ export default function BlockData({
                                 <DropdownButton
                                     label={'Ajouter un texte'}
                                     icon={<FaPlus />}
-                                    onSelectedItem={addNewComponent}
+                                    onSelectedItem={(key) =>
+                                        addNewComponent(key as ComponentType)
+                                    }
                                     items={[
                                         {
                                             key: ComponentType.RICH_TEXT_EDITOR,
-                                            label: ComponentType.getComponentTypeLabel(
+                                            label: getComponentTypeLabel(
                                                 ComponentType.RICH_TEXT_EDITOR
                                             ),
                                         },
@@ -303,23 +313,27 @@ export default function BlockData({
                                     <DropdownButton
                                         label={'Ajouter un composant'}
                                         icon={<FaPlus />}
-                                        onSelectedItem={addNewComponent}
+                                        onSelectedItem={(key) =>
+                                            addNewComponent(
+                                                key as ComponentType
+                                            )
+                                        }
                                         items={[
                                             {
                                                 key: ComponentType.MAP,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.MAP
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.COUNTDOWN,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.COUNTDOWN
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.SPACER,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.SPACER
                                                 ),
                                             },
@@ -328,23 +342,27 @@ export default function BlockData({
                                     <DropdownButton
                                         label={'Ajouter un bouton'}
                                         icon={<FaPlus />}
-                                        onSelectedItem={addNewComponent}
+                                        onSelectedItem={(key) =>
+                                            addNewComponent(
+                                                key as ComponentType
+                                            )
+                                        }
                                         items={[
                                             {
                                                 key: ComponentType.CALENDAR_BUTTON,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.CALENDAR_BUTTON
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.POSITION_BUTTON,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.POSITION_BUTTON
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.PAGE_LINK_BUTTON,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.PAGE_LINK_BUTTON
                                                 ),
                                             },
@@ -353,23 +371,27 @@ export default function BlockData({
                                     <DropdownButton
                                         label={'Ajouter une image'}
                                         icon={<FaPlus />}
-                                        onSelectedItem={addNewComponent}
+                                        onSelectedItem={(key) =>
+                                            addNewComponent(
+                                                key as ComponentType
+                                            )
+                                        }
                                         items={[
                                             {
                                                 key: ComponentType.ICON,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.ICON
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.ROUND_PHOTO,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.ROUND_PHOTO
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.STAINED_GLASS_PHOTO,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.STAINED_GLASS_PHOTO
                                                 ),
                                             },
@@ -378,53 +400,57 @@ export default function BlockData({
                                     <DropdownButton
                                         label={'Ajouter un texte'}
                                         icon={<FaPlus />}
-                                        onSelectedItem={addNewComponent}
+                                        onSelectedItem={(key) =>
+                                            addNewComponent(
+                                                key as ComponentType
+                                            )
+                                        }
                                         items={[
                                             {
                                                 key: ComponentType.TEXT,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.TEXT
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.ITALIC_TEXT,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.ITALIC_TEXT
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.BOLD_TEXT,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.BOLD_TEXT
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.UNDERLINED_ABOVELINED_TEXT,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.UNDERLINED_ABOVELINED_TEXT
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.HEADER,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.HEADER
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.ITALIC_HEADER,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.ITALIC_HEADER
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.HEADER_WITH_COLORED_BACKGROUND,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.HEADER_WITH_COLORED_BACKGROUND
                                                 ),
                                             },
                                             {
                                                 key: ComponentType.RICH_TEXT_EDITOR,
-                                                label: ComponentType.getComponentTypeLabel(
+                                                label: getComponentTypeLabel(
                                                     ComponentType.RICH_TEXT_EDITOR
                                                 ),
                                             },
@@ -434,19 +460,19 @@ export default function BlockData({
                             )}
                         </Flex>
                         <Box paddingTop={'55px'}>
-                            <DynamicAccordion
+                            <DynamicAccordion<Block | Component>
                                 elements={childElements.map((element) => ({
                                     reference: element,
                                     title:
                                         element.title +
                                         ' (' +
                                         (isComponent(element)
-                                            ? ComponentType.getComponentTypeLabel(
+                                            ? getComponentTypeLabel(
                                                   element.componentType
                                               )
                                             : '') +
                                         (isBlock(element) && element.blockType
-                                            ? BlockType.getBlockTypeLabel(
+                                            ? getBlockTypeLabel(
                                                   element.blockType as BlockType
                                               )
                                             : '') +

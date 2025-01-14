@@ -29,13 +29,16 @@ let ComponentModel: Model<Component> = mongoose.models?.Component;
 if (!ComponentModel) {
     ComponentModel = mongoose.model<Component>('Component', ComponentSchema);
 }
-function isComponent(object: any): object is Component {
+function isComponent(object: unknown): object is Component {
+    if (typeof object !== 'object' || object === null) {
+        return false;
+    }
     return (
-        object.hasOwnProperty('blockId') &&
-        object.hasOwnProperty('componentType') &&
-        object.hasOwnProperty('content') &&
-        object.hasOwnProperty('title') &&
-        object.hasOwnProperty('position')
+        'blockId' in object &&
+        'componentType' in object &&
+        'content' in object &&
+        'title' in object &&
+        'position' in object
     );
 }
 

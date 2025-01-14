@@ -1,14 +1,14 @@
 import { Box, Button, Input, useToast } from '@chakra-ui/react';
 import { Notification } from '../feedback/notification';
 
-export default function SaveForm({
+export default function SaveForm<U>({
     children,
     action,
     parameters = [],
 }: {
     children: React.ReactNode;
-    action: (data: FormData) => Promise<any>;
-    parameters?: { key: string; value: any }[];
+    action: (data: FormData) => Promise<U>;
+    parameters?: { key: string; value: string | undefined }[];
 }) {
     const notification = new Notification(useToast());
     return (

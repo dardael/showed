@@ -15,7 +15,7 @@ import FileInput from 'showed/components/core/form/inputs/fileInput';
 import { getFile } from 'showed/controllers/image/imageController';
 import NumberInput from 'showed/components/core/form/inputs/numberInput';
 import DropdownButton from 'showed/components/core/button/dropdownButton';
-import { BlockType } from 'showed/lib/page/models/blockType';
+import { BlockType, getBlockTypeLabel } from 'showed/lib/page/models/blockType';
 import InvitationBlockData from './block/invitationBlockData';
 
 export default function PageData({
@@ -23,7 +23,7 @@ export default function PageData({
     onPageChange,
 }: {
     page: Page;
-    onPageChange: (data: FormData) => Promise<any>;
+    onPageChange: <U>(data: FormData) => Promise<U | void>;
 }) {
     const [hasSoundChanged, setHasSoundChanged] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
@@ -149,7 +149,10 @@ export default function PageData({
                     <SaveForm
                         parameters={[
                             { key: 'id', value: page._id },
-                            { key: 'position', value: page.position },
+                            {
+                                key: 'position',
+                                value: page.position.toString(),
+                            },
                         ]}
                         action={handleSubmit}
                     >
@@ -190,17 +193,19 @@ export default function PageData({
                             <DropdownButton
                                 label={'Ajouter un block'}
                                 icon={<FaPlus />}
-                                onSelectedItem={addNewBlock}
+                                onSelectedItem={(key) =>
+                                    addNewBlock(key as BlockType)
+                                }
                                 items={[
                                     {
                                         key: BlockType.VERTICAL,
-                                        label: BlockType.getBlockTypeLabel(
+                                        label: getBlockTypeLabel(
                                             BlockType.VERTICAL
                                         ),
                                     },
                                     {
                                         key: BlockType.INVITATION,
-                                        label: BlockType.getBlockTypeLabel(
+                                        label: getBlockTypeLabel(
                                             BlockType.INVITATION
                                         ),
                                     },
@@ -208,7 +213,7 @@ export default function PageData({
                             />
                         </Flex>
                         <Box paddingTop={'55px'}>
-                            <DynamicAccordion
+                            <DynamicAccordion<Block>
                                 elements={blocks.map((block) => ({
                                     reference: block,
                                     title: block.title,
@@ -235,9 +240,9 @@ export default function PageData({
                                             )}
                                             {block.blockType ===
                                                 BlockType.INVITATION && (
-                                                <InvitationBlockData
+                                                <InvitationBlockData<Block>
                                                     block={block}
-                                                    onBlockChange={async (
+                                                    onBlockChange={(
                                                         data: FormData
                                                     ) => {
                                                         const pendingSave =
@@ -275,7 +280,7 @@ export default function PageData({
                                             },
                                         },
                                         delete: {
-                                            title: 'Supprimer la block',
+                                            title: 'Supprimer le block',
                                             action: (block) =>
                                                 deleteBlock(block),
                                             confirmation: {

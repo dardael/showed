@@ -1,5 +1,5 @@
 import SelectInput from 'showed/components/core/form/inputs/selectInput';
-import { Font } from 'showed/lib/theme/models/font';
+import * as Font from 'showed/lib/theme/models/font';
 
 export default function FontSelect({
     name,
@@ -16,8 +16,8 @@ export default function FontSelect({
         { value: '', label: '' },
         ...Font.getAll().map((font) => {
             return {
-                label: Font.getFontLabel(font),
                 value: font.toString(),
+                label: Font.getFontLabel(font),
             };
         }),
     ];

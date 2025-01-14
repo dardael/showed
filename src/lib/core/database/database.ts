@@ -1,21 +1,30 @@
 import DatabaseInterface from 'showed/lib/core/database/service/database';
 import connectToDb from 'showed/lib/core/database/connection';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { nanoid } from 'nanoid';
+import { SortOrder } from './model/sortOrder';
 
 export default class Database implements DatabaseInterface {
     public async find<U>(
         model: Model<U>,
         filter: {
             limit?: number;
-            model?: any;
-            sort?: any;
+            model?: FilterQuery<U>;
+            sort?: { [key: string]: SortOrder };
             isLike?: boolean;
         }
     ): Promise<U[]> {
         await connectToDb();
 
-        let query = model.find(filter.model).sort(filter.sort);
+        let query;
+        if (filter.model) {
+            query = model.find(filter.model);
+        } else {
+            query = model.find();
+        }
+        if (filter.sort) {
+            query = query.sort(filter.sort);
+        }
         if (filter.isLike) {
             query = query.collation({ locale: 'en_US', strength: 1 });
         }
@@ -26,9 +35,12 @@ export default class Database implements DatabaseInterface {
         return foundItems as U[];
     }
 
-    public async deleteMany<U>(model: Model<U>, data: any): Promise<void> {
+    public async deleteMany<U>(
+        model: Model<U>,
+        data: FilterQuery<U>
+    ): Promise<void> {
         await connectToDb();
-        const deletedObjects = await model.deleteMany(data);
+        await model.deleteMany(data);
     }
 
     public async findByIdAndDelete<U>(model: Model<U>, id: string): Promise<U> {
@@ -38,7 +50,10 @@ export default class Database implements DatabaseInterface {
         return deletedObject?.toObject() as U;
     }
 
-    public async create<U>(model: Model<U>, data: any): Promise<U> {
+    public async create<U>(
+        model: Model<U>,
+        data: FilterQuery<U> & { _id?: string }
+    ): Promise<U> {
         await connectToDb();
         data._id = nanoid();
         const created = await model.create(data);
@@ -48,7 +63,7 @@ export default class Database implements DatabaseInterface {
     public async findByIdAndUpdate<U>(
         model: Model<U>,
         id: string,
-        data: any
+        data: FilterQuery<U>
     ): Promise<U> {
         await connectToDb();
 

@@ -12,27 +12,27 @@ import { ReactElement } from 'react';
 import { FaTrash } from 'react-icons/fa6';
 import ConfirmationButton from '../button/confirmationButton';
 
-export default function DynamicAccordion({
+export default function DynamicAccordion<U>({
     elements,
 }: {
     elements: {
         title: string;
         content: ReactElement;
-        reference: any;
+        reference: U;
         buttons: {
             sort: {
                 sortUp: {
                     title: string;
-                    action: (element: any) => void;
+                    action: (element: U) => void;
                 };
                 sortDown: {
                     title: string;
-                    action: (element: any) => void;
+                    action: (element: U) => void;
                 };
             };
             delete: {
                 title: string;
-                action: (element: any) => void;
+                action: (element: U) => void;
                 confirmation: {
                     title: string;
                     content: string;

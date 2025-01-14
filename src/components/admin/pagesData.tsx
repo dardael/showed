@@ -93,7 +93,7 @@ export default function PagesData() {
                         Ajouter une page
                     </Button>
                     <Box paddingTop={'55px'}>
-                        <DynamicAccordion
+                        <DynamicAccordion<Page>
                             elements={pages.map((page) => ({
                                 reference: page,
                                 title: page.title,
