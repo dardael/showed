@@ -8,6 +8,7 @@ services:
             - '3000:3000'
         volumes:
             - .:/app
+        user: "${UID}:${GID}"
         depends_on:
             - mongodb
         networks:
@@ -46,6 +47,7 @@ services:
             - '3000:3000'
         volumes:
             - .:/app
+        user: "${UID}:${GID}"
         depends_on:
             - mongodb
         networks:
