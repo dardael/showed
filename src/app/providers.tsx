@@ -6,7 +6,13 @@ import {
     withDefaultColorScheme,
 } from '@chakra-ui/react';
 import { Theme } from 'showed/lib/theme/models/theme';
-import { createContext, useState } from 'react';
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 import { Color } from 'showed/lib/theme/models/color';
 import { Colors } from 'showed/components/core/theme/color';
 
@@ -26,9 +32,12 @@ export function Providers({
 }) {
     const [theme, setTheme] = useState<Theme>(initialTheme);
 
-    function setThemeColor(color: Color) {
-        setTheme({ ...theme, color: color });
-    }
+    const setThemeColor = useCallback(
+        (color: Color) => {
+            setTheme({ ...theme, color: color });
+        },
+        [theme]
+    );
 
     const chakraTheme = extendTheme(
         withDefaultColorScheme({ colorScheme: theme?.color }),
@@ -41,6 +50,10 @@ export function Providers({
             useSystemColorMode: false,
         }
     );
+    useEffect(
+        () => setThemeColor(initialTheme.color),
+        [initialTheme, setThemeColor]
+    );
     return (
         <ThemeContext.Provider
             value={{
@@ -52,3 +65,4 @@ export function Providers({
         </ThemeContext.Provider>
     );
 }
+export const useGlobalContext = () => useContext(ThemeContext);

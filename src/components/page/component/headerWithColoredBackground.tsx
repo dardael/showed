@@ -1,14 +1,16 @@
 'use client';
 import { Box } from '@chakra-ui/react';
 import { useContext } from 'react';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import { ThemeContext } from 'showed/app/providers';
 import getFontFamily from 'showed/components/core/font/font';
+import { Font } from 'showed/lib/theme/models/font';
 
 export default function HeaderWithColoredBackground({
-    component,
+    html,
+    font,
 }: {
-    component: ComponentModel;
+    html: string;
+    font?: Font;
 }) {
     const { theme } = useContext(ThemeContext);
     return (
@@ -20,10 +22,9 @@ export default function HeaderWithColoredBackground({
             backgroundColor={theme.color + '.500'}
             color={'white'}
             borderRadius={'10px'}
-            key={component._id}
-            fontFamily={getFontFamily(component.font)}
+            fontFamily={getFontFamily(font)}
             dangerouslySetInnerHTML={{
-                __html: component.content,
+                __html: html,
             }}
         />
     );

@@ -1,19 +1,21 @@
 import { Heading } from '@chakra-ui/react';
 import getFontFamily from 'showed/components/core/font/font';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
+import { Font } from 'showed/lib/theme/models/font';
 
 export default async function BoldText({
-    component,
+    text,
+    font,
 }: {
-    component: ComponentModel;
+    text: string;
+    font?: Font;
 }) {
     return (
         <Heading
             fontWeight={'500'}
             fontSize={'17px'}
-            fontFamily={getFontFamily(component.font)}
+            fontFamily={getFontFamily(font)}
         >
-            {component.content}
+            {text}
         </Heading>
     );
 }

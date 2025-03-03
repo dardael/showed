@@ -19,8 +19,11 @@
                 "name": "next"
             }
         ],
+        "types": ["jest"],
+        "baseUrl": ".",
         "paths": {
-            "showed/*": ["./src/*"]
+            "showed/*": ["./src/*"],
+            "#src/*": ["./src/*"]
         },
         "strictPropertyInitialization": false
     },

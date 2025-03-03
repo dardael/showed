@@ -1,12 +1,13 @@
 'use client';
 import { Button as ChakraButton } from '@chakra-ui/react';
 import { FaLocationDot } from 'react-icons/fa6';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
 export default function PositionButton({
-    component,
+    text,
+    link,
 }: {
-    component: ComponentModel;
+    text: string;
+    link: string;
 }) {
     return (
         <ChakraButton
@@ -14,10 +15,10 @@ export default function PositionButton({
             borderStyle={'solid'}
             borderWidth={'2px'}
             borderColor={'white'}
-            onClick={() => window.open(component.link, '_blank')}
+            onClick={() => window.open(link, '_blank')}
             leftIcon={<FaLocationDot />}
         >
-            {component.content}
+            {text}
         </ChakraButton>
     );
 }

@@ -1,6 +1,5 @@
 import { Heading, SimpleGrid, Text } from '@chakra-ui/react';
-import { useContext } from 'react';
-import { ThemeContext } from 'showed/app/providers';
+import { useGlobalContext } from 'showed/app/providers';
 
 export default function TimePartBlock({
     value,
@@ -9,7 +8,7 @@ export default function TimePartBlock({
     value: number;
     label: string;
 }) {
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useGlobalContext();
 
     return (
         <SimpleGrid

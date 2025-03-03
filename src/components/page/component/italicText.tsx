@@ -1,20 +1,22 @@
 import { Heading } from '@chakra-ui/react';
 import getFontFamily from 'showed/components/core/font/font';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
+import { Font } from 'showed/lib/theme/models/font';
 
 export default async function ItalicText({
-    component,
+    text,
+    font,
 }: {
-    component: ComponentModel;
+    text: string;
+    font?: Font;
 }) {
     return (
         <Heading
-            fontFamily={getFontFamily(component.font)}
+            fontFamily={getFontFamily(font)}
             fontWeight={'400'}
             fontStyle={'italic'}
             size={'md'}
         >
-            {component.content}
+            {text}
         </Heading>
     );
 }

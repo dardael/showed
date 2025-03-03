@@ -1,7 +1,6 @@
 'use client';
 import { Box, Flex, Spacer } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import TimePartBlock from './coutdown/timePartBlock';
 
 interface CountdownDate {
@@ -10,11 +9,7 @@ interface CountdownDate {
     minutes: number;
     seconds: number;
 }
-export default function Countdown({
-    component,
-}: {
-    component: ComponentModel;
-}) {
+export default function Countdown({ date }: { date: string }) {
     const calculateTimeLeft = (endDate: string): CountdownDate => {
         const difference = +new Date(endDate) - +new Date();
         let timeLeft = {
@@ -36,16 +31,16 @@ export default function Countdown({
         return timeLeft;
     };
     const [timeLeft, setTimeLeft] = useState<CountdownDate>(
-        calculateTimeLeft(component.content)
+        calculateTimeLeft(date)
     );
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setTimeLeft(calculateTimeLeft(component.content));
+            setTimeLeft(calculateTimeLeft(date));
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [component]);
+    }, [date]);
     return (
         <Flex>
             <Spacer />

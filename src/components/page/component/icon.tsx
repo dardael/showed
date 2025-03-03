@@ -4,27 +4,32 @@ import { useContext } from 'react';
 import { GiHearts, GiLinkedRings, GiLovers } from 'react-icons/gi';
 import { BsHouseHeartFill } from 'react-icons/bs';
 import { ThemeContext } from 'showed/app/providers';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 
-export default function Icon({ component }: { component: ComponentModel }) {
+export default function Icon({ icon }: { icon: string }) {
     const { theme } = useContext(ThemeContext);
-    let icon;
-    switch (component.content) {
+    let iconComponent;
+    switch (icon) {
         case 'GiLinkedRings':
-            icon = GiLinkedRings;
+            iconComponent = GiLinkedRings;
             break;
         case 'GiHearts':
-            icon = GiHearts;
+            iconComponent = GiHearts;
             break;
         case 'GiLovers':
-            icon = GiLovers;
+            iconComponent = GiLovers;
             break;
         case 'BsHouseHeartFill':
-            icon = BsHouseHeartFill;
+            iconComponent = BsHouseHeartFill;
             break;
         default:
-            icon = GiLinkedRings;
+            iconComponent = GiLinkedRings;
             break;
     }
-    return <ChakraIcon color={theme.color + '.400'} as={icon} boxSize='50px' />;
+    return (
+        <ChakraIcon
+            color={theme.color + '.400'}
+            as={iconComponent}
+            boxSize='50px'
+        />
+    );
 }

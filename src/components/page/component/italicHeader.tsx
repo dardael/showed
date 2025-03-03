@@ -1,12 +1,14 @@
 import { Heading } from '@chakra-ui/react';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import { getTheme } from 'showed/controllers/theme/themeController';
 import getFontFamily from 'showed/components/core/font/font';
+import { Font } from 'showed/lib/theme/models/font';
 
 export default async function ItalicHeader({
-    component,
+    text,
+    font,
 }: {
-    component: ComponentModel;
+    text: string;
+    font?: Font;
 }) {
     const theme = await getTheme();
     return (
@@ -15,9 +17,9 @@ export default async function ItalicHeader({
             size='xl'
             color={theme.color + '.500'}
             fontWeight={'500'}
-            fontFamily={getFontFamily(component.font)}
+            fontFamily={getFontFamily(font)}
         >
-            {component.content}
+            {text}
         </Heading>
     );
 }

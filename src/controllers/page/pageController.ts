@@ -1,10 +1,9 @@
 'use server';
-import 'showed/lib/core/dependencyInjection/container';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import PageProvider from 'showed/lib/page/pageProvider';
-import { Container } from 'typedi';
 import { revalidatePath } from 'next/cache';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
 
 export async function savePage(data: FormData): Promise<Page> {
     const id = data.get('id')?.toString();
@@ -20,7 +19,7 @@ export async function savePage(data: FormData): Promise<Page> {
             new Error('Title and position are required')
         );
     }
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     return provider.updatePage(id, {
         title,
         width: width ? Number.parseInt(width) : 0,
@@ -30,7 +29,7 @@ export async function savePage(data: FormData): Promise<Page> {
 }
 
 export async function createPage(position: number): Promise<Page> {
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     return provider.createPage({
         title: 'Nouvelle page',
         position,
@@ -38,13 +37,13 @@ export async function createPage(position: number): Promise<Page> {
 }
 
 export async function getPages(): Promise<Page[]> {
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     const page = await provider.getPages();
     return page;
 }
 
 export async function deletePage(id: string): Promise<Page> {
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     return provider.deletePage(id);
 }
 
@@ -52,12 +51,12 @@ export async function movePage(
     page: Page,
     direction: SortDirection
 ): Promise<void> {
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     provider.movePage(page, direction);
 }
 
 export async function reloadPage(id: string): Promise<void> {
-    const provider: PageProvider = Container.get('PageProvider');
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
     const page = (await provider.getPages()).find((p) => p._id === id);
     if (!page) {
         return await Promise.reject(new Error('Page not found'));

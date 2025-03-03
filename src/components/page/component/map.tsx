@@ -1,5 +1,4 @@
 'use client';
-import { Component as ComponentModel } from 'showed/lib/page/models/component';
 import { useState } from 'react';
 import { Box, Spinner, Center } from '@chakra-ui/react';
 import {
@@ -8,9 +7,9 @@ import {
     Marker,
 } from '@vis.gl/react-google-maps';
 
-export default function Map({ component }: { component: ComponentModel }) {
+export default function Map({ localization }: { localization: string }) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const position = component.content.split(',');
+    const position = localization.split(',');
     const center = {
         lat: Number.parseFloat(position[0]),
         lng: Number.parseFloat(position[1]),

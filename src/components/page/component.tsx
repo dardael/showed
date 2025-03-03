@@ -38,27 +38,30 @@ export default async function Component({
                 <RichText component={component} />
             )}
             {component.componentType === ComponentType.COUNTDOWN && (
-                <Countdown component={component} />
+                <Countdown date={component.content} />
             )}
             {component.componentType === ComponentType.HEADER && (
-                <Header component={component} />
+                <Header text={component.content} font={component.font} />
             )}
             {component.componentType ===
                 ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
-                <HeaderWithColoredBackground component={component} />
+                <HeaderWithColoredBackground
+                    html={component.content}
+                    font={component.font}
+                />
             )}
             {component.componentType === ComponentType.ITALIC_HEADER && (
-                <ItalicHeader component={component} />
+                <ItalicHeader text={component.content} font={component.font} />
             )}
             {component.componentType ===
                 ComponentType.UNDERLINED_ABOVELINED_TEXT && (
                 <UnderlinedAndAbovelinedText component={component} />
             )}
             {component.componentType === ComponentType.BOLD_TEXT && (
-                <BoldText component={component} />
+                <BoldText text={component.content} font={component.font} />
             )}
             {component.componentType === ComponentType.ITALIC_TEXT && (
-                <ItalicText component={component} />
+                <ItalicText text={component.content} font={component.font} />
             )}
             {component.componentType === ComponentType.TEXT && (
                 <Text component={component} />
@@ -70,22 +73,31 @@ export default async function Component({
                 <RoundPhoto component={component} />
             )}
             {component.componentType === ComponentType.ICON && (
-                <Icon component={component} />
+                <Icon icon={component.content} />
             )}
             {component.componentType === ComponentType.SPACER && (
                 <Spacer component={component} />
             )}
             {component.componentType === ComponentType.CALENDAR_BUTTON && (
-                <CalendarButton component={component} />
+                <CalendarButton
+                    text={component.content}
+                    link={component.link as string}
+                />
             )}
             {component.componentType === ComponentType.PAGE_LINK_BUTTON && (
-                <PageLinkButton component={component} />
+                <PageLinkButton
+                    text={component.content}
+                    link={component.link as string}
+                />
             )}
             {component.componentType === ComponentType.POSITION_BUTTON && (
-                <PositionButton component={component} />
+                <PositionButton
+                    text={component.content}
+                    link={component.link as string}
+                />
             )}
             {component.componentType === ComponentType.MAP && (
-                <Map component={component} />
+                <Map localization={component.content} />
             )}
         </Box>
     );
