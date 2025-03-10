@@ -6,13 +6,7 @@ import {
     withDefaultColorScheme,
 } from '@chakra-ui/react';
 import { Theme } from 'showed/lib/theme/models/theme';
-import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { Color } from 'showed/lib/theme/models/color';
 import { Colors } from 'showed/components/core/theme/color';
 
@@ -32,12 +26,9 @@ export function Providers({
 }) {
     const [theme, setTheme] = useState<Theme>(initialTheme);
 
-    const setThemeColor = useCallback(
-        (color: Color) => {
-            setTheme({ ...theme, color: color });
-        },
-        [theme]
-    );
+    const setThemeColor = (color: Color) => {
+        setTheme({ ...theme, color: color });
+    };
 
     const chakraTheme = extendTheme(
         withDefaultColorScheme({ colorScheme: theme?.color }),
@@ -51,8 +42,8 @@ export function Providers({
         }
     );
     useEffect(
-        () => setThemeColor(initialTheme.color),
-        [initialTheme, setThemeColor]
+        () => setTheme({ ...theme, color: initialTheme.color }),
+        [initialTheme]
     );
     return (
         <ThemeContext.Provider
