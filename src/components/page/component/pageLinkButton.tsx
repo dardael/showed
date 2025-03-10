@@ -26,8 +26,12 @@ export default function PageLinkButton({
             {isLoading ? (
                 <Spinner size='xl' />
             ) : (
-                <Link href={'/page/' + page?.urlPart + '?id=' + page?.urlPart}>
+                <Link
+                    style={{ width: '100%' }}
+                    href={'/page/' + page?.urlPart + '?id=' + page?.urlPart}
+                >
                     <ChakraButton
+                        width={'100%'}
                         height={'29px'}
                         borderStyle={'solid'}
                         borderWidth={'2px'}
