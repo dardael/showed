@@ -276,6 +276,12 @@ export default function BlockData<U>({
                                     }
                                     items={[
                                         {
+                                            key: BlockType.VERTICAL,
+                                            label: getBlockTypeLabel(
+                                                BlockType.VERTICAL
+                                            ),
+                                        },
+                                        {
                                             key: BlockType.HORIZONTAL,
                                             label: getBlockTypeLabel(
                                                 BlockType.HORIZONTAL
@@ -307,7 +313,7 @@ export default function BlockData<U>({
                                     ]}
                                 />
                             )}
-                            {(block.pageId ||
+                            {(block.blockType === BlockType.VERTICAL ||
                                 block.blockType === BlockType.HORIZONTAL) && (
                                 <>
                                     <DropdownButton

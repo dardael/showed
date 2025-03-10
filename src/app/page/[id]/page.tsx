@@ -8,6 +8,7 @@ import { getPages } from 'showed/controllers/page/pageController';
 import { BlockType } from 'showed/lib/page/models/blockType';
 import { Block as BlockModel } from 'showed/lib/page/models/block';
 import { Person } from 'showed/lib/invitation/models/person';
+import HorizontalBlock from 'showed/components/page/horizontalBlock';
 
 const fillReceptionDisplayRule = (
     block: BlockModel,
@@ -50,11 +51,14 @@ export default async function Page({ params }: { params: { id: string } }) {
     );
     const blockComponents = blocks.map((block) => (
         <>
-            {(!block.blockType || block.blockType === BlockType.VERTICAL) && (
+            {block.blockType === BlockType.VERTICAL && (
                 <Block key={block._id as string} block={block} />
             )}
             {block.blockType === BlockType.INVITATION && (
                 <InvitationBlock key={block._id as string} block={block} />
+            )}
+            {block.blockType === BlockType.HORIZONTAL && (
+                <HorizontalBlock key={block._id as string} block={block} />
             )}
         </>
     ));

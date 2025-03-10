@@ -204,6 +204,12 @@ export default function PageData({
                                         ),
                                     },
                                     {
+                                        key: BlockType.HORIZONTAL,
+                                        label: getBlockTypeLabel(
+                                            BlockType.HORIZONTAL
+                                        ),
+                                    },
+                                    {
                                         key: BlockType.INVITATION,
                                         label: getBlockTypeLabel(
                                             BlockType.INVITATION
@@ -219,9 +225,10 @@ export default function PageData({
                                     title: block.title,
                                     content: (
                                         <>
-                                            {(!block.blockType ||
+                                            {(block.blockType ===
+                                                BlockType.VERTICAL ||
                                                 block.blockType ===
-                                                    BlockType.VERTICAL) && (
+                                                    BlockType.HORIZONTAL) && (
                                                 <BlockData
                                                     block={block}
                                                     onBlockChange={async (

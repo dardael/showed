@@ -35,14 +35,20 @@ export default async function Block({ block }: { block: BlockModel }) {
                 {elements.map((element) => (
                     <Center key={element._id as string}>
                         {isBlock(element) ? (
-                            element.blockType === BlockType.HORIZONTAL ? (
+                            (element.blockType === BlockType.HORIZONTAL && (
                                 <HorizontalBlock block={element} />
-                            ) : (
+                            )) ||
+                            (element.blockType === BlockType.LINKED && (
                                 <LinkedBlock block={element} />
-                            )
+                            )) ||
+                            (element.blockType === BlockType.VERTICAL && (
+                                <Block block={element} />
+                            ))
                         ) : (
                             <Component
-                                isInHorizontalBlock={false}
+                                isInHorizontalBlock={
+                                    block.blockType === BlockType.HORIZONTAL
+                                }
                                 component={element as ComponentModel}
                             />
                         )}
