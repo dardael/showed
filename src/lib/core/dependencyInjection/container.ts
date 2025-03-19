@@ -6,10 +6,12 @@ import MaintainerRepository from 'showed/lib/maintainer/bridge/database/reposito
 import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/pageRepository';
 import PersonRepository from 'showed/lib/invitation/bridge/database/personRepository';
+import ProductRepository from 'showed/lib/product/bridge/database/productRepository';
 import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
 import BlockRepository from 'showed/lib/page/bridge/database/blockRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import PersonProvider from 'showed/lib/invitation/personProvider';
+import ProductProvider from 'showed/lib/product/productProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
@@ -73,6 +75,14 @@ const pageProvider = new PageProvider(
 );
 const pageProviderToken = 'PageProvider';
 Container.set(pageProviderToken, pageProvider);
+
+const productRepository = new ProductRepository(database);
+const productRepositoryToken = 'ProductRepository';
+Container.set(productRepositoryToken, productRepository);
+
+const productProvider = new ProductProvider(productRepository, fileProvider);
+const productProviderToken = 'ProductProvider';
+Container.set(productProviderToken, productProvider);
 
 const blockProvider = new BlockProvider(blockRepository, componentRepository);
 const blockProviderToken = 'BlockProvider';
