@@ -9,6 +9,7 @@ import { BlockType } from 'showed/lib/page/models/blockType';
 import { Block as BlockModel } from 'showed/lib/page/models/block';
 import { Person } from 'showed/lib/invitation/models/person';
 import HorizontalBlock from 'showed/components/page/horizontalBlock';
+import ProductsBlock from 'showed/components/page/productsBlock';
 
 const fillReceptionDisplayRule = (
     block: BlockModel,
@@ -59,6 +60,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             )}
             {block.blockType === BlockType.HORIZONTAL && (
                 <HorizontalBlock key={block._id as string} block={block} />
+            )}
+            {block.blockType === BlockType.PRODUCTS && (
+                <ProductsBlock key={block._id as string} block={block} />
             )}
         </>
     ));

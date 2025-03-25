@@ -17,6 +17,7 @@ import NumberInput from 'showed/components/core/form/inputs/numberInput';
 import DropdownButton from 'showed/components/core/button/dropdownButton';
 import { BlockType, getBlockTypeLabel } from 'showed/lib/page/models/blockType';
 import InvitationBlockData from './block/invitationBlockData';
+import ProductsBlockData from './block/productsBlockData';
 
 export default function PageData({
     page,
@@ -215,6 +216,12 @@ export default function PageData({
                                             BlockType.INVITATION
                                         ),
                                     },
+                                    {
+                                        key: BlockType.PRODUCTS,
+                                        label: getBlockTypeLabel(
+                                            BlockType.PRODUCTS
+                                        ),
+                                    },
                                 ]}
                             />
                         </Flex>
@@ -248,6 +255,24 @@ export default function PageData({
                                             {block.blockType ===
                                                 BlockType.INVITATION && (
                                                 <InvitationBlockData<Block>
+                                                    block={block}
+                                                    onBlockChange={(
+                                                        data: FormData
+                                                    ) => {
+                                                        const pendingSave =
+                                                            BlockController.saveBlock(
+                                                                data
+                                                            );
+                                                        pendingSave.then(
+                                                            updateBlock
+                                                        );
+                                                        return pendingSave;
+                                                    }}
+                                                />
+                                            )}
+                                            {block.blockType ===
+                                                BlockType.PRODUCTS && (
+                                                <ProductsBlockData
                                                     block={block}
                                                     onBlockChange={(
                                                         data: FormData

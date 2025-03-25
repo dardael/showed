@@ -3,6 +3,7 @@ export enum BlockType {
     VERTICAL = 'VERTICAL',
     LINKED = 'LINKED',
     INVITATION = 'INVITATION',
+    PRODUCTS = 'PRODUCTS',
 }
 export function getBlockTypeLabel(blockType: BlockType): string {
     switch (blockType) {
@@ -14,6 +15,8 @@ export function getBlockTypeLabel(blockType: BlockType): string {
             return 'Block lié';
         case BlockType.INVITATION:
             return 'Invitations';
+        case BlockType.PRODUCTS:
+            return 'Produits';
         default:
             throw new Error(`Unknown block type: ${blockType}`);
     }
