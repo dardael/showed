@@ -1,19 +1,5 @@
 'use client';
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    Card,
-    CardBody,
-    CardFooter,
-    Divider,
-    Flex,
-    Heading,
-    Image,
-    Spinner,
-    Stack,
-    Text,
-} from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import ProductModal from './productModal';
 import { Product } from 'showed/lib/product/models/product';
@@ -21,6 +7,7 @@ import {
     deleteProduct,
     getProducts,
 } from 'showed/controllers/product/productController';
+import ProductCard from './productCard';
 
 export default function Products() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -65,27 +52,10 @@ export default function Products() {
                         justifyContent={'center'}
                     >
                         {products.map((product) => (
-                            <Card key={product._id}>
-                                <CardBody>
-                                    <Image
-                                        alt='Image du produit'
-                                        src={`api/image/${product.imageId}`}
-                                        height={'250px'}
-                                        width={'370px'}
-                                        borderRadius='lg'
-                                    />
-                                    <Stack mt='6' spacing='3'>
-                                        <Heading size='md'>
-                                            {product.name}
-                                        </Heading>
-                                        <Text>{product.description}</Text>
-                                        <Text fontSize='2xl'>
-                                            {product.price}€
-                                        </Text>
-                                    </Stack>
-                                </CardBody>
-                                <Divider />
-                                <CardFooter>
+                            <ProductCard
+                                product={product}
+                                key={product._id}
+                                footer={
                                     <ButtonGroup spacing='2'>
                                         <ProductModal
                                             initialProduct={product}
@@ -102,8 +72,8 @@ export default function Products() {
                                             Supprimer
                                         </Button>
                                     </ButtonGroup>
-                                </CardFooter>
-                            </Card>
+                                }
+                            />
                         ))}
                     </Flex>
                 </Box>
