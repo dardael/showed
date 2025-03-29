@@ -12,6 +12,7 @@ import BlockRepository from 'showed/lib/page/bridge/database/blockRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import PersonProvider from 'showed/lib/invitation/personProvider';
 import ProductProvider from 'showed/lib/product/productProvider';
+import ShoppingCartProvider from 'showed/lib/product/shoppingCartProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
@@ -83,6 +84,10 @@ Container.set(productRepositoryToken, productRepository);
 const productProvider = new ProductProvider(productRepository, fileProvider);
 const productProviderToken = 'ProductProvider';
 Container.set(productProviderToken, productProvider);
+
+const shoppingCartProvider = new ShoppingCartProvider(cache);
+const shoppingCartProviderToken = 'ShoppingCartProvider';
+Container.set(shoppingCartProviderToken, shoppingCartProvider);
 
 const blockProvider = new BlockProvider(blockRepository, componentRepository);
 const blockProviderToken = 'BlockProvider';
