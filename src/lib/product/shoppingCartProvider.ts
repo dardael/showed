@@ -36,6 +36,10 @@ export default class ShoppingCartProvider
         }
     }
 
+    public async removeAllProductsFromCache(sessionId: string): Promise<void> {
+        this.cache.delete(sessionId);
+    }
+
     public async getProductCount(
         sessionId: string,
         product: Product
@@ -46,5 +50,25 @@ export default class ShoppingCartProvider
         } else {
             return 0;
         }
+    }
+
+    public async getProductsFromCache(
+        sessionId: string
+    ): Promise<{ product: Product; quantity: number }[]> {
+        const products: Product[] = (await this.cache.get(sessionId)) || [];
+        return products.reduce(
+            (acc, product) => {
+                const existingProduct = acc.find(
+                    (item) => item.product._id === product._id
+                );
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    acc.push({ product, quantity: 1 });
+                }
+                return acc;
+            },
+            [] as { product: Product; quantity: number }[]
+        );
     }
 }

@@ -1,0 +1,39 @@
+import OrderRepository from './orderRepository';
+import OrderProviderInterface from './service/orderProvider';
+import { Customer, Order, Product } from './models/order';
+import ShoppingCartProvider from './service/shoppingCartProvider';
+
+export default class OrderProvider implements OrderProviderInterface {
+    constructor(
+        private repository: OrderRepository,
+        private shoppingCartProvider: ShoppingCartProvider
+    ) {
+        this.repository = repository;
+        this.shoppingCartProvider = shoppingCartProvider;
+    }
+
+    public async validateOrder(
+        sessionId: string,
+        customer: Customer
+    ): Promise<Order> {
+        const shoppingCart =
+            await this.shoppingCartProvider.getProductsFromCache(sessionId);
+        const order: Order = {
+            customer,
+            products: shoppingCart.map((product) => ({
+                quantity: product.quantity,
+                product: {
+                    _id: product.product._id,
+                    name: product.product.name,
+                    price: product.product.price,
+                    description: product.product.description,
+                } as Product,
+            })),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            _id: '',
+        };
+        this.shoppingCartProvider.removeAllProductsFromCache(sessionId);
+        return this.repository.validateOrder(order);
+    }
+}

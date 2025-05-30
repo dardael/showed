@@ -7,11 +7,13 @@ import MaintainerProvider from 'showed/lib/maintainer/provider';
 import PageRepository from 'showed/lib/page/bridge/database/pageRepository';
 import PersonRepository from 'showed/lib/invitation/bridge/database/personRepository';
 import ProductRepository from 'showed/lib/product/bridge/database/productRepository';
+import OrderRepository from 'showed/lib/product/bridge/database/orderRepository';
 import ComponentRepository from 'showed/lib/page/bridge/database/componentRepository';
 import BlockRepository from 'showed/lib/page/bridge/database/blockRepository';
 import PageProvider from 'showed/lib/page/pageProvider';
 import PersonProvider from 'showed/lib/invitation/personProvider';
 import ProductProvider from 'showed/lib/product/productProvider';
+import OrderProvider from 'showed/lib/product/orderProvider';
 import ShoppingCartProvider from 'showed/lib/product/shoppingCartProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
@@ -88,6 +90,14 @@ Container.set(productProviderToken, productProvider);
 const shoppingCartProvider = new ShoppingCartProvider(cache);
 const shoppingCartProviderToken = 'ShoppingCartProvider';
 Container.set(shoppingCartProviderToken, shoppingCartProvider);
+
+const orderRepository = new OrderRepository(database);
+const orderRepositoryToken = 'OrderRepository';
+Container.set(orderRepositoryToken, orderRepository);
+
+const orderProvider = new OrderProvider(orderRepository, shoppingCartProvider);
+const orderProviderToken = 'OrderProvider';
+Container.set(orderProviderToken, orderProvider);
 
 const blockProvider = new BlockProvider(blockRepository, componentRepository);
 const blockProviderToken = 'BlockProvider';

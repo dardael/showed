@@ -21,3 +21,11 @@ export async function getProductCount(product: Product): Promise<number> {
     const service: ShoppingCartProvider = getService('ShoppingCartProvider');
     return service.getProductCount(sessionId, product);
 }
+
+export async function getProductsFromCache(): Promise<
+    { product: Product; quantity: number }[]
+> {
+    const sessionId = (await getSessionId(true)) as string;
+    const service: ShoppingCartProvider = getService('ShoppingCartProvider');
+    return service.getProductsFromCache(sessionId);
+}

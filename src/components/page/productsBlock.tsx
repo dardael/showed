@@ -1,12 +1,12 @@
 'use client';
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Button, Center, Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getProducts } from 'showed/controllers/product/productController';
-import { Block as BlockModel } from 'showed/lib/page/models/block';
 import { Product } from 'showed/lib/product/models/product';
 import ProductCard from '../admin/products/productCard';
 import ShoppingCartButtons from './products/shoppingCartButtons';
-export default function ProductsBlock({ block }: { block: BlockModel }) {
+import Link from 'next/link';
+export default function ProductsBlock() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
@@ -37,6 +37,20 @@ export default function ProductsBlock({ block }: { block: BlockModel }) {
                             />
                         ))}
                     </Flex>
+                    <Center paddingTop={'40px'}>
+                        {products.length > 0 && (
+                            <Link href={'/shoppingCart'}>
+                                <Button
+                                    width={'100%'}
+                                    borderStyle={'solid'}
+                                    borderWidth={'2px'}
+                                    borderColor={'white'}
+                                >
+                                    Voir le panier
+                                </Button>
+                            </Link>
+                        )}
+                    </Center>
                 </>
             )}
         </>

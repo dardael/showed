@@ -62,7 +62,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <HorizontalBlock key={block._id as string} block={block} />
             )}
             {block.blockType === BlockType.PRODUCTS && (
-                <ProductsBlock key={block._id as string} block={block} />
+                <ProductsBlock key={block._id as string} />
             )}
         </>
     ));
