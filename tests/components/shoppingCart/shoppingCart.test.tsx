@@ -28,6 +28,18 @@ jest.mock('showed/components/shoppingCart/shoppingCartValidated', () => {
     return mock;
 });
 
+jest.mock('showed/components/core/feedback/loading', () => {
+    const MockLoading = ({
+        isLoading,
+        children,
+    }: {
+        isLoading: boolean;
+        children: React.ReactNode;
+    }) => <>{isLoading ? <div>Loading...</div> : children}</>;
+    MockLoading.displayName = 'Loading';
+    return MockLoading;
+});
+
 describe('ShoppingCart', () => {
     beforeEach(() => {
         jest.clearAllMocks();
