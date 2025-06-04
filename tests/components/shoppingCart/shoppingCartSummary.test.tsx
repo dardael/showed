@@ -80,7 +80,7 @@ describe('ShoppingCartSummary', () => {
         );
 
         // Verify total price
-        expect(screen.getByText('40')).toBeInTheDocument(); // (10 * 2) + (20 * 1)
+        expect(screen.getByText('40.00')).toBeInTheDocument(); // (10 * 2) + (20 * 1)
     });
 
     it('renders an empty table when no products are provided', async () => {
@@ -91,6 +91,6 @@ describe('ShoppingCartSummary', () => {
         expect(screen.queryByText('Product 2')).not.toBeInTheDocument();
 
         // Verify total price is 0
-        expect(screen.getByText('0')).toBeInTheDocument();
+        expect(screen.getByText('0.00')).toBeInTheDocument();
     });
 });

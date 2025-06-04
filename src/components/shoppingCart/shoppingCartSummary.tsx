@@ -45,13 +45,15 @@ export default function ShoppingCartSummary({
                             <Th>Total</Th>
                             <Th></Th>
                             <Th>
-                                {products.reduce(
-                                    (acc, product) =>
-                                        acc +
-                                        (product.product.price as number) *
-                                            product.quantity,
-                                    0
-                                )}
+                                {products
+                                    .reduce(
+                                        (acc, product) =>
+                                            acc +
+                                            (product.product.price as number) *
+                                                product.quantity,
+                                        0
+                                    )
+                                    .toFixed(2)}
                             </Th>
                         </Tr>
                     </Tfoot>
