@@ -46,6 +46,7 @@ const OrderSchema: Schema = new Schema(
         customer: { type: CustomerSchema, required: true },
         products: [
             {
+                _id: false,
                 product: { type: ProductSchema, required: true },
                 quantity: { type: Number, required: true },
             },
