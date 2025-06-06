@@ -21,4 +21,5 @@ export default interface Database {
     ): Promise<U>;
     findByIdAndDelete<U>(model: Model<U>, id: string): Promise<U>;
     deleteMany<U>(model: Model<U>, data: FilterQuery<U>): Promise<void>;
+    getNewId(): string;
 }

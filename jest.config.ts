@@ -175,9 +175,11 @@ const config: Config = {
 
     // A map from regular expressions to paths to transformers
     // transform: undefined,
+
     transform: {
-        '^.+\\.(js|jsx|ts|tsx)$': '@swc/jest', // Use @swc/jest for transforming files
+        '^.+\\.(t|j)sx?$': ['@swc/jest', { configFile: '.swcrctest' }],
     },
+
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
     // transformIgnorePatterns: [
     //   "/node_modules/",

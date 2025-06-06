@@ -52,10 +52,20 @@ export default class Database implements DatabaseInterface {
 
     public async create<U>(
         model: Model<U>,
-        data: FilterQuery<U> & { _id?: string }
+        data: FilterQuery<U> & {
+            _id?: string;
+            createdAt?: Date;
+            updatedAt?: Date;
+        }
     ): Promise<U> {
         await connectToDb();
-        data._id = nanoid();
+        data._id = this.getNewId();
+        if ('createdAt' in data) {
+            data.createdAt = new Date();
+        }
+        if ('updatedAt' in data) {
+            data.updatedAt = new Date();
+        }
         const created = await model.create(data);
         return created.toObject() as U;
     }
@@ -63,14 +73,21 @@ export default class Database implements DatabaseInterface {
     public async findByIdAndUpdate<U>(
         model: Model<U>,
         id: string,
-        data: FilterQuery<U>
+        data: FilterQuery<U> & { updatedAt?: Date }
     ): Promise<U> {
         await connectToDb();
+
+        if ('updatedAt' in data) {
+            data.updatedAt = new Date();
+        }
 
         const updatedObject = await model.findByIdAndUpdate(id, data, {
             new: true,
             overwrite: true,
         });
         return updatedObject?.toObject() as U;
+    }
+    public getNewId(): string {
+        return nanoid();
     }
 }

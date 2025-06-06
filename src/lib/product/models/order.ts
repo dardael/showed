@@ -1,6 +1,8 @@
 import mongoose, { Schema, Model } from 'mongoose';
+import { OrderState } from './orderState';
 
 export interface Customer {
+    _id?: string;
     name: string;
     surname: string;
     email: string;
@@ -15,14 +17,16 @@ export interface Product {
 }
 
 export interface Order {
-    _id: string;
+    _id?: string;
     customer: Customer;
     products: { product: Product; quantity: number }[];
-    createdAt: Date;
-    updatedAt: Date;
+    state: OrderState;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 const CustomerSchema: Schema = new Schema({
+    _id: { type: String, required: true },
     name: { type: String, required: true },
     surname: { type: String, required: true },
     email: { type: String, required: true },
@@ -46,6 +50,7 @@ const OrderSchema: Schema = new Schema(
                 quantity: { type: Number, required: true },
             },
         ],
+        state: { type: String, enum: OrderState, required: true },
     },
     { timestamps: true }
 );

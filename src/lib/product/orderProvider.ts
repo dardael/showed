@@ -2,6 +2,7 @@ import OrderRepository from './orderRepository';
 import OrderProviderInterface from './service/orderProvider';
 import { Customer, Order, Product } from './models/order';
 import ShoppingCartProvider from './service/shoppingCartProvider';
+import { OrderState } from './models/orderState';
 
 export default class OrderProvider implements OrderProviderInterface {
     constructor(
@@ -29,11 +30,18 @@ export default class OrderProvider implements OrderProviderInterface {
                     description: product.product.description,
                 } as Product,
             })),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            _id: '',
+            state: OrderState.NEW,
         };
         this.shoppingCartProvider.removeAllProductsFromCache(sessionId);
         return this.repository.validateOrder(order);
+    }
+    public async getOrders(orderState: OrderState): Promise<Order[]> {
+        return this.repository.getOrders(orderState);
+    }
+    public async setOrderState(
+        orderId: string,
+        orderState: OrderState
+    ): Promise<void> {
+        return this.repository.setOrderState(orderId, orderState);
     }
 }
