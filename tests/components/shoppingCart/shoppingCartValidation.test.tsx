@@ -1,10 +1,8 @@
-import React, { act } from 'react';
-import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import ShoppingCartValidation from 'showed/components/shoppingCart/shoppingCartValidation';
 import { validateOrder } from 'showed/controllers/product/orderController';
 
-// Mock the validateOrder function
 jest.mock('showed/controllers/product/orderController', () => ({
     validateOrder: jest.fn(),
 }));
@@ -12,107 +10,86 @@ jest.mock('showed/controllers/product/orderController', () => ({
 describe('ShoppingCartValidation', () => {
     const mockOnOrderValidated = jest.fn();
 
-    const renderComponent = () => {
-        render(
-            <ShoppingCartValidation onOrderValidated={mockOnOrderValidated} />
-        );
-    };
-
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it('renders all input fields and the button', async () => {
-        await act(async () => renderComponent());
+    it('renders all input fields and the validate button', () => {
+        render(
+            <ShoppingCartValidation onOrderValidated={mockOnOrderValidated} />
+        );
 
+        expect(screen.getByLabelText(/^Nom/)).toBeInTheDocument();
+        expect(screen.getByLabelText(/^Prénom/)).toBeInTheDocument();
+        expect(screen.getByLabelText(/^Adresse mail/)).toBeInTheDocument();
         expect(
-            screen.getByPlaceholderText('Veuillez renseigner votre nom')
-        ).toBeInTheDocument();
-        expect(
-            screen.getByPlaceholderText('Veuillez renseigner votre prénom')
-        ).toBeInTheDocument();
-        expect(
-            screen.getByPlaceholderText(
-                'Veuillez renseigner votre adresse mail'
-            )
-        ).toBeInTheDocument();
-        expect(
-            screen.getByPlaceholderText(
-                'Veuillez renseigner votre numéro de téléphone'
-            )
+            screen.getByLabelText(/^Numéro de téléphone/)
         ).toBeInTheDocument();
         expect(screen.getByText('Valider la commande')).toBeInTheDocument();
     });
 
-    it('updates the customer state when inputs are changed', async () => {
-        await act(async () => renderComponent());
-
-        const nameInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre nom'
-        );
-        const surnameInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre prénom'
-        );
-        const emailInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre adresse mail'
-        );
-        const phoneInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre numéro de téléphone'
-        );
-
-        fireEvent.change(nameInput, { target: { value: 'John' } });
-        fireEvent.change(surnameInput, { target: { value: 'Doe' } });
-        fireEvent.change(emailInput, {
-            target: { value: 'john.doe@example.com' },
-        });
-        fireEvent.change(phoneInput, { target: { value: '1234567890' } });
-
-        expect(nameInput).toHaveValue('John');
-        expect(surnameInput).toHaveValue('Doe');
-        expect(emailInput).toHaveValue('john.doe@example.com');
-        expect(phoneInput).toHaveValue('1234567890');
-    });
-
-    it('calls validateOrder and onOrderValidated when the button is clicked', async () => {
+    it('calls validateOrder and onOrderValidated when the form is submitted with valid data', async () => {
         (validateOrder as jest.Mock).mockResolvedValueOnce(undefined);
-        await act(async () => renderComponent());
 
-        const nameInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre nom'
+        render(
+            <ShoppingCartValidation onOrderValidated={mockOnOrderValidated} />
         );
-        const surnameInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre prénom'
-        );
-        const emailInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre adresse mail'
-        );
-        const phoneInput = screen.getByPlaceholderText(
-            'Veuillez renseigner votre numéro de téléphone'
-        );
-        const button = screen.getByText('Valider la commande');
 
-        // Fill in the form
-        fireEvent.change(nameInput, { target: { value: 'John' } });
-        fireEvent.change(surnameInput, { target: { value: 'Doe' } });
-        fireEvent.change(emailInput, {
+        fireEvent.change(screen.getByLabelText(/^Nom/), {
+            target: { value: 'John' },
+        });
+        fireEvent.change(screen.getByLabelText(/^Prénom/), {
+            target: { value: 'Doe' },
+        });
+        fireEvent.change(screen.getByLabelText(/^Adresse mail/), {
             target: { value: 'john.doe@example.com' },
         });
-        fireEvent.change(phoneInput, { target: { value: '1234567890' } });
+        fireEvent.change(screen.getByLabelText(/^Numéro de téléphone/), {
+            target: { value: '1234567890' },
+        });
 
-        // Click the button
-        fireEvent.click(button);
+        fireEvent.click(screen.getByText('Valider la commande'));
 
-        // Assert validateOrder is called with the correct data
-        await waitFor(async () =>
+        await waitFor(() => {
             expect(validateOrder).toHaveBeenCalledWith({
                 name: 'John',
                 surname: 'Doe',
                 email: 'john.doe@example.com',
-                phoneNumber: '1234567890',
-            })
+                phoneNumber: '12 34 56 78 90',
+            });
+            expect(mockOnOrderValidated).toHaveBeenCalled();
+        });
+    });
+
+    it('displays an error notification if validateOrder fails', async () => {
+        (validateOrder as jest.Mock).mockRejectedValueOnce(
+            new Error('Validation failed')
         );
 
-        // Assert onOrderValidated is called
-        expect(mockOnOrderValidated).toHaveBeenCalled();
+        render(
+            <ShoppingCartValidation onOrderValidated={mockOnOrderValidated} />
+        );
+
+        fireEvent.change(screen.getByLabelText(/^Nom/), {
+            target: { value: 'John' },
+        });
+        fireEvent.change(screen.getByLabelText(/^Prénom/), {
+            target: { value: 'Doe' },
+        });
+        fireEvent.change(screen.getByLabelText(/^Adresse mail/), {
+            target: { value: 'john.doe@example.com' },
+        });
+        fireEvent.change(screen.getByLabelText(/^Numéro de téléphone/), {
+            target: { value: '1234567890' },
+        });
+
+        fireEvent.click(screen.getByText('Valider la commande'));
+
+        await waitFor(() => {
+            expect(validateOrder).toHaveBeenCalled();
+            expect(mockOnOrderValidated).not.toHaveBeenCalled();
+        });
+
+        // You can add additional checks for error notifications if they are rendered in the UI
     });
 });

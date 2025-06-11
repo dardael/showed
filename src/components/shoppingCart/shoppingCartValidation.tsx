@@ -1,69 +1,62 @@
-import { Box, Button, Center, Input, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box } from '@chakra-ui/react';
 import { validateOrder } from 'showed/controllers/product/orderController';
 import { Customer } from 'showed/lib/product/models/order';
+import TextInput from '../core/form/inputs/textInput';
+import SaveForm from '../core/form/saveForm';
+import PhoneNumberInput from '../core/form/inputs/phoneNumberInput';
+import EmailInput from '../core/form/inputs/emailInput';
 
 export default function ShoppingCartValidation({
     onOrderValidated,
 }: {
     onOrderValidated: () => void;
 }) {
-    const [customer, setCustomer] = useState<Customer>({
-        name: '',
-        surname: '',
-        email: '',
-        phoneNumber: '',
-    });
+    async function onFormValidated(data: FormData) {
+        const customer: Customer = {
+            name: data.get('name') as string,
+            surname: data.get('surname') as string,
+            email: data.get('email') as string,
+            phoneNumber: data.get('phoneNumber') as string,
+        };
+        await validateOrder(customer);
+        onOrderValidated();
+    }
     return (
         <Box padding={'40px'}>
-            <Text marginBottom={'10px'}>Nom</Text>
-            <Input
-                placeholder='Veuillez renseigner votre nom'
-                onChange={(e) =>
-                    setCustomer({ ...customer, name: e.target.value })
-                }
-            />
-            <Text marginTop={'15px'} marginBottom={'10px'}>
-                {'Prénom'}
-            </Text>
-            <Input
-                placeholder={'Veuillez renseigner votre prénom'}
-                onChange={(e) =>
-                    setCustomer({ ...customer, surname: e.target.value })
-                }
-            />
+            <SaveForm
+                action={onFormValidated}
+                validateButtonLabel='Valider la commande'
+                notificationLabels={{
+                    loading: 'Commande en cours de validation',
+                    error: 'Erreur lors de la validation de la commande',
+                }}
+            >
+                <TextInput
+                    name='name'
+                    label='Nom'
+                    placeholder='Veuillez renseigner votre nom'
+                    isRequired
+                />
+                <TextInput
+                    name='surname'
+                    label={'Prénom'}
+                    placeholder={'Veuillez renseigner votre prénom'}
+                    isRequired
+                />
 
-            <Text marginTop={'15px'} marginBottom={'10px'}>
-                {'Adresse mail'}
-            </Text>
-            <Input
-                type='email'
-                placeholder='Veuillez renseigner votre adresse mail'
-                onChange={(e) =>
-                    setCustomer({ ...customer, email: e.target.value })
-                }
-            />
-            <Text marginTop={'15px'} marginBottom={'10px'}>
-                {'Numéro de téléphone'}
-            </Text>
-            <Input
-                type='tel'
-                placeholder='Veuillez renseigner votre numéro de téléphone'
-                onChange={(e) =>
-                    setCustomer({ ...customer, phoneNumber: e.target.value })
-                }
-            />
-            <Center>
-                <Button
-                    marginTop={'20px'}
-                    onClick={async () => {
-                        await validateOrder(customer);
-                        onOrderValidated();
-                    }}
-                >
-                    Valider la commande
-                </Button>
-            </Center>
+                <EmailInput
+                    name='email'
+                    label='Adresse mail'
+                    placeholder='Veuillez renseigner votre adresse mail'
+                    isRequired
+                />
+                <PhoneNumberInput
+                    name='phoneNumber'
+                    label='Numéro de téléphone'
+                    placeholder='Veuillez renseigner votre numéro de téléphone'
+                    isRequired
+                />
+            </SaveForm>
         </Box>
     );
 }
