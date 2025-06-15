@@ -2,6 +2,8 @@ import { Box } from '@chakra-ui/react';
 import SocialNetworkData from 'showed/components/admin/footer/socialNetworkData';
 import VerticalTabs from 'showed/components/core/tabs/verticalTabs';
 import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
+import PhoneNumberData from 'showed/components/admin/footer/phoneNumberData';
+import EmailData from 'showed/components/admin/footer/emailData';
 
 export default function FooterData() {
     return (
@@ -29,21 +31,16 @@ export default function FooterData() {
                     {
                         title: 'Téléphone',
                         content: (
-                            <SocialNetworkData
+                            <PhoneNumberData
                                 key={SocialNetworkName.Phone.toString()}
-                                name={SocialNetworkName.Phone}
-                                unchangableText='Numéro de téléphone'
-                                linkLabel='Numéro de téléphone'
                             />
                         ),
                     },
                     {
                         title: 'Email',
                         content: (
-                            <SocialNetworkData
+                            <EmailData
                                 key={SocialNetworkName.Email.toString()}
-                                name={SocialNetworkName.Email}
-                                linkLabel='Email'
                             />
                         ),
                     },

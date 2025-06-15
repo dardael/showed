@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Loading from 'showed/components/core/feedback/loading';
+import PhoneNumberInput from 'showed/components/core/form/inputs/phoneNumberInput';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import SaveForm from 'showed/components/core/form/saveForm';
 import {
@@ -10,24 +11,20 @@ import {
 import type { SocialNetwork } from 'showed/lib/socialNetwork/models/socialNetwork';
 import { SocialNetworkName } from 'showed/lib/socialNetwork/models/socialNetworkName';
 
-export default function SocialNetworkData({
-    name,
-}: {
-    name: SocialNetworkName;
-}) {
+export default function PhoneNumberData() {
     const [socialNetwork, setSocialNetwork] = useState<
         SocialNetwork | undefined
     >(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
-        getSocialNetwork(name).then((foundSocialNetwork) => {
+        getSocialNetwork(SocialNetworkName.Phone).then((foundSocialNetwork) => {
             setSocialNetwork(foundSocialNetwork);
             setIsLoading(false);
         });
-    }, [name]);
+    }, []);
     const formParameters = [
         { key: 'id', value: socialNetwork?._id },
-        { key: 'name', value: name },
+        { key: 'name', value: SocialNetworkName.Phone },
     ];
     return (
         <Loading isLoading={isLoading}>
@@ -46,10 +43,10 @@ export default function SocialNetworkData({
                     placeholder='Texte affiché'
                     defaultValue={socialNetwork?.text}
                 />
-                <TextInput
-                    label='Lien'
+                <PhoneNumberInput
+                    label='Numéro de téléphone'
                     name='link'
-                    placeholder='Lien'
+                    placeholder='Entrez votre numéro de téléphone'
                     defaultValue={socialNetwork?.link}
                 />
             </SaveForm>

@@ -13,15 +13,14 @@ import { FaPhone } from 'react-icons/fa6';
 interface PhoneNumberInputProps extends InputProps {
     label?: string;
     isRequired?: boolean;
+    defaultValue?: string;
 }
 export default function PhoneNumberInput({
     label,
     isRequired,
+    defaultValue,
     ...props
 }: PhoneNumberInputProps) {
-    const [value, setValue] = useState('');
-    const [isValid, setIsValid] = useState(true);
-    const [isTouched, setIsTouched] = useState(false);
     const formatPhoneNumber = (input: string) => {
         // Remove all non-digit characters
         const digits = input.replace(/\D/g, '');
@@ -33,6 +32,9 @@ export default function PhoneNumberInput({
 
         return formatted.trim(); // Remove trailing spaces
     };
+    const [value, setValue] = useState(formatPhoneNumber(defaultValue || ''));
+    const [isValid, setIsValid] = useState(true);
+    const [isTouched, setIsTouched] = useState(false);
 
     const validatePhoneNumber = (input: string): boolean => {
         // Remove all non-digit characters

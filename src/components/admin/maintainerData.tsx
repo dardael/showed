@@ -9,6 +9,7 @@ import {
     saveMaintainer,
 } from 'showed/controllers/maintainer/maintainerController';
 import Loading from '../core/feedback/loading';
+import EmailInput from '../core/form/inputs/emailInput';
 
 export default function MaintainerData() {
     const [maintainer, setMaintainer] = useState<Maintainer | undefined>(
@@ -22,39 +23,39 @@ export default function MaintainerData() {
         });
     }, []);
     return (
-            <Loading isLoading={isLoading}>
-                <Box padding={'40px'}>
-                    <SaveForm
-                        action={async (formData: FormData) => {
-                            return saveMaintainer(formData).then(
-                                (updatedMaintainer) => {
-                                    setMaintainer(updatedMaintainer);
-                                }
-                            );
-                        }}
-                        parameters={[{ key: 'id', value: maintainer?._id }]}
-                    >
-                        <TextInput
-                            label='Adresse mail'
-                            name='email'
-                            placeholder='email'
-                            defaultValue={maintainer?.email}
-                            isRequired
-                        />
-                        <TextInput
-                            label='Nom'
-                            name='name'
-                            placeholder='name'
-                            defaultValue={maintainer?.name}
-                        />
-                        <TextInput
-                            label='Prénom'
-                            name='surname'
-                            placeholder='surname'
-                            defaultValue={maintainer?.surname}
-                        />
-                    </SaveForm>
-                </Box>
+        <Loading isLoading={isLoading}>
+            <Box padding={'40px'}>
+                <SaveForm
+                    action={async (formData: FormData) => {
+                        return saveMaintainer(formData).then(
+                            (updatedMaintainer) => {
+                                setMaintainer(updatedMaintainer);
+                            }
+                        );
+                    }}
+                    parameters={[{ key: 'id', value: maintainer?._id }]}
+                >
+                    <EmailInput
+                        label='Adresse mail'
+                        name='email'
+                        placeholder='Entrez votre adresse mail'
+                        defaultValue={maintainer?.email}
+                        isRequired
+                    />
+                    <TextInput
+                        label='Nom'
+                        name='name'
+                        placeholder='name'
+                        defaultValue={maintainer?.name}
+                    />
+                    <TextInput
+                        label='Prénom'
+                        name='surname'
+                        placeholder='surname'
+                        defaultValue={maintainer?.surname}
+                    />
+                </SaveForm>
+            </Box>
         </Loading>
     );
 }

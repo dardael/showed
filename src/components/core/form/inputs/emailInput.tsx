@@ -13,13 +13,15 @@ import { FaEnvelope } from 'react-icons/fa';
 interface EmailInputProps extends InputProps {
     label?: string;
     isRequired?: boolean;
+    defaultValue?: string;
 }
 export default function EmailInput({
     label,
     isRequired,
+    defaultValue,
     ...props
 }: EmailInputProps) {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(defaultValue || '');
     const [isValid, setIsValid] = useState(true);
     const [isTouched, setIsTouched] = useState(false);
 
