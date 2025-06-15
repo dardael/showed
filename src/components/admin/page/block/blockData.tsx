@@ -21,6 +21,7 @@ import { FileType } from 'showed/components/core/input/fileType';
 import { BlockType, getBlockTypeLabel } from 'showed/lib/page/models/blockType';
 import DropdownButton from 'showed/components/core/button/dropdownButton';
 import SwitchInput from 'showed/components/core/form/inputs/switchInput';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function BlockData<U>({
     block,
@@ -194,10 +195,7 @@ export default function BlockData<U>({
         );
     }, [block._id, block.backgroundImageId]);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Box padding={'40px'}>
                     <SaveForm
                         parameters={[
@@ -554,7 +552,6 @@ export default function BlockData<U>({
                         </Box>
                     </Box>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

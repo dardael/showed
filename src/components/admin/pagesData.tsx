@@ -1,4 +1,4 @@
-import { Box, Button, Spinner, useToast } from '@chakra-ui/react';
+import { Box, Button, useToast } from '@chakra-ui/react';
 import PageData from './page/pageData';
 import { FaPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import * as PageController from 'showed/controllers/page/pageController';
 import { Notification } from '../core/feedback/notification';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import DynamicAccordion from '../core/accordion/dynamicAccordion';
+import Loading from '../core/feedback/loading';
 
 export default function PagesData() {
     const notification = new Notification(useToast());
@@ -77,10 +78,7 @@ export default function PagesData() {
         });
     }, []);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Box>
                     <Button
                         title='Ajouter une page'
@@ -143,7 +141,6 @@ export default function PagesData() {
                         />
                     </Box>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

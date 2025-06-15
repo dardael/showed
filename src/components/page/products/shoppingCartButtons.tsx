@@ -7,6 +7,7 @@ import {
     getProductCount,
 } from 'showed/controllers/product/shoppingCartController';
 import { Product } from 'showed/lib/product/models/product';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function ShoppingCartButtons({ product }: { product: Product }) {
     const [productCount, setProductCount] = useState<number>(0);
@@ -18,10 +19,7 @@ export default function ShoppingCartButtons({ product }: { product: Product }) {
         });
     }, [product]);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <ButtonGroup spacing='4' alignItems='center'>
                     <IconButton
                         aria-label='Supprimer le produit'
@@ -44,7 +42,6 @@ export default function ShoppingCartButtons({ product }: { product: Product }) {
                         }}
                     />
                 </ButtonGroup>
-            )}
-        </>
+        </Loading>
     );
 }

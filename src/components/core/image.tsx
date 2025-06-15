@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image as ChakraImage, ImageProps, Spinner } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
+import Loading from './feedback/loading';
 
 export default function Image({
     fileId,
@@ -21,13 +22,10 @@ export default function Image({
     }, [fileId]);
 
     return (
-        <>
+        <Loading isLoading={isLoading}>
             {' '}
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
                 <ChakraImage src={image as string} {...props} />
-            )}{' '}
-        </>
+            {' '}
+        </Loading>
     );
 }

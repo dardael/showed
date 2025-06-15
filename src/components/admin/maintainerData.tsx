@@ -1,5 +1,5 @@
 'use client';
-import { Box, Spinner } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import TextInput from 'showed/components/core/form/inputs/textInput';
@@ -8,6 +8,7 @@ import {
     getMaintainer,
     saveMaintainer,
 } from 'showed/controllers/maintainer/maintainerController';
+import Loading from '../core/feedback/loading';
 
 export default function MaintainerData() {
     const [maintainer, setMaintainer] = useState<Maintainer | undefined>(
@@ -21,10 +22,7 @@ export default function MaintainerData() {
         });
     }, []);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+            <Loading isLoading={isLoading}>
                 <Box padding={'40px'}>
                     <SaveForm
                         action={async (formData: FormData) => {
@@ -57,7 +55,6 @@ export default function MaintainerData() {
                         />
                     </SaveForm>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

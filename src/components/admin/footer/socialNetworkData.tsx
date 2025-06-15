@@ -1,6 +1,6 @@
 'use client';
-import { Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import Loading from 'showed/components/core/feedback/loading';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import SaveForm from 'showed/components/core/form/saveForm';
 import {

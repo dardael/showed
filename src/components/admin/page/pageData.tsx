@@ -18,6 +18,7 @@ import DropdownButton from 'showed/components/core/button/dropdownButton';
 import { BlockType, getBlockTypeLabel } from 'showed/lib/page/models/blockType';
 import InvitationBlockData from './block/invitationBlockData';
 import ProductsBlockData from './block/productsBlockData';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function PageData({
     page,
@@ -142,10 +143,7 @@ export default function PageData({
         );
     }, [page.soundId, page._id]);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Box padding={'40px'}>
                     <SaveForm
                         parameters={[
@@ -328,7 +326,6 @@ export default function PageData({
                         </Box>
                     </Box>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import FileInput from 'showed/components/core/form/inputs/fileInput';
 import CheckBoxInput from 'showed/components/core/form/inputs/checkBoxInput';
 import { FileType } from 'showed/components/core/input/fileType';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function InvitationBlockData<U>({
     block,
@@ -62,10 +63,7 @@ export default function InvitationBlockData<U>({
         }
     }, [block.backgroundImageId]);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Box padding={'40px'}>
                     <SaveForm
                         parameters={[
@@ -103,7 +101,6 @@ export default function InvitationBlockData<U>({
                         />
                     </SaveForm>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

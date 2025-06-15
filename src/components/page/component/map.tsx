@@ -6,6 +6,7 @@ import {
     Map as GoogleMap,
     Marker,
 } from '@vis.gl/react-google-maps';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function Map({ localization }: { localization: string }) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,16 +22,11 @@ export default function Map({ localization }: { localization: string }) {
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
                 onLoad={() => setIsLoading(false)}
             >
-                {isLoading ? (
-                    <Center>
-                        {' '}
-                        <Spinner size={'xl'} />
-                    </Center>
-                ) : (
+               <Loading isLoading={isLoading}>
                     <GoogleMap defaultCenter={center} defaultZoom={14}>
                         <Marker position={center} />
                     </GoogleMap>
-                )}
+                </Loading>
             </APIProvider>
         </Box>
     );

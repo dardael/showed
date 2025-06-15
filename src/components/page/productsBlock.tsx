@@ -6,6 +6,7 @@ import { Product } from 'showed/lib/product/models/product';
 import ProductCard from '../admin/products/productCard';
 import ShoppingCartButtons from './products/shoppingCartButtons';
 import Link from 'next/link';
+import Loading from '../core/feedback/loading';
 export default function ProductsBlock() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [products, setProducts] = useState<Product[]>([]);
@@ -17,10 +18,7 @@ export default function ProductsBlock() {
     }, []);
 
     return (
-        <>
-            {isLoading && <Spinner size='xl' />}
-            {!isLoading && (
-                <>
+        <Loading isLoading={isLoading}>
                     <Flex
                         flexWrap={'wrap'}
                         gap={'30px'}
@@ -51,8 +49,6 @@ export default function ProductsBlock() {
                             </Link>
                         )}
                     </Center>
-                </>
-            )}
-        </>
+                </Loading>
     );
 }

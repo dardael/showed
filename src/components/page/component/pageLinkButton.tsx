@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getPages } from 'showed/controllers/page/pageController';
 import { Page } from 'showed/lib/page/models/page';
 import Link from 'next/link';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function PageLinkButton({
     text,
@@ -22,10 +23,7 @@ export default function PageLinkButton({
     }, [link]);
 
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Link
                     style={{ width: '100%' }}
                     href={'/page/' + page?.urlPart + '?id=' + page?.urlPart}
@@ -40,7 +38,6 @@ export default function PageLinkButton({
                         {text}
                     </ChakraButton>
                 </Link>
-            )}
-        </>
+        </Loading>
     );
 }

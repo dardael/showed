@@ -25,6 +25,7 @@ import ItalicHeaderData from './italicHeaderData';
 import ItalicTextData from './italicTextData';
 import PageLinkButtonData from './pageLinkButtonData';
 import MapData from './mapData';
+import Loading from 'showed/components/core/feedback/loading';
 
 export default function ComponentData({
     component,
@@ -83,10 +84,7 @@ export default function ComponentData({
         }
     }, [component.content, component.componentType]);
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <SaveForm
                     parameters={[
                         { key: 'id', value: component._id },
@@ -185,7 +183,6 @@ export default function ComponentData({
                         <MapData component={component} />
                     )}
                 </SaveForm>
-            )}
-        </>
+        </Loading>
     );
 }

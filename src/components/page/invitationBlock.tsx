@@ -31,6 +31,7 @@ import { ThemeContext } from 'showed/app/providers';
 import { Notification } from '../core/feedback/notification';
 import { reloadPage } from 'showed/controllers/page/pageController';
 import { IoMdLogOut } from 'react-icons/io';
+import Loading from '../core/feedback/loading';
 
 export default function InvitationBlock({ block }: { block: BlockModel }) {
     const notification = new Notification(useToast());
@@ -138,9 +139,7 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
     };
 
     return (
-        <>
-            {isLoading && <Box></Box>}
-            {!isLoading && (
+        <Loading isLoading={isLoading}>
                 <Box
                     backgroundImage={backgroundImage}
                     backgroundSize={'cover'}
@@ -419,7 +418,6 @@ export default function InvitationBlock({ block }: { block: BlockModel }) {
                         )}
                     </Box>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }

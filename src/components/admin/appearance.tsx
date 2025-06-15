@@ -17,6 +17,7 @@ import {
     getWebsiteModeLabel,
 } from 'showed/lib/theme/models/websiteMode';
 import SelectInput from '../core/form/inputs/selectInput';
+import Loading from '../core/feedback/loading';
 export default function Appearance() {
     const [theme, setTheme] = useState<Theme>({
         color: Color.gray,
@@ -57,10 +58,7 @@ export default function Appearance() {
         );
     };
     return (
-        <>
-            {isLoading ? (
-                <Spinner size='xl' />
-            ) : (
+        <Loading isLoading={isLoading}>
                 <Box padding={'40px'}>
                     <SaveForm
                         parameters={[{ key: 'id', value: theme._id }]}
@@ -113,7 +111,6 @@ export default function Appearance() {
                         />
                     </SaveForm>
                 </Box>
-            )}
-        </>
+        </Loading>
     );
 }
