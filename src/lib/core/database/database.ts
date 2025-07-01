@@ -15,8 +15,8 @@ export default class Database implements DatabaseInterface {
         }
     ): Promise<U[]> {
         await connectToDb();
-
         let query;
+
         if (filter.model) {
             query = model.find(filter.model);
         } else {

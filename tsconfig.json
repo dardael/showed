@@ -19,7 +19,7 @@
                 "name": "next"
             }
         ],
-        "types": ["jest"],
+        "types": ["jest", "node"],
         "baseUrl": ".",
         "paths": {
             "showed/*": ["./src/*"],

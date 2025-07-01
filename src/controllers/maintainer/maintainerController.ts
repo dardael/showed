@@ -33,5 +33,8 @@ export async function saveMaintainer(data: FormData): Promise<Maintainer> {
 export async function getMaintainer(): Promise<Maintainer | undefined> {
     const provider: Provider = Container.get('MaintainerProvider');
     const maintainer = await provider.getMaintainer();
+    if (maintainer) {
+        maintainer.password = '';
+    }
     return maintainer;
 }

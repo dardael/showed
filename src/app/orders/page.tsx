@@ -1,10 +1,18 @@
 'use client';
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { useState } from 'react';
+import LoginForm from 'showed/components/core/form/loginForm';
 import NewOrders from 'showed/components/order/newOrders';
 import ValidatedOrders from 'showed/components/order/validatedOrders';
 
 export default function Home() {
-    return (
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLoginSuccess = () => {
+        setIsLoggedIn(true);
+    };
+
+    return isLoggedIn ? (
         <Box padding={'40px'}>
             <Tabs>
                 <TabList>
@@ -21,5 +29,7 @@ export default function Home() {
                 </TabPanels>
             </Tabs>
         </Box>
+    ) : (
+        <LoginForm onLogin={handleLoginSuccess} />
     );
 }

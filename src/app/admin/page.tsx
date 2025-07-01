@@ -4,9 +4,17 @@ import MaintainerData from 'showed/components/admin/maintainerData';
 import FooterData from 'showed/components/admin/footerData';
 import PagesData from 'showed/components/admin/pagesData';
 import Appearance from 'showed/components/admin/appearance';
+import LoginForm from 'showed/components/core/form/loginForm';
+import { useState } from 'react';
 
 export default function Home() {
-    return (
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLoginSuccess = () => {
+        setIsLoggedIn(true);
+    };
+
+    return isLoggedIn ? (
         <Box padding={'40px'}>
             <Tabs>
                 <TabList>
@@ -31,5 +39,7 @@ export default function Home() {
                 </TabPanels>
             </Tabs>
         </Box>
+    ) : (
+        <LoginForm onLogin={handleLoginSuccess} />
     );
 }

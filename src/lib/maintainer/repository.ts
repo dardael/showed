@@ -10,4 +10,9 @@ export default interface Repository {
         id: string,
         maintainerData: { email?: string; name?: string; surname?: string }
     ): Promise<Maintainer>;
+    verifyMaintainerCredentials(
+        email: string,
+        password: string
+    ): Promise<boolean>;
+    savePassword(password: string): Promise<void>;
 }

@@ -50,9 +50,9 @@ async function connectToDb() {
         cached.conn = await cached.promise;
     } catch (e) {
         cached.promise = null;
+        console.log(e);
         throw e;
     }
-
     return cached.conn;
 }
 

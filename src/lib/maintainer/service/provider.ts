@@ -11,4 +11,5 @@ export default interface Provider {
         update: { email?: string; name?: string; surname?: string }
     ): Promise<Maintainer>;
     getMaintainer(): Promise<Maintainer | undefined>;
+    savePassword(password: string): Promise<void>;
 }

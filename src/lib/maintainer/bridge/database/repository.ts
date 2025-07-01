@@ -35,4 +35,32 @@ export default class Repository implements RepositoryInterface {
             maintainerData
         );
     }
+
+    public async savePassword(password: string): Promise<void> {
+        const maintainers = await this.getMaintainers({ limit: 1 });
+        const maintainer = maintainers?.pop();
+        if (maintainer) {
+            await this.database.findByIdAndUpdate<Maintainer>(
+                MaintainerModel,
+                maintainer._id as string,
+                { password }
+            );
+        } else {
+            await this.database.create<Maintainer>(MaintainerModel, {
+                password,
+            });
+        }
+    }
+
+    public async verifyMaintainerCredentials(
+        email: string,
+        password: string
+    ): Promise<boolean> {
+        const maintainers = await this.getMaintainers({ limit: 1 });
+        const maintainer = maintainers?.pop();
+        if (!maintainer) {
+            return false;
+        }
+        return password == maintainer.password && email == maintainer.email;
+    }
 }

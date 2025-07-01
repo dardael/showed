@@ -1,8 +1,18 @@
 'use client';
+import { useState } from 'react';
 import Products from 'showed/components/admin/products/products';
+import LoginForm from 'showed/components/core/form/loginForm';
 
 export default function Home() {
-    return (
-         <Products />
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLoginSuccess = () => {
+        setIsLoggedIn(true);
+    };
+
+    return isLoggedIn ? (
+        <Products />
+    ) : (
+        <LoginForm onLogin={handleLoginSuccess} />
     );
 }
