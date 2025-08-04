@@ -21,12 +21,22 @@ import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/re
 import SocialNetworkProvider from 'showed/lib/socialNetwork/provider';
 import EncodingProvider from 'showed/lib/core/security/encodingProvider';
 import Cache from 'showed/lib/core/cache/cache';
+import Authentificator from 'showed/lib/core/authentification/authentificator';
+import AuthentificatorRepository from 'showed/lib/core/authentification/bridge/database/repository';
 import { Container } from 'typedi';
 import Database from 'showed/lib/core/database/database';
 
 const database = new Database();
 const databaseToken = 'Database';
 Container.set(databaseToken, database);
+
+const authentificatorRepository = new AuthentificatorRepository(database);
+const authentificatorRepositoryToken = 'AuthentificatorRepository';
+Container.set(authentificatorRepositoryToken, authentificatorRepository);
+
+const authentificator = new Authentificator(authentificatorRepository);
+const authentificatorToken = 'Authentificator';
+Container.set(authentificatorToken, authentificator);
 
 const cache = new Cache();
 const cacheToken = 'Cache';
@@ -58,7 +68,8 @@ Container.set(maintainerRepositoryToken, maintainerRepository);
 
 const maintainerProvider = new MaintainerProvider(
     maintainerRepository,
-    encodingProvider
+    encodingProvider,
+    authentificator
 );
 const maintainerProviderToken = 'MaintainerProvider';
 Container.set(maintainerProviderToken, maintainerProvider);

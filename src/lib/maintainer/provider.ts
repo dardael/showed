@@ -2,14 +2,17 @@ import ProviderInterface from 'showed/lib/maintainer/service/provider';
 import type Repository from 'showed/lib/maintainer/repository';
 import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import EncodingProvider from 'showed/lib/core/security/service/encodingProvider';
+import Authentificator from 'showed/lib/core/authentification/service/authentificator';
 
 export default class Provider implements ProviderInterface {
     constructor(
         private repository: Repository,
-        private encodingProvider: EncodingProvider
+        private encodingProvider: EncodingProvider,
+        private authentificator: Authentificator
     ) {
         this.repository = repository;
         this.encodingProvider = encodingProvider;
+        this.authentificator = authentificator;
     }
 
     public async createMaintainer(maintainerData: {
@@ -34,15 +37,19 @@ export default class Provider implements ProviderInterface {
 
     public async loginMaintainer(
         email: string,
-        password: string
+        password: string,
+        token: string
     ): Promise<boolean> {
-        console.log(password);
         const hashedPassword = await this.encodingProvider.hashString(password);
-        console.log(hashedPassword);
-        return await this.repository.verifyMaintainerCredentials(
-            email,
-            hashedPassword
-        );
+        const isLoginSuccesfull =
+            await this.repository.verifyMaintainerCredentials(
+                email,
+                hashedPassword
+            );
+        if (isLoginSuccesfull) {
+            this.authentificator.saveAuthentification(token);
+        }
+        return isLoginSuccesfull;
     }
 
     public async savePassword(password: string): Promise<void> {

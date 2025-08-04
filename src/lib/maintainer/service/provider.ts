@@ -12,4 +12,9 @@ export default interface Provider {
     ): Promise<Maintainer>;
     getMaintainer(): Promise<Maintainer | undefined>;
     savePassword(password: string): Promise<void>;
+    loginMaintainer(
+        email: string,
+        password: string,
+        token: string
+    ): Promise<boolean>;
 }
