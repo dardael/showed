@@ -2,8 +2,7 @@
 import 'showed/lib/core/dependencyInjection/container';
 import type { Maintainer } from 'showed/lib/maintainer/models/maintainer';
 import Provider from 'showed/lib/maintainer/provider';
-import { Container } from 'typedi';
-
+import { getService } from 'showed/lib/core/dependencyInjection/getter';
 export async function saveMaintainer(data: FormData): Promise<Maintainer> {
     const id = data.get('id')?.toString();
     const email = data.get('email')?.toString();
@@ -12,7 +11,7 @@ export async function saveMaintainer(data: FormData): Promise<Maintainer> {
     if (!email) {
         return await Promise.reject(new Error('Email is required'));
     }
-    const provider: Provider = Container.get('MaintainerProvider');
+    const provider: Provider = getService('MaintainerProvider');
     let updatedMaintainer;
     if (id) {
         updatedMaintainer = await provider.updateMaintainer(id, {
@@ -31,7 +30,7 @@ export async function saveMaintainer(data: FormData): Promise<Maintainer> {
 }
 
 export async function getMaintainer(): Promise<Maintainer | undefined> {
-    const provider: Provider = Container.get('MaintainerProvider');
+    const provider: Provider = getService('MaintainerProvider');
     const maintainer = await provider.getMaintainer();
     if (maintainer) {
         maintainer.password = '';

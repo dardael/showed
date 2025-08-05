@@ -3,7 +3,7 @@ import 'showed/lib/core/dependencyInjection/container';
 import { Block } from 'showed/lib/page/models/block';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import BlockProvider from 'showed/lib/page/blockProvider';
-import { Container } from 'typedi';
+import { getService } from 'showed/lib/core/dependencyInjection/getter';
 import { Component } from 'showed/lib/page/models/component';
 import { BlockType } from 'showed/lib/page/models/blockType';
 
@@ -30,7 +30,7 @@ export async function saveBlock(data: FormData): Promise<Block> {
     if (!position) {
         return await Promise.reject(new Error('Position is required'));
     }
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     return provider.updateBlock(id, {
         backgroundImageId,
         title,
@@ -48,7 +48,7 @@ export async function createBlock(
     parentBlockId?: string,
     blockType?: BlockType
 ): Promise<Block> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     return provider.createBlock({
         pageId,
         parentBlockId,
@@ -60,12 +60,12 @@ export async function createBlock(
 }
 
 export async function getBlocks(pageId: string): Promise<Block[]> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     return provider.getBlocks(pageId);
 }
 
 export async function deleteBlock(id: string): Promise<Block> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     return provider.deleteBlock(id);
 }
 
@@ -73,7 +73,7 @@ export async function moveBlock(
     block: Block,
     direction: SortDirection
 ): Promise<void> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     provider.moveBlock(block, direction);
 }
 
@@ -81,13 +81,13 @@ export async function moveChildElement(
     element: Block | Component,
     direction: SortDirection
 ): Promise<void> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     provider.moveChildElement(element, direction);
 }
 
 export async function getChildElements(
     parentBlockId: string
 ): Promise<(Block | Component)[]> {
-    const provider: BlockProvider = Container.get('BlockProvider');
+    const provider: BlockProvider = getService('BlockProvider');
     return provider.getChildElements(parentBlockId);
 }

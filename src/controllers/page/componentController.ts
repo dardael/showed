@@ -3,9 +3,8 @@ import 'showed/lib/core/dependencyInjection/container';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import ComponentProvider from 'showed/lib/page/componentProvider';
-import { Container } from 'typedi';
 import { Font } from 'showed/lib/theme/models/font';
-
+import { getService } from 'showed/lib/core/dependencyInjection/getter';
 export async function saveComponent(data: FormData): Promise<Component> {
     const id = data.get('id')?.toString();
     const content = data.get('content')?.toString();
@@ -22,7 +21,7 @@ export async function saveComponent(data: FormData): Promise<Component> {
             new Error('Position and content are required')
         );
     }
-    const provider: ComponentProvider = Container.get('ComponentProvider');
+    const provider: ComponentProvider = getService('ComponentProvider');
     return provider.updateComponent(id, {
         link,
         content,
@@ -38,7 +37,7 @@ export async function createComponent(
     componentType: ComponentType,
     position: number
 ): Promise<Component> {
-    const provider: ComponentProvider = Container.get('ComponentProvider');
+    const provider: ComponentProvider = getService('ComponentProvider');
     return provider.createComponent({
         componentType,
         blockId,
@@ -49,11 +48,11 @@ export async function createComponent(
 }
 
 export async function getComponents(blockId: string): Promise<Component[]> {
-    const provider: ComponentProvider = Container.get('ComponentProvider');
+    const provider: ComponentProvider = getService('ComponentProvider');
     return provider.getComponents(blockId);
 }
 
 export async function deleteComponent(id: string): Promise<Component> {
-    const provider: ComponentProvider = Container.get('ComponentProvider');
+    const provider: ComponentProvider = getService('ComponentProvider');
     return provider.deleteComponent(id);
 }
