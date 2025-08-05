@@ -85,6 +85,15 @@ export const getService = <T>(service: string): T => {
                     return Promise.resolve();
                 },
             } as T;
+        case 'MaintainerProvider':
+            return {} as T;
+        case 'Authentificator':
+            return {
+                isAlreadyAuthentified: (token: string): Promise<boolean> => {
+                    return Promise.resolve(token === 'valid-token');
+                },
+            } as T;
+
         default:
             throw new Error('Service not found');
     }

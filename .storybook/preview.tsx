@@ -13,6 +13,7 @@ const preview: Preview = {
             },
         },
     },
+
     decorators: [
         (Story, context) => {
             const [color, setColor] = useState(context.args.color || Color.red);
@@ -32,20 +33,25 @@ const preview: Preview = {
             );
         },
     ],
+
     argTypes: {
         color: {
             control: { type: 'select' },
             options: Object.keys(Color),
         },
     },
+
     args: {
         color: Color.gray,
     },
+
     loaders: [
         async ({ args }) => {
             return { color: args.color };
         },
     ],
+
+    tags: ['autodocs'],
 };
 
 export default preview;
