@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Spinner } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 interface LoadingProps {
     isLoading: boolean;
@@ -7,5 +8,21 @@ interface LoadingProps {
 }
 
 export default function Loading({ isLoading, children }: LoadingProps) {
-    return <>{isLoading ? <Spinner size='xl' /> : children}</>;
+    return (
+        <>
+            {isLoading ? (
+                <Flex justify='center' align='center' height='100%'>
+                    <Spinner
+                        size='xl'
+                        speed='1s'
+                        emptyColor='gray.200'
+                        thickness='4px'
+                        title='Chargement...'
+                    />
+                </Flex>
+            ) : (
+                children
+            )}
+        </>
+    );
 }
