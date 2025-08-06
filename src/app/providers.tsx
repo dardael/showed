@@ -33,16 +33,14 @@ export function Providers({
     const chakraTheme = extendTheme(
         withDefaultColorScheme({ colorScheme: theme?.color }),
         {
-            colors: {
-                Colors,
-            },
+            colors: Colors,
 
             initialColorMode: 'light',
             useSystemColorMode: false,
         }
     );
     useEffect(
-        () => setTheme({ ...theme, color: initialTheme.color }),
+        () => setTheme((t) => ({ ...t, color: initialTheme.color })),
         [initialTheme]
     );
     return (
