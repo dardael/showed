@@ -12,6 +12,7 @@ export default class Provider implements ProviderInterface {
     public async createTheme(themeData: {
         color: Color;
         websiteMode: WebsiteMode;
+        logoImageId?: string;
         title?: string;
         description?: string;
         isMenuHidden?: boolean;
@@ -25,6 +26,7 @@ export default class Provider implements ProviderInterface {
             color: Color;
             websiteMode: WebsiteMode;
             description?: string;
+            logoImageId?: string;
             title?: string;
             isMenuHidden?: boolean;
         }

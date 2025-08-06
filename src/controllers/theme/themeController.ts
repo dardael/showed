@@ -17,6 +17,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
     const websiteMode = data.get('websiteMode')?.toString() as WebsiteMode;
     const title = data.get('title')?.toString();
     const description = data.get('description')?.toString();
+    const logoImageId = data.get('logoImageId')?.toString();
     const isMenuHidden = Boolean(data.get('isMenuHidden'));
     let updatedTheme;
     if (id) {
@@ -26,6 +27,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
             title,
             description,
             isMenuHidden,
+            logoImageId,
         });
     } else {
         updatedTheme = await provider.createTheme({
@@ -34,6 +36,7 @@ export async function saveTheme(data: FormData): Promise<Theme> {
             title,
             description,
             isMenuHidden,
+            logoImageId,
         });
     }
     return updatedTheme;

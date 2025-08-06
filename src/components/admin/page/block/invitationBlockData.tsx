@@ -1,4 +1,4 @@
-import { Box, Spinner } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Block } from 'showed/lib/page/models/block';
@@ -64,43 +64,43 @@ export default function InvitationBlockData<U>({
     }, [block.backgroundImageId]);
     return (
         <Loading isLoading={isLoading}>
-                <Box padding={'40px'}>
-                    <SaveForm
-                        parameters={[
-                            { key: 'id', value: block._id as string },
-                            {
-                                key: 'position',
-                                value: block.position.toString(),
-                            },
-                            {
-                                key: 'backgroundImageId',
-                                value: block.backgroundImageId,
-                            },
-                        ]}
-                        action={handleSubmit}
-                    >
-                        <TextInput
-                            isRequired
-                            name='title'
-                            label='Titre'
-                            placeholder='Titre'
-                            defaultValue={block?.title}
-                        />
-                        <FileInput
-                            name='backgroundImage'
-                            label='Image en arriére plan'
-                            defaultValue={initialFilePath}
-                            onChange={handleFileChange}
-                            allowedFileExtensions={['png, jpg, jpeg']}
-                            fileType={FileType.IMAGE}
-                        />
-                        <CheckBoxInput
-                            name='hasTransparentBackground'
-                            label='Fond transparent'
-                            defaultValue={block.hasTransparentBackground}
-                        />
-                    </SaveForm>
-                </Box>
+            <Box padding={'40px'}>
+                <SaveForm
+                    parameters={[
+                        { key: 'id', value: block._id as string },
+                        {
+                            key: 'position',
+                            value: block.position.toString(),
+                        },
+                        {
+                            key: 'backgroundImageId',
+                            value: block.backgroundImageId,
+                        },
+                    ]}
+                    action={handleSubmit}
+                >
+                    <TextInput
+                        isRequired
+                        name='title'
+                        label='Titre'
+                        placeholder='Titre'
+                        defaultValue={block?.title}
+                    />
+                    <FileInput
+                        name='backgroundImage'
+                        label='Image en arriére plan'
+                        defaultValue={initialFilePath}
+                        onChange={handleFileChange}
+                        allowedFileExtensions={['png, jpg, jpeg']}
+                        fileType={FileType.IMAGE}
+                    />
+                    <CheckBoxInput
+                        name='hasTransparentBackground'
+                        label='Fond transparent'
+                        defaultValue={block.hasTransparentBackground}
+                    />
+                </SaveForm>
+            </Box>
         </Loading>
     );
 }

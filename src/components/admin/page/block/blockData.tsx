@@ -1,4 +1,4 @@
-import { Box, Divider, Spinner, useToast, Flex } from '@chakra-ui/react';
+import { Box, Divider, useToast, Flex } from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Block, isBlock } from 'showed/lib/page/models/block';
@@ -196,105 +196,201 @@ export default function BlockData<U>({
     }, [block._id, block.backgroundImageId]);
     return (
         <Loading isLoading={isLoading}>
-                <Box padding={'40px'}>
-                    <SaveForm
-                        parameters={[
-                            { key: 'id', value: block._id },
-                            {
-                                key: 'position',
-                                value: block.position.toString(),
-                            },
-                            {
-                                key: 'backgroundImageId',
-                                value: block.backgroundImageId,
-                            },
-                        ]}
-                        action={handleSubmit}
-                    >
-                        <TextInput
-                            isRequired
-                            name='title'
-                            label='Titre'
-                            placeholder='Titre'
-                            defaultValue={block?.title}
-                        />
-                        <FileInput
-                            name='backgroundImage'
-                            label='Image en arriére plan'
-                            defaultValue={initialFilePath}
-                            onChange={handleFileChange}
-                            allowedFileExtensions={['png, jpg, jpeg']}
-                            fileType={FileType.IMAGE}
-                        />
-                        <CheckBoxInput
-                            name='hasTransparentBackground'
-                            label='Fond transparent'
-                            defaultValue={block.hasTransparentBackground}
-                        />
-                        <SwitchInput
-                            name='isVisibleOnlyWhenInvitedToReception'
-                            label="Visible seulement si invité au vin d'honneur"
-                            defaultValue={
-                                block.isVisibleOnlyWhenInvitedToReception
-                            }
-                        />
-                        <SwitchInput
-                            name='isVisibleOnlyWhenInvitedToMeal'
-                            label='Visible seulement si invité au repas'
-                            defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
-                        />
-                        <SwitchInput
-                            name='isVisibleOnlyWhenInvitedToTownHall'
-                            label='Visible seulement si invité a la mairie'
-                            defaultValue={
-                                block.isVisibleOnlyWhenInvitedToTownHall
-                            }
-                        />
-                    </SaveForm>
-                    <Box
-                        paddingTop={'20px'}
-                        paddingLeft={'20px'}
-                        paddingRight={'20px'}
+            <Box padding={'40px'}>
+                <SaveForm
+                    parameters={[
+                        { key: 'id', value: block._id },
+                        {
+                            key: 'position',
+                            value: block.position.toString(),
+                        },
+                        {
+                            key: 'backgroundImageId',
+                            value: block.backgroundImageId,
+                        },
+                    ]}
+                    action={handleSubmit}
+                >
+                    <TextInput
+                        isRequired
+                        name='title'
+                        label='Titre'
+                        placeholder='Titre'
+                        defaultValue={block?.title}
                     />
-                    <Divider />
-                    <Box
-                        paddingTop={'20px'}
-                        paddingLeft={'20px'}
-                        paddingRight={'20px'}
-                    >
-                        <Flex direction={'row-reverse'} gap={'10px'}>
-                            {block.parentBlockId ? (
-                                <></>
-                            ) : (
+                    <FileInput
+                        name='backgroundImage'
+                        label='Image en arriére plan'
+                        defaultValue={initialFilePath}
+                        onChange={handleFileChange}
+                        allowedFileExtensions={['png, jpg, jpeg']}
+                        fileType={FileType.IMAGE}
+                    />
+                    <CheckBoxInput
+                        name='hasTransparentBackground'
+                        label='Fond transparent'
+                        defaultValue={block.hasTransparentBackground}
+                    />
+                    <SwitchInput
+                        name='isVisibleOnlyWhenInvitedToReception'
+                        label="Visible seulement si invité au vin d'honneur"
+                        defaultValue={block.isVisibleOnlyWhenInvitedToReception}
+                    />
+                    <SwitchInput
+                        name='isVisibleOnlyWhenInvitedToMeal'
+                        label='Visible seulement si invité au repas'
+                        defaultValue={block.isVisibleOnlyWhenInvitedToMeal}
+                    />
+                    <SwitchInput
+                        name='isVisibleOnlyWhenInvitedToTownHall'
+                        label='Visible seulement si invité a la mairie'
+                        defaultValue={block.isVisibleOnlyWhenInvitedToTownHall}
+                    />
+                </SaveForm>
+                <Box
+                    paddingTop={'20px'}
+                    paddingLeft={'20px'}
+                    paddingRight={'20px'}
+                />
+                <Divider />
+                <Box
+                    paddingTop={'20px'}
+                    paddingLeft={'20px'}
+                    paddingRight={'20px'}
+                >
+                    <Flex direction={'row-reverse'} gap={'10px'}>
+                        {block.parentBlockId ? (
+                            <></>
+                        ) : (
+                            <DropdownButton
+                                label={'Ajouter un sous-block'}
+                                icon={<FaPlus />}
+                                onSelectedItem={(key) =>
+                                    addNewBlock(key as BlockType)
+                                }
+                                items={[
+                                    {
+                                        key: BlockType.VERTICAL,
+                                        label: getBlockTypeLabel(
+                                            BlockType.VERTICAL
+                                        ),
+                                    },
+                                    {
+                                        key: BlockType.HORIZONTAL,
+                                        label: getBlockTypeLabel(
+                                            BlockType.HORIZONTAL
+                                        ),
+                                    },
+                                    {
+                                        key: BlockType.LINKED,
+                                        label: getBlockTypeLabel(
+                                            BlockType.LINKED
+                                        ),
+                                    },
+                                ]}
+                            />
+                        )}
+                        {block.blockType === BlockType.LINKED && (
+                            <DropdownButton
+                                label={'Ajouter un texte'}
+                                icon={<FaPlus />}
+                                onSelectedItem={(key) =>
+                                    addNewComponent(key as ComponentType)
+                                }
+                                items={[
+                                    {
+                                        key: ComponentType.RICH_TEXT_EDITOR,
+                                        label: getComponentTypeLabel(
+                                            ComponentType.RICH_TEXT_EDITOR
+                                        ),
+                                    },
+                                ]}
+                            />
+                        )}
+                        {(block.blockType === BlockType.VERTICAL ||
+                            block.blockType === BlockType.HORIZONTAL) && (
+                            <>
                                 <DropdownButton
-                                    label={'Ajouter un sous-block'}
+                                    label={'Ajouter un composant'}
                                     icon={<FaPlus />}
                                     onSelectedItem={(key) =>
-                                        addNewBlock(key as BlockType)
+                                        addNewComponent(key as ComponentType)
                                     }
                                     items={[
                                         {
-                                            key: BlockType.VERTICAL,
-                                            label: getBlockTypeLabel(
-                                                BlockType.VERTICAL
+                                            key: ComponentType.MAP,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.MAP
                                             ),
                                         },
                                         {
-                                            key: BlockType.HORIZONTAL,
-                                            label: getBlockTypeLabel(
-                                                BlockType.HORIZONTAL
+                                            key: ComponentType.COUNTDOWN,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.COUNTDOWN
                                             ),
                                         },
                                         {
-                                            key: BlockType.LINKED,
-                                            label: getBlockTypeLabel(
-                                                BlockType.LINKED
+                                            key: ComponentType.SPACER,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.SPACER
                                             ),
                                         },
                                     ]}
                                 />
-                            )}
-                            {block.blockType === BlockType.LINKED && (
+                                <DropdownButton
+                                    label={'Ajouter un bouton'}
+                                    icon={<FaPlus />}
+                                    onSelectedItem={(key) =>
+                                        addNewComponent(key as ComponentType)
+                                    }
+                                    items={[
+                                        {
+                                            key: ComponentType.CALENDAR_BUTTON,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.CALENDAR_BUTTON
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.POSITION_BUTTON,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.POSITION_BUTTON
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.PAGE_LINK_BUTTON,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.PAGE_LINK_BUTTON
+                                            ),
+                                        },
+                                    ]}
+                                />
+                                <DropdownButton
+                                    label={'Ajouter une image'}
+                                    icon={<FaPlus />}
+                                    onSelectedItem={(key) =>
+                                        addNewComponent(key as ComponentType)
+                                    }
+                                    items={[
+                                        {
+                                            key: ComponentType.ICON,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.ICON
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.ROUND_PHOTO,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.ROUND_PHOTO
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.STAINED_GLASS_PHOTO,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.STAINED_GLASS_PHOTO
+                                            ),
+                                        },
+                                    ]}
+                                />
                                 <DropdownButton
                                     label={'Ajouter un texte'}
                                     icon={<FaPlus />}
@@ -303,6 +399,48 @@ export default function BlockData<U>({
                                     }
                                     items={[
                                         {
+                                            key: ComponentType.TEXT,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.TEXT
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.ITALIC_TEXT,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.ITALIC_TEXT
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.BOLD_TEXT,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.BOLD_TEXT
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.UNDERLINED_ABOVELINED_TEXT,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.UNDERLINED_ABOVELINED_TEXT
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.HEADER,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.HEADER
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.ITALIC_HEADER,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.ITALIC_HEADER
+                                            ),
+                                        },
+                                        {
+                                            key: ComponentType.HEADER_WITH_COLORED_BACKGROUND,
+                                            label: getComponentTypeLabel(
+                                                ComponentType.HEADER_WITH_COLORED_BACKGROUND
+                                            ),
+                                        },
+                                        {
                                             key: ComponentType.RICH_TEXT_EDITOR,
                                             label: getComponentTypeLabel(
                                                 ComponentType.RICH_TEXT_EDITOR
@@ -310,248 +448,94 @@ export default function BlockData<U>({
                                         },
                                     ]}
                                 />
-                            )}
-                            {(block.blockType === BlockType.VERTICAL ||
-                                block.blockType === BlockType.HORIZONTAL) && (
-                                <>
-                                    <DropdownButton
-                                        label={'Ajouter un composant'}
-                                        icon={<FaPlus />}
-                                        onSelectedItem={(key) =>
-                                            addNewComponent(
-                                                key as ComponentType
-                                            )
-                                        }
-                                        items={[
-                                            {
-                                                key: ComponentType.MAP,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.MAP
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.COUNTDOWN,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.COUNTDOWN
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.SPACER,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.SPACER
-                                                ),
-                                            },
-                                        ]}
-                                    />
-                                    <DropdownButton
-                                        label={'Ajouter un bouton'}
-                                        icon={<FaPlus />}
-                                        onSelectedItem={(key) =>
-                                            addNewComponent(
-                                                key as ComponentType
-                                            )
-                                        }
-                                        items={[
-                                            {
-                                                key: ComponentType.CALENDAR_BUTTON,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.CALENDAR_BUTTON
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.POSITION_BUTTON,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.POSITION_BUTTON
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.PAGE_LINK_BUTTON,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.PAGE_LINK_BUTTON
-                                                ),
-                                            },
-                                        ]}
-                                    />
-                                    <DropdownButton
-                                        label={'Ajouter une image'}
-                                        icon={<FaPlus />}
-                                        onSelectedItem={(key) =>
-                                            addNewComponent(
-                                                key as ComponentType
-                                            )
-                                        }
-                                        items={[
-                                            {
-                                                key: ComponentType.ICON,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.ICON
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.ROUND_PHOTO,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.ROUND_PHOTO
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.STAINED_GLASS_PHOTO,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.STAINED_GLASS_PHOTO
-                                                ),
-                                            },
-                                        ]}
-                                    />
-                                    <DropdownButton
-                                        label={'Ajouter un texte'}
-                                        icon={<FaPlus />}
-                                        onSelectedItem={(key) =>
-                                            addNewComponent(
-                                                key as ComponentType
-                                            )
-                                        }
-                                        items={[
-                                            {
-                                                key: ComponentType.TEXT,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.TEXT
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.ITALIC_TEXT,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.ITALIC_TEXT
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.BOLD_TEXT,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.BOLD_TEXT
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.UNDERLINED_ABOVELINED_TEXT,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.UNDERLINED_ABOVELINED_TEXT
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.HEADER,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.HEADER
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.ITALIC_HEADER,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.ITALIC_HEADER
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.HEADER_WITH_COLORED_BACKGROUND,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.HEADER_WITH_COLORED_BACKGROUND
-                                                ),
-                                            },
-                                            {
-                                                key: ComponentType.RICH_TEXT_EDITOR,
-                                                label: getComponentTypeLabel(
-                                                    ComponentType.RICH_TEXT_EDITOR
-                                                ),
-                                            },
-                                        ]}
-                                    />
-                                </>
-                            )}
-                        </Flex>
-                        <Box paddingTop={'55px'}>
-                            <DynamicAccordion<Block | Component>
-                                elements={childElements.map((element) => ({
-                                    reference: element,
-                                    title:
-                                        element.title +
-                                        ' (' +
-                                        (isComponent(element)
-                                            ? getComponentTypeLabel(
-                                                  element.componentType
-                                              )
-                                            : '') +
-                                        (isBlock(element) && element.blockType
-                                            ? getBlockTypeLabel(
-                                                  element.blockType as BlockType
-                                              )
-                                            : '') +
-                                        ')',
-                                    content: isComponent(element) ? (
-                                        <ComponentData
-                                            key={element._id}
-                                            component={element as Component}
-                                            onSave={async (data) => {
-                                                const pendingSave =
-                                                    ComponentController.saveComponent(
-                                                        data
-                                                    );
-                                                pendingSave.then(
-                                                    updateComponent
+                            </>
+                        )}
+                    </Flex>
+                    <Box paddingTop={'55px'}>
+                        <DynamicAccordion<Block | Component>
+                            elements={childElements.map((element) => ({
+                                reference: element,
+                                title:
+                                    element.title +
+                                    ' (' +
+                                    (isComponent(element)
+                                        ? getComponentTypeLabel(
+                                              element.componentType
+                                          )
+                                        : '') +
+                                    (isBlock(element) && element.blockType
+                                        ? getBlockTypeLabel(
+                                              element.blockType as BlockType
+                                          )
+                                        : '') +
+                                    ')',
+                                content: isComponent(element) ? (
+                                    <ComponentData
+                                        key={element._id}
+                                        component={element as Component}
+                                        onSave={async (data) => {
+                                            const pendingSave =
+                                                ComponentController.saveComponent(
+                                                    data
                                                 );
-                                                return pendingSave;
-                                            }}
-                                        />
-                                    ) : (
-                                        <BlockData
-                                            key={element._id}
-                                            block={element as Block}
-                                            onBlockChange={async (
-                                                data: FormData
-                                            ) => {
-                                                const pendingSave =
-                                                    BlockController.saveBlock(
-                                                        data
-                                                    );
-                                                pendingSave.then(updateBlock);
-                                                return pendingSave;
-                                            }}
-                                        />
-                                    ),
-                                    buttons: {
-                                        sort: {
-                                            sortUp: {
-                                                title: 'Déplacer vers le haut',
-                                                action: (element) => {
-                                                    moveElement(
-                                                        element,
-                                                        SortDirection.UP
-                                                    );
-                                                },
-                                            },
-                                            sortDown: {
-                                                title: 'Déplacer vers le bas',
-                                                action: (element) => {
-                                                    moveElement(
-                                                        element,
-                                                        SortDirection.DOWN
-                                                    );
-                                                },
+                                            pendingSave.then(updateComponent);
+                                            return pendingSave;
+                                        }}
+                                    />
+                                ) : (
+                                    <BlockData
+                                        key={element._id}
+                                        block={element as Block}
+                                        onBlockChange={async (
+                                            data: FormData
+                                        ) => {
+                                            const pendingSave =
+                                                BlockController.saveBlock(data);
+                                            pendingSave.then(updateBlock);
+                                            return pendingSave;
+                                        }}
+                                    />
+                                ),
+                                buttons: {
+                                    sort: {
+                                        sortUp: {
+                                            title: 'Déplacer vers le haut',
+                                            action: (element) => {
+                                                moveElement(
+                                                    element,
+                                                    SortDirection.UP
+                                                );
                                             },
                                         },
-                                        delete: {
-                                            title: 'Supprimer',
-                                            action: (element) =>
-                                                isComponent(element)
-                                                    ? deleteComponent(element)
-                                                    : deleteBlock(element),
-                                            confirmation: {
-                                                title: 'Supprimer',
-                                                content: `Souhaitez vous supprimer l'élément "${element.title}" ?\nIl sera perdue.`,
-                                                acceptButtonTitle: 'Supprimer',
-                                                cancelButtonTitle: 'Annuler',
+                                        sortDown: {
+                                            title: 'Déplacer vers le bas',
+                                            action: (element) => {
+                                                moveElement(
+                                                    element,
+                                                    SortDirection.DOWN
+                                                );
                                             },
                                         },
                                     },
-                                }))}
-                            />
-                        </Box>
+                                    delete: {
+                                        title: 'Supprimer',
+                                        action: (element) =>
+                                            isComponent(element)
+                                                ? deleteComponent(element)
+                                                : deleteBlock(element),
+                                        confirmation: {
+                                            title: 'Supprimer',
+                                            content: `Souhaitez vous supprimer l'élément "${element.title}" ?\nIl sera perdue.`,
+                                            acceptButtonTitle: 'Supprimer',
+                                            cancelButtonTitle: 'Annuler',
+                                        },
+                                    },
+                                },
+                            }))}
+                        />
                     </Box>
                 </Box>
+            </Box>
         </Loading>
     );
 }

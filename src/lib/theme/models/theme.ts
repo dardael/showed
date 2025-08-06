@@ -4,6 +4,7 @@ import { WebsiteMode } from './websiteMode';
 
 type Theme = {
     _id?: string;
+    logoImageId?: string;
     color: Color;
     websiteMode: WebsiteMode;
     title?: string;
@@ -12,6 +13,7 @@ type Theme = {
 };
 const ThemeSchema = new mongoose.Schema({
     _id: { type: String, required: true },
+    logoImageId: { type: String },
     color: { type: String, required: true },
     websiteMode: { type: String, required: true },
     title: { type: String },

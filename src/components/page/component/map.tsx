@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Box, Spinner, Center } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import {
     APIProvider,
     Map as GoogleMap,
@@ -22,7 +22,7 @@ export default function Map({ localization }: { localization: string }) {
                 apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string}
                 onLoad={() => setIsLoading(false)}
             >
-               <Loading isLoading={isLoading}>
+                <Loading isLoading={isLoading}>
                     <GoogleMap defaultCenter={center} defaultZoom={14}>
                         <Marker position={center} />
                     </GoogleMap>

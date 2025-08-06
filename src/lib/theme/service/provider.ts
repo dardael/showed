@@ -8,6 +8,7 @@ export default interface Provider {
         websiteMode: WebsiteMode;
         description?: string;
         title?: string;
+        logoImageId?: string;
         isMenuHidden?: boolean;
     }): Promise<Theme>;
     updateTheme(
@@ -16,6 +17,7 @@ export default interface Provider {
             color: Color;
             websiteMode: WebsiteMode;
             description?: string;
+            logoImageId?: string;
             title?: string;
             isMenuHidden?: boolean;
         }

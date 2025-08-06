@@ -1,4 +1,3 @@
-import { Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import Loading from 'showed/components/core/feedback/loading';
 import FontSelect from 'showed/components/core/font/fontSelect';
@@ -29,25 +28,25 @@ export default function PageLinkButtonData({
         })) || [];
     return (
         <Loading isLoading={isLoading}>
-                    <FontSelect
-                        name='font'
-                        label='Police'
-                        defaultValue={component.font?.toString()}
-                    />
-                    <TextInput
-                        isRequired
-                        name='content'
-                        label='Texte'
-                        placeholder='Texte à afficher'
-                        defaultValue={component.content}
-                    />
-                    <SelectInput
-                        isRequired
-                        name='link'
-                        label='Page'
-                        defaultValue={component.link}
-                        options={options}
-                    />
+            <FontSelect
+                name='font'
+                label='Police'
+                defaultValue={component.font?.toString()}
+            />
+            <TextInput
+                isRequired
+                name='content'
+                label='Texte'
+                placeholder='Texte à afficher'
+                defaultValue={component.content}
+            />
+            <SelectInput
+                isRequired
+                name='link'
+                label='Page'
+                defaultValue={component.link}
+                options={options}
+            />
         </Loading>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonGroup, IconButton, Spinner, Text } from '@chakra-ui/react';
+import { ButtonGroup, IconButton, Text } from '@chakra-ui/react';
 import { FaTrash, FaMinus, FaPlus } from 'react-icons/fa';
 import {
     addProductToCache,
@@ -20,28 +20,28 @@ export default function ShoppingCartButtons({ product }: { product: Product }) {
     }, [product]);
     return (
         <Loading isLoading={isLoading}>
-                <ButtonGroup spacing='4' alignItems='center'>
-                    <IconButton
-                        aria-label='Supprimer le produit'
-                        icon={productCount > 1 ? <FaMinus /> : <FaTrash />}
-                        isDisabled={productCount === 0}
-                        onClick={async () => {
-                            await removeProductFromCache(product);
-                            setProductCount(productCount - 1);
-                        }}
-                    />
-                    <Text fontSize='lg' fontWeight='bold'>
-                        {productCount}
-                    </Text>
-                    <IconButton
-                        aria-label='Ajouter le produit'
-                        icon={<FaPlus />}
-                        onClick={async () => {
-                            await addProductToCache(product);
-                            setProductCount(productCount + 1);
-                        }}
-                    />
-                </ButtonGroup>
+            <ButtonGroup spacing='4' alignItems='center'>
+                <IconButton
+                    aria-label='Supprimer le produit'
+                    icon={productCount > 1 ? <FaMinus /> : <FaTrash />}
+                    isDisabled={productCount === 0}
+                    onClick={async () => {
+                        await removeProductFromCache(product);
+                        setProductCount(productCount - 1);
+                    }}
+                />
+                <Text fontSize='lg' fontWeight='bold'>
+                    {productCount}
+                </Text>
+                <IconButton
+                    aria-label='Ajouter le produit'
+                    icon={<FaPlus />}
+                    onClick={async () => {
+                        await addProductToCache(product);
+                        setProductCount(productCount + 1);
+                    }}
+                />
+            </ButtonGroup>
         </Loading>
     );
 }

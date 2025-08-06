@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Image as ChakraImage, ImageProps, Spinner } from '@chakra-ui/react';
+import { Image as ChakraImage, ImageProps } from '@chakra-ui/react';
 import { getFile } from 'showed/controllers/image/imageController';
 import Loading from './feedback/loading';
 
@@ -24,8 +24,7 @@ export default function Image({
     return (
         <Loading isLoading={isLoading}>
             {' '}
-                <ChakraImage src={image as string} {...props} />
-            {' '}
+            <ChakraImage src={image as string} {...props} />{' '}
         </Loading>
     );
 }

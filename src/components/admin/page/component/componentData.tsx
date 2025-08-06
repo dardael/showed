@@ -11,7 +11,6 @@ import HeaderData from './headerData';
 import TextData from './textData';
 import BoldTextData from './boldTextData';
 import { useEffect, useState } from 'react';
-import { Spinner } from '@chakra-ui/react';
 import StainedGlassPhotoData from './stainedGlassPhotoData';
 import SpacerData from './spacerData';
 import CalendarButtonData from './calendarButtonData';
@@ -85,104 +84,97 @@ export default function ComponentData({
     }, [component.content, component.componentType]);
     return (
         <Loading isLoading={isLoading}>
-                <SaveForm
-                    parameters={[
-                        { key: 'id', value: component._id },
-                        {
-                            key: 'position',
-                            value: component.position.toString(),
-                        },
-                    ]}
-                    action={handleSubmit}
-                >
-                    <TextInput
-                        isRequired
-                        name='title'
-                        label='Titre'
-                        placeholder='Titre'
-                        defaultValue={component.title}
+            <SaveForm
+                parameters={[
+                    { key: 'id', value: component._id },
+                    {
+                        key: 'position',
+                        value: component.position.toString(),
+                    },
+                ]}
+                action={handleSubmit}
+            >
+                <TextInput
+                    isRequired
+                    name='title'
+                    label='Titre'
+                    placeholder='Titre'
+                    defaultValue={component.title}
+                />
+                <TextInput
+                    name='description'
+                    label='Type de composant'
+                    defaultValue={getComponentTypeLabel(
+                        component.componentType
+                    )}
+                    readOnly
+                />
+                <NumberInput
+                    name='width'
+                    label='Largeur'
+                    defaultValue={component.width}
+                />
+                {component.componentType === ComponentType.RICH_TEXT_EDITOR && (
+                    <RichTextEditorData component={component} />
+                )}
+                {component.componentType === ComponentType.COUNTDOWN && (
+                    <CountdownData component={component} />
+                )}
+                {component.componentType === ComponentType.HEADER && (
+                    <HeaderData component={component} />
+                )}
+                {component.componentType ===
+                    ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
+                    <HeaderWithColoredBackgroundData component={component} />
+                )}
+                {component.componentType === ComponentType.ITALIC_HEADER && (
+                    <ItalicHeaderData component={component} />
+                )}
+                {component.componentType ===
+                    ComponentType.UNDERLINED_ABOVELINED_TEXT && (
+                    <UnderlineAndAbovelineTextData component={component} />
+                )}
+                {component.componentType === ComponentType.BOLD_TEXT && (
+                    <BoldTextData component={component} />
+                )}
+                {component.componentType === ComponentType.TEXT && (
+                    <TextData component={component} />
+                )}
+                {component.componentType === ComponentType.ITALIC_TEXT && (
+                    <ItalicTextData component={component} />
+                )}
+                {component.componentType ===
+                    ComponentType.STAINED_GLASS_PHOTO && (
+                    <StainedGlassPhotoData
+                        initialFilePath={initialFilePath}
+                        onIconChange={handleFileChange}
                     />
-                    <TextInput
-                        name='description'
-                        label='Type de composant'
-                        defaultValue={getComponentTypeLabel(
-                            component.componentType
-                        )}
-                        readOnly
+                )}
+                {component.componentType === ComponentType.ROUND_PHOTO && (
+                    <RoundPhotoData
+                        initialFilePath={initialFilePath}
+                        onIconChange={handleFileChange}
                     />
-                    <NumberInput
-                        name='width'
-                        label='Largeur'
-                        defaultValue={component.width}
-                    />
-                    {component.componentType ===
-                        ComponentType.RICH_TEXT_EDITOR && (
-                        <RichTextEditorData component={component} />
-                    )}
-                    {component.componentType === ComponentType.COUNTDOWN && (
-                        <CountdownData component={component} />
-                    )}
-                    {component.componentType === ComponentType.HEADER && (
-                        <HeaderData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.HEADER_WITH_COLORED_BACKGROUND && (
-                        <HeaderWithColoredBackgroundData
-                            component={component}
-                        />
-                    )}
-                    {component.componentType ===
-                        ComponentType.ITALIC_HEADER && (
-                        <ItalicHeaderData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.UNDERLINED_ABOVELINED_TEXT && (
-                        <UnderlineAndAbovelineTextData component={component} />
-                    )}
-                    {component.componentType === ComponentType.BOLD_TEXT && (
-                        <BoldTextData component={component} />
-                    )}
-                    {component.componentType === ComponentType.TEXT && (
-                        <TextData component={component} />
-                    )}
-                    {component.componentType === ComponentType.ITALIC_TEXT && (
-                        <ItalicTextData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.STAINED_GLASS_PHOTO && (
-                        <StainedGlassPhotoData
-                            initialFilePath={initialFilePath}
-                            onIconChange={handleFileChange}
-                        />
-                    )}
-                    {component.componentType === ComponentType.ROUND_PHOTO && (
-                        <RoundPhotoData
-                            initialFilePath={initialFilePath}
-                            onIconChange={handleFileChange}
-                        />
-                    )}
-                    {component.componentType === ComponentType.ICON && (
-                        <IconData component={component} />
-                    )}
-                    {component.componentType === ComponentType.SPACER && (
-                        <SpacerData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.CALENDAR_BUTTON && (
-                        <CalendarButtonData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.PAGE_LINK_BUTTON && (
-                        <PageLinkButtonData component={component} />
-                    )}
-                    {component.componentType ===
-                        ComponentType.POSITION_BUTTON && (
-                        <PositionButtonData component={component} />
-                    )}
-                    {component.componentType === ComponentType.MAP && (
-                        <MapData component={component} />
-                    )}
-                </SaveForm>
+                )}
+                {component.componentType === ComponentType.ICON && (
+                    <IconData component={component} />
+                )}
+                {component.componentType === ComponentType.SPACER && (
+                    <SpacerData component={component} />
+                )}
+                {component.componentType === ComponentType.CALENDAR_BUTTON && (
+                    <CalendarButtonData component={component} />
+                )}
+                {component.componentType === ComponentType.PAGE_LINK_BUTTON && (
+                    <PageLinkButtonData component={component} />
+                )}
+                {component.componentType === ComponentType.POSITION_BUTTON && (
+                    <PositionButtonData component={component} />
+                )}
+                {component.componentType === ComponentType.MAP && (
+                    <MapData component={component} />
+                )}
+            </SaveForm>
         </Loading>
     );
 }

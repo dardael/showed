@@ -9,6 +9,7 @@ export default interface Repository {
         title?: string;
         description?: string;
         isMenuHidden?: boolean;
+        logoImageId?: string;
     }): Promise<Theme>;
     updateTheme(
         id: string,
@@ -18,6 +19,7 @@ export default interface Repository {
             title?: string;
             description?: string;
             isMenuHidden?: boolean;
+            logoImageId?: string;
         }
     ): Promise<Theme>;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/nextjs';
 import EmailInput from './emailInput';
 import { ChakraProvider } from '@chakra-ui/react';
 

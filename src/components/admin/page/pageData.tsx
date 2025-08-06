@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Spinner, useToast } from '@chakra-ui/react';
+import { Box, Divider, Flex, useToast } from '@chakra-ui/react';
 import SaveForm from 'showed/components/core/form/saveForm';
 import TextInput from 'showed/components/core/form/inputs/textInput';
 import { Page } from 'showed/lib/page/models/page';
@@ -144,188 +144,187 @@ export default function PageData({
     }, [page.soundId, page._id]);
     return (
         <Loading isLoading={isLoading}>
-                <Box padding={'40px'}>
-                    <SaveForm
-                        parameters={[
-                            { key: 'id', value: page._id },
-                            {
-                                key: 'position',
-                                value: page.position.toString(),
-                            },
-                        ]}
-                        action={handleSubmit}
-                    >
-                        <TextInput
-                            isRequired
-                            name='title'
-                            label='Titre'
-                            placeholder='Titre affiché dans le menu'
-                            defaultValue={page?.title}
-                        />
-                        <FileInput
-                            name='sound'
-                            label='Son'
-                            onChange={handleFileChange}
-                            defaultValue={initialFilePath}
-                            fileType={FileType.AUDIO}
-                            allowedFileExtensions={['mp3', 'mp4', 'wav']}
-                        />
-                        <NumberInput
-                            name='width'
-                            label='Largeur'
-                            placeholder='Largeur de la page'
-                            defaultValue={page?.width}
-                        />
-                    </SaveForm>
-                    <Box
-                        paddingTop={'20px'}
-                        paddingLeft={'20px'}
-                        paddingRight={'20px'}
+            <Box padding={'40px'}>
+                <SaveForm
+                    parameters={[
+                        { key: 'id', value: page._id },
+                        {
+                            key: 'position',
+                            value: page.position.toString(),
+                        },
+                    ]}
+                    action={handleSubmit}
+                >
+                    <TextInput
+                        isRequired
+                        name='title'
+                        label='Titre'
+                        placeholder='Titre affiché dans le menu'
+                        defaultValue={page?.title}
                     />
-                    <Divider />
-                    <Box
-                        paddingTop={'20px'}
-                        paddingLeft={'20px'}
-                        paddingRight={'20px'}
-                    >
-                        <Flex direction={'row-reverse'} gap={'10px'}>
-                            <DropdownButton
-                                label={'Ajouter un block'}
-                                icon={<FaPlus />}
-                                onSelectedItem={(key) =>
-                                    addNewBlock(key as BlockType)
-                                }
-                                items={[
-                                    {
-                                        key: BlockType.VERTICAL,
-                                        label: getBlockTypeLabel(
-                                            BlockType.VERTICAL
-                                        ),
-                                    },
-                                    {
-                                        key: BlockType.HORIZONTAL,
-                                        label: getBlockTypeLabel(
-                                            BlockType.HORIZONTAL
-                                        ),
-                                    },
-                                    {
-                                        key: BlockType.INVITATION,
-                                        label: getBlockTypeLabel(
-                                            BlockType.INVITATION
-                                        ),
-                                    },
-                                    {
-                                        key: BlockType.PRODUCTS,
-                                        label: getBlockTypeLabel(
-                                            BlockType.PRODUCTS
-                                        ),
-                                    },
-                                ]}
-                            />
-                        </Flex>
-                        <Box paddingTop={'55px'}>
-                            <DynamicAccordion<Block>
-                                elements={blocks.map((block) => ({
-                                    reference: block,
-                                    title: block.title,
-                                    content: (
-                                        <>
-                                            {(block.blockType ===
-                                                BlockType.VERTICAL ||
-                                                block.blockType ===
-                                                    BlockType.HORIZONTAL) && (
-                                                <BlockData
-                                                    block={block}
-                                                    onBlockChange={async (
-                                                        data: FormData
-                                                    ) => {
-                                                        const pendingSave =
-                                                            BlockController.saveBlock(
-                                                                data
-                                                            );
-                                                        pendingSave.then(
-                                                            updateBlock
-                                                        );
-                                                        return pendingSave;
-                                                    }}
-                                                />
-                                            )}
-                                            {block.blockType ===
-                                                BlockType.INVITATION && (
-                                                <InvitationBlockData<Block>
-                                                    block={block}
-                                                    onBlockChange={(
-                                                        data: FormData
-                                                    ) => {
-                                                        const pendingSave =
-                                                            BlockController.saveBlock(
-                                                                data
-                                                            );
-                                                        pendingSave.then(
-                                                            updateBlock
-                                                        );
-                                                        return pendingSave;
-                                                    }}
-                                                />
-                                            )}
-                                            {block.blockType ===
-                                                BlockType.PRODUCTS && (
-                                                <ProductsBlockData
-                                                    block={block}
-                                                    onBlockChange={(
-                                                        data: FormData
-                                                    ) => {
-                                                        const pendingSave =
-                                                            BlockController.saveBlock(
-                                                                data
-                                                            );
-                                                        pendingSave.then(
-                                                            updateBlock
-                                                        );
-                                                        return pendingSave;
-                                                    }}
-                                                />
-                                            )}
-                                        </>
+                    <FileInput
+                        name='sound'
+                        label='Son'
+                        onChange={handleFileChange}
+                        defaultValue={initialFilePath}
+                        fileType={FileType.AUDIO}
+                        allowedFileExtensions={['mp3', 'mp4', 'wav']}
+                    />
+                    <NumberInput
+                        name='width'
+                        label='Largeur'
+                        placeholder='Largeur de la page'
+                        defaultValue={page?.width}
+                    />
+                </SaveForm>
+                <Box
+                    paddingTop={'20px'}
+                    paddingLeft={'20px'}
+                    paddingRight={'20px'}
+                />
+                <Divider />
+                <Box
+                    paddingTop={'20px'}
+                    paddingLeft={'20px'}
+                    paddingRight={'20px'}
+                >
+                    <Flex direction={'row-reverse'} gap={'10px'}>
+                        <DropdownButton
+                            label={'Ajouter un block'}
+                            icon={<FaPlus />}
+                            onSelectedItem={(key) =>
+                                addNewBlock(key as BlockType)
+                            }
+                            items={[
+                                {
+                                    key: BlockType.VERTICAL,
+                                    label: getBlockTypeLabel(
+                                        BlockType.VERTICAL
                                     ),
-                                    buttons: {
-                                        sort: {
-                                            sortUp: {
-                                                title: 'Déplacer le block vers le haut',
-                                                action: (block) => {
-                                                    moveBlock(
-                                                        block,
-                                                        SortDirection.UP
+                                },
+                                {
+                                    key: BlockType.HORIZONTAL,
+                                    label: getBlockTypeLabel(
+                                        BlockType.HORIZONTAL
+                                    ),
+                                },
+                                {
+                                    key: BlockType.INVITATION,
+                                    label: getBlockTypeLabel(
+                                        BlockType.INVITATION
+                                    ),
+                                },
+                                {
+                                    key: BlockType.PRODUCTS,
+                                    label: getBlockTypeLabel(
+                                        BlockType.PRODUCTS
+                                    ),
+                                },
+                            ]}
+                        />
+                    </Flex>
+                    <Box paddingTop={'55px'}>
+                        <DynamicAccordion<Block>
+                            elements={blocks.map((block) => ({
+                                reference: block,
+                                title: block.title,
+                                content: (
+                                    <>
+                                        {(block.blockType ===
+                                            BlockType.VERTICAL ||
+                                            block.blockType ===
+                                                BlockType.HORIZONTAL) && (
+                                            <BlockData
+                                                block={block}
+                                                onBlockChange={async (
+                                                    data: FormData
+                                                ) => {
+                                                    const pendingSave =
+                                                        BlockController.saveBlock(
+                                                            data
+                                                        );
+                                                    pendingSave.then(
+                                                        updateBlock
                                                     );
-                                                },
-                                            },
-                                            sortDown: {
-                                                title: 'Déplacer le block vers le bas',
-                                                action: (block) => {
-                                                    moveBlock(
-                                                        block,
-                                                        SortDirection.DOWN
+                                                    return pendingSave;
+                                                }}
+                                            />
+                                        )}
+                                        {block.blockType ===
+                                            BlockType.INVITATION && (
+                                            <InvitationBlockData<Block>
+                                                block={block}
+                                                onBlockChange={(
+                                                    data: FormData
+                                                ) => {
+                                                    const pendingSave =
+                                                        BlockController.saveBlock(
+                                                            data
+                                                        );
+                                                    pendingSave.then(
+                                                        updateBlock
                                                     );
-                                                },
+                                                    return pendingSave;
+                                                }}
+                                            />
+                                        )}
+                                        {block.blockType ===
+                                            BlockType.PRODUCTS && (
+                                            <ProductsBlockData
+                                                block={block}
+                                                onBlockChange={(
+                                                    data: FormData
+                                                ) => {
+                                                    const pendingSave =
+                                                        BlockController.saveBlock(
+                                                            data
+                                                        );
+                                                    pendingSave.then(
+                                                        updateBlock
+                                                    );
+                                                    return pendingSave;
+                                                }}
+                                            />
+                                        )}
+                                    </>
+                                ),
+                                buttons: {
+                                    sort: {
+                                        sortUp: {
+                                            title: 'Déplacer le block vers le haut',
+                                            action: (block) => {
+                                                moveBlock(
+                                                    block,
+                                                    SortDirection.UP
+                                                );
                                             },
                                         },
-                                        delete: {
-                                            title: 'Supprimer le block',
-                                            action: (block) =>
-                                                deleteBlock(block),
-                                            confirmation: {
-                                                title: 'Supprimer un block',
-                                                content: `Souhaitez vous supprimer le block "${block.title}" ?\nLe block sera perdue.`,
-                                                acceptButtonTitle: 'Supprimer',
-                                                cancelButtonTitle: 'Annuler',
+                                        sortDown: {
+                                            title: 'Déplacer le block vers le bas',
+                                            action: (block) => {
+                                                moveBlock(
+                                                    block,
+                                                    SortDirection.DOWN
+                                                );
                                             },
                                         },
                                     },
-                                }))}
-                            />
-                        </Box>
+                                    delete: {
+                                        title: 'Supprimer le block',
+                                        action: (block) => deleteBlock(block),
+                                        confirmation: {
+                                            title: 'Supprimer un block',
+                                            content: `Souhaitez vous supprimer le block "${block.title}" ?\nLe block sera perdue.`,
+                                            acceptButtonTitle: 'Supprimer',
+                                            cancelButtonTitle: 'Annuler',
+                                        },
+                                    },
+                                },
+                            }))}
+                        />
                     </Box>
                 </Box>
+            </Box>
         </Loading>
     );
 }

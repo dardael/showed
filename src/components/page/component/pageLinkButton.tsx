@@ -1,5 +1,5 @@
 'use client';
-import { Button as ChakraButton, Spinner } from '@chakra-ui/react';
+import { Button as ChakraButton } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getPages } from 'showed/controllers/page/pageController';
 import { Page } from 'showed/lib/page/models/page';
@@ -24,20 +24,20 @@ export default function PageLinkButton({
 
     return (
         <Loading isLoading={isLoading}>
-                <Link
-                    style={{ width: '100%' }}
-                    href={'/page/' + page?.urlPart + '?id=' + page?.urlPart}
+            <Link
+                style={{ width: '100%' }}
+                href={'/page/' + page?.urlPart + '?id=' + page?.urlPart}
+            >
+                <ChakraButton
+                    width={'100%'}
+                    height={'29px'}
+                    borderStyle={'solid'}
+                    borderWidth={'2px'}
+                    borderColor={'white'}
                 >
-                    <ChakraButton
-                        width={'100%'}
-                        height={'29px'}
-                        borderStyle={'solid'}
-                        borderWidth={'2px'}
-                        borderColor={'white'}
-                    >
-                        {text}
-                    </ChakraButton>
-                </Link>
+                    {text}
+                </ChakraButton>
+            </Link>
         </Loading>
     );
 }
