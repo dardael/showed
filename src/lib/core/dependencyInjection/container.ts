@@ -25,6 +25,7 @@ import Authentificator from 'showed/lib/core/authentification/authentificator';
 import AuthentificatorRepository from 'showed/lib/core/authentification/bridge/database/repository';
 import { Container } from 'typedi';
 import Database from 'showed/lib/core/database/database';
+import EmailProvider from 'showed/lib/email/provider';
 
 const database = new Database();
 const databaseToken = 'Database';
@@ -41,6 +42,10 @@ Container.set(authentificatorToken, authentificator);
 const cache = new Cache();
 const cacheToken = 'Cache';
 Container.set(cacheToken, cache);
+
+const email = new EmailProvider();
+const emailToken = 'Email';
+Container.set(emailToken, email);
 
 const encodingProvider = new EncodingProvider();
 const encodingProviderToken = 'Encoding';
@@ -114,7 +119,12 @@ const orderRepository = new OrderRepository(database);
 const orderRepositoryToken = 'OrderRepository';
 Container.set(orderRepositoryToken, orderRepository);
 
-const orderProvider = new OrderProvider(orderRepository, shoppingCartProvider);
+const orderProvider = new OrderProvider(
+    orderRepository,
+    shoppingCartProvider,
+    email,
+    maintainerProvider
+);
 const orderProviderToken = 'OrderProvider';
 Container.set(orderProviderToken, orderProvider);
 
