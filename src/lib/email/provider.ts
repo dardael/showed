@@ -6,6 +6,7 @@ import { EmailKey } from './models/emailKey';
 import Repository from 'showed/lib/email/repository';
 import { Email } from './models/email';
 import MaintainerProvider from 'showed/lib/maintainer/service/provider';
+import { Order } from '../product/models/order';
 
 export default class Provider implements ProviderInterface {
     constructor(
@@ -17,10 +18,32 @@ export default class Provider implements ProviderInterface {
         this.repository = repository;
         this.maintainerProvider = maintainerProvider;
     }
-    private replacePlaceholders(
+    public replacePlaceholders(
         content: string,
-        placeholders: { [key: string]: string }
+        placeholders: { [key: string]: string },
+        order?: Order
     ): string {
+        if (order) {
+            placeholders['client.nom'] = order.customer.name;
+            placeholders['client.prenom'] = order.customer.surname;
+            placeholders['client.email'] = order.customer.email;
+            placeholders['client.telephone'] = order.customer.phoneNumber;
+
+            const totalPrice = order.products.reduce(
+                (sum, item) => sum + item.product.price * item.quantity,
+                0
+            );
+            placeholders['prix-total'] = totalPrice.toFixed(2);
+
+            const productSummary = order.products
+                .map(
+                    (item) =>
+                        `${item.product.name} x ${item.quantity} = ${(item.product.price * item.quantity).toFixed(2)}`
+                )
+                .join('\n');
+            placeholders['recap-produits'] = productSummary;
+        }
+
         return content.replace(
             /\{(.*?)\}/g,
             (_, key) => placeholders[key] || `{${key}}`
@@ -66,25 +89,43 @@ export default class Provider implements ProviderInterface {
         });
     }
 
-    public async sendNewOrderEmail(): Promise<void> {
+    public async sendNewOrderEmail(order: Order): Promise<void> {
         const emailTemplate = await this.getEmailTemplate(
             EmailKey.NEW_ORDER_CREATED
         );
+        const placeholders: { [key: string]: string } = {};
+        const subject = this.replacePlaceholders(
+            emailTemplate?.subject || '',
+            placeholders,
+            order
+        );
+        const body = this.replacePlaceholders(
+            emailTemplate?.body || '',
+            placeholders,
+            order
+        );
         await this.sendMail(
             (await this.maintainerProvider.getMaintainer())?.email || '',
-            emailTemplate?.subject || '',
-            emailTemplate?.body || ''
+            subject,
+            body
         );
     }
-    public async sendOrderConfirmationEmail(to: string): Promise<void> {
+    public async sendOrderConfirmationEmail(order: Order): Promise<void> {
         const emailTemplate = await this.getEmailTemplate(
             EmailKey.ORDER_CONFIRMATION
         );
-        await this.sendMail(
-            to,
+        const placeholders: { [key: string]: string } = {};
+        const subject = this.replacePlaceholders(
             emailTemplate?.subject || '',
-            emailTemplate?.body || ''
+            placeholders,
+            order
         );
+        const body = this.replacePlaceholders(
+            emailTemplate?.body || '',
+            placeholders,
+            order
+        );
+        await this.sendMail(order.customer.email, subject, body);
     }
 
     public async saveSMTPServerConfiguration(

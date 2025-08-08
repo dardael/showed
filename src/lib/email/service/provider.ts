@@ -1,9 +1,10 @@
+import { Order } from 'showed/lib/product/models/order';
 import { Email } from '../models/email';
 import { EmailKey } from '../models/emailKey';
 
 export default interface Provider {
-    sendNewOrderEmail(): Promise<void>;
-    sendOrderConfirmationEmail(to: string): Promise<void>;
+    sendNewOrderEmail(order: Order): Promise<void>;
+    sendOrderConfirmationEmail(order: Order): Promise<void>;
     saveSMTPServerConfiguration(
         host: string,
         port: number,

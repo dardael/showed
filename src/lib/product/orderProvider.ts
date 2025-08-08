@@ -37,8 +37,8 @@ export default class OrderProvider implements OrderProviderInterface {
         };
         this.shoppingCartProvider.removeAllProductsFromCache(sessionId);
         const validatedOrder = await this.repository.validateOrder(order);
-        await this.emailProvider.sendNewOrderEmail();
-        await this.emailProvider.sendOrderConfirmationEmail(customer.email);
+        await this.emailProvider.sendNewOrderEmail(validatedOrder);
+        await this.emailProvider.sendOrderConfirmationEmail(validatedOrder);
         return validatedOrder;
     }
     public async getOrders(orderState: OrderState): Promise<Order[]> {

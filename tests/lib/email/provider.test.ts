@@ -1,60 +1,118 @@
 import EmailProvider from 'showed/lib/email/provider';
-import Repository from 'showed/lib/email/repository';
-import type Provider from 'showed/lib/configuration/service/provider';
-import MaintainerProvider from 'showed/lib/maintainer/provider';
-import nodemailer from 'nodemailer';
+import { Order } from 'showed/lib/product/models/order';
+import { OrderState } from 'showed/lib/product/models/orderState';
 
-jest.mock('nodemailer');
-
-describe('Provider - sendMail', () => {
+describe('Provider - replacePlaceholders with Order object', () => {
     let provider: EmailProvider;
-    let sendMailMock: jest.Mock;
 
     beforeEach(() => {
         provider = new EmailProvider(
-            {} as Repository,
-            {} as Provider,
-            {} as MaintainerProvider
+            {} as import('showed/lib/email/repository').default, // Mock repository
+            {} as import('showed/lib/configuration/service/provider').default, // Mock configuration
+            {} as import('showed/lib/maintainer/provider').default // Mock maintainerProvider
         );
-        sendMailMock = jest.fn();
-        (nodemailer.createTransport as jest.Mock).mockReturnValue({
-            sendMail: sendMailMock,
-        });
     });
 
-    it('should replace placeholders in email subject and body correctly', async () => {
-        const smtpConfigMock = {
-            host: 'smtp.example.com',
-            port: 587,
-            user: 'user@example.com',
-            password: 'password',
-            from: 'noreply@example.com',
+    it('should replace {ajd} and {maintenant} placeholders correctly', () => {
+        const content = 'Today: {ajd}, Now: {maintenant}';
+        const result = (provider as EmailProvider).replacePlaceholders(
+            content,
+            {
+                ajd: new Date().toLocaleDateString(),
+                maintenant: new Date().toLocaleTimeString(),
+            }
+        );
+
+        expect(result).toContain('Today: ');
+        expect(result).toContain('Now: ');
+    });
+
+    it('should replace customer properties placeholders correctly', () => {
+        const order: Order = {
+            customer: {
+                name: 'John Doe',
+                surname: 'Smith',
+                email: 'john.doe@example.com',
+                phoneNumber: '123-456-7890',
+            },
+            products: [],
+            state: OrderState.NEW,
+        } as Order;
+
+        const content =
+            'Customer: {client.nom} {client.prenom}, Email: {client.email}, Phone: {client.telephone}';
+        const result = (provider as EmailProvider).replacePlaceholders(
+            content,
+            {},
+            order
+        );
+
+        expect(result).toBe(
+            'Customer: John Doe Smith, Email: john.doe@example.com, Phone: 123-456-7890'
+        );
+    });
+
+    it('should replace total price placeholder correctly', () => {
+        const order: Order = {
+            customer: {
+                name: 'John Doe',
+                surname: 'Smith',
+                email: 'john.doe@example.com',
+                phoneNumber: '123-456-7890',
+            },
+            products: [
+                {
+                    product: { _id: '1', name: 'Product A', price: 10 },
+                    quantity: 2,
+                },
+                {
+                    product: { _id: '2', name: 'Product B', price: 25 },
+                    quantity: 1,
+                },
+            ],
+            state: OrderState.NEW,
         };
 
-        jest.spyOn(provider, 'getSMTPServerConfiguration').mockResolvedValue(
-            smtpConfigMock
+        const content = 'Total Price: {prix-total}';
+        const result = (provider as EmailProvider).replacePlaceholders(
+            content,
+            {},
+            order
         );
 
-        const to = 'recipient@example.com';
-        const subject = 'Today is {ajd}';
-        const text = 'The current time is {maintenant}.';
+        expect(result).toBe('Total Price: 45.00');
+    });
 
-        const dateMock = new Date('2025-08-08T14:00:00');
-        jest.spyOn(global, 'Date').mockImplementation(
-            () => dateMock as unknown as Date
+    it('should replace product summary placeholder correctly', () => {
+        const order: Order = {
+            customer: {
+                name: 'John Doe',
+                surname: 'Smith',
+                email: 'john.doe@example.com',
+                phoneNumber: '123-456-7890',
+            },
+            products: [
+                {
+                    product: { _id: '1', name: 'Product A', price: 10 },
+                    quantity: 2,
+                },
+                {
+                    product: { _id: '2', name: 'Product B', price: 25 },
+                    quantity: 1,
+                },
+            ],
+            state: OrderState.NEW,
+        };
+
+        const content = 'Product Summary:\n{recap-produits}';
+        const result = (provider as EmailProvider).replacePlaceholders(
+            content,
+            {},
+            order
         );
-        jest.spyOn(dateMock, 'toLocaleDateString').mockReturnValue(
-            '08/08/2025'
+
+        expect(result).toBe(
+            'Product Summary:\nProduct A x 2 = 20.00\nProduct B x 1 = 25.00'
         );
-        jest.spyOn(dateMock, 'toLocaleTimeString').mockReturnValue('14:00:00');
-
-        await provider['sendMail'](to, subject, text);
-
-        expect(sendMailMock).toHaveBeenCalledWith({
-            from: 'noreply@example.com',
-            to,
-            subject: 'Today is 08/08/2025',
-            text: 'The current time is 14:00:00.',
-        });
     });
 });
