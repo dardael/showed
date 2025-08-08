@@ -14,7 +14,7 @@ export default function DateInput({
     isRequired?: boolean;
 }) {
     return (
-        <FormControl isRequired={isRequired} paddingBottom={5}>
+        <FormControl isRequired={isRequired}>
             <FormLabel>{label}</FormLabel>
             <Input
                 type='date'

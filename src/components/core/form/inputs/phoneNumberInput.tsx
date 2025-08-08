@@ -59,11 +59,7 @@ export default function PhoneNumberInput({
     };
 
     return (
-        <FormControl
-            isRequired={isRequired}
-            paddingBottom={5}
-            isInvalid={!isValid && !isTouched}
-        >
+        <FormControl isRequired={isRequired} isInvalid={!isValid && !isTouched}>
             <FormLabel>{label}</FormLabel>
             <InputGroup>
                 <InputLeftElement pointerEvents='none' color='gray.300'>

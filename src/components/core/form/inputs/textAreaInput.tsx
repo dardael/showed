@@ -1,29 +1,23 @@
-import { FormControl, FormLabel, Textarea } from '@chakra-ui/react';
+import {
+    FormControl,
+    FormLabel,
+    TextareaProps,
+    Textarea,
+} from '@chakra-ui/react';
 
+interface TextAreaInputProps extends TextareaProps {
+    label?: string;
+    isRequired?: boolean;
+}
 export default function TextAreaInput({
     label,
-    name,
-    placeholder,
-    defaultValue = '',
-    isRequired = false,
-    readOnly = false,
-}: {
-    label: string;
-    name: string;
-    placeholder?: string;
-    defaultValue?: string;
-    isRequired?: boolean;
-    readOnly?: boolean;
-}) {
+    isRequired,
+    ...props
+}: TextAreaInputProps) {
     return (
-        <FormControl isRequired={isRequired} paddingBottom={5}>
+        <FormControl isRequired={isRequired}>
             <FormLabel>{label}</FormLabel>
-            <Textarea
-                name={name}
-                placeholder={placeholder ? placeholder : label}
-                defaultValue={defaultValue}
-                readOnly={readOnly}
-            />
+            <Textarea {...props} />
         </FormControl>
     );
 }

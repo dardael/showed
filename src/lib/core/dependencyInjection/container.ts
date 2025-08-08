@@ -25,11 +25,23 @@ import Authentificator from 'showed/lib/core/authentification/authentificator';
 import AuthentificatorRepository from 'showed/lib/core/authentification/bridge/database/repository';
 import { Container } from 'typedi';
 import Database from 'showed/lib/core/database/database';
+import EmailRepository from 'showed/lib/email/bridge/database/repository';
 import EmailProvider from 'showed/lib/email/provider';
-
+import ConfigurationRepository from 'showed/lib/configuration/bridge/database/repository';
+import ConfigurationProvider from 'showed/lib/configuration/provider';
 const database = new Database();
 const databaseToken = 'Database';
 Container.set(databaseToken, database);
+
+const configurationRepository = new ConfigurationRepository(database);
+const configurationRepositoryToken = 'ConfigurationRepository';
+Container.set(configurationRepositoryToken, configurationRepository);
+
+const configurationProvider = new ConfigurationProvider(
+    configurationRepository
+);
+const configurationProviderToken = 'ConfigurationProvider';
+Container.set(configurationProviderToken, configurationProvider);
 
 const authentificatorRepository = new AuthentificatorRepository(database);
 const authentificatorRepositoryToken = 'AuthentificatorRepository';
@@ -42,10 +54,6 @@ Container.set(authentificatorToken, authentificator);
 const cache = new Cache();
 const cacheToken = 'Cache';
 Container.set(cacheToken, cache);
-
-const email = new EmailProvider();
-const emailToken = 'Email';
-Container.set(emailToken, email);
 
 const encodingProvider = new EncodingProvider();
 const encodingProviderToken = 'Encoding';
@@ -78,6 +86,18 @@ const maintainerProvider = new MaintainerProvider(
 );
 const maintainerProviderToken = 'MaintainerProvider';
 Container.set(maintainerProviderToken, maintainerProvider);
+
+const emailRepository = new EmailRepository(database);
+const emailRepositoryToken = 'EmailRepository';
+Container.set(emailRepositoryToken, emailRepository);
+
+const email = new EmailProvider(
+    emailRepository,
+    configurationProvider,
+    maintainerProvider
+);
+const emailToken = 'Email';
+Container.set(emailToken, email);
 
 const pageRepository = new PageRepository(database);
 const pageRepositoryToken = 'PageRepository';
@@ -122,8 +142,7 @@ Container.set(orderRepositoryToken, orderRepository);
 const orderProvider = new OrderProvider(
     orderRepository,
     shoppingCartProvider,
-    email,
-    maintainerProvider
+    email
 );
 const orderProviderToken = 'OrderProvider';
 Container.set(orderProviderToken, orderProvider);

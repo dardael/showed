@@ -1,4 +1,11 @@
-import { Box, Button, Input, useToast } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Heading,
+    Input,
+    useToast,
+    VStack,
+} from '@chakra-ui/react';
 import { Notification } from '../feedback/notification';
 
 export default function SaveForm<U>({
@@ -11,12 +18,16 @@ export default function SaveForm<U>({
         error: 'Erreur',
         loading: 'En cours de sauvegarde',
     },
+    header = '',
+    hideBorder = false,
 }: {
     children: React.ReactNode;
     action: (data: FormData) => Promise<U>;
     parameters?: { key: string; value: string | undefined }[];
     validateButtonLabel?: string;
     notificationLabels?: { success?: string; error?: string; loading?: string };
+    header?: string;
+    hideBorder?: boolean;
 }) {
     const notification = new Notification(useToast());
 
@@ -29,20 +40,34 @@ export default function SaveForm<U>({
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {parameters.map((parameter) => (
-                    <Input
-                        type='hidden'
-                        key={parameter.key}
-                        name={parameter.key}
-                        value={parameter.value}
-                    />
-                ))}
-                {children}
-                <Box textAlign={'right'} paddingTop={'20px'}>
-                    <Button type='submit'>{validateButtonLabel}</Button>
-                </Box>
-            </form>
+            <Box
+                p={4}
+                borderWidth={hideBorder ? 0 : 1}
+                borderRadius='md'
+                mt={4}
+            >
+                {header && (
+                    <Heading size='md' mb={4}>
+                        {header}
+                    </Heading>
+                )}
+                <form onSubmit={handleSubmit}>
+                    <VStack spacing={4} align='stretch'>
+                        {parameters.map((parameter) => (
+                            <Input
+                                type='hidden'
+                                key={parameter.key}
+                                name={parameter.key}
+                                value={parameter.value}
+                            />
+                        ))}
+                        {children}
+                        <Box textAlign={'right'} paddingTop={'20px'}>
+                            <Button type='submit'>{validateButtonLabel}</Button>
+                        </Box>
+                    </VStack>
+                </form>
+            </Box>
         </>
     );
 }

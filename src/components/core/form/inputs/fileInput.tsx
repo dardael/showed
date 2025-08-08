@@ -19,7 +19,7 @@ export default function FileInput({
     fileType: FileType;
 }) {
     return (
-        <FormControl paddingBottom={5}>
+        <FormControl>
             <FormLabel>{label}</FormLabel>
             <File
                 onChange={onChange}

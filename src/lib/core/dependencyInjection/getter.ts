@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+import './container';
 import { Container } from 'typedi';
 let isContainerLoaded = false;
 export const getService = <T>(service: string): T => {

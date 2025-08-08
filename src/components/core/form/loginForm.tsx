@@ -49,6 +49,7 @@ export default function LoginForm({ onLogin }: { onLogin: () => void }) {
             zIndex='1000'
         >
             <SaveForm
+                hideBorder
                 action={async (data: FormData) => {
                     const email = data.get('email') as string;
                     const password = data.get('password') as string;

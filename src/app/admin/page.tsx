@@ -6,6 +6,7 @@ import PagesData from 'showed/components/admin/pagesData';
 import Appearance from 'showed/components/admin/appearance';
 import LoginForm from 'showed/components/core/form/loginForm';
 import { useState } from 'react';
+import EmailAdmin from 'showed/components/admin/emailAdmin';
 
 export default function Home() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,6 +23,7 @@ export default function Home() {
                     <Tab>Apparence</Tab>
                     <Tab>Bas de page</Tab>
                     <Tab>Pages</Tab>
+                    <Tab>Emails</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -35,6 +37,9 @@ export default function Home() {
                     </TabPanel>
                     <TabPanel>
                         <PagesData></PagesData>
+                    </TabPanel>
+                    <TabPanel>
+                        <EmailAdmin></EmailAdmin>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

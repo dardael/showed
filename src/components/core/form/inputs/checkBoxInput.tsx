@@ -16,7 +16,7 @@ export default function CheckBoxInput({
     readOnly?: boolean;
 }) {
     return (
-        <FormControl isRequired={isRequired} paddingBottom={5}>
+        <FormControl isRequired={isRequired}>
             <FormLabel>{label}</FormLabel>
             <Checkbox
                 name={name}
