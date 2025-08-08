@@ -17,6 +17,16 @@ export default class Provider implements ProviderInterface {
         this.repository = repository;
         this.maintainerProvider = maintainerProvider;
     }
+    private replacePlaceholders(
+        content: string,
+        placeholders: { [key: string]: string }
+    ): string {
+        return content.replace(
+            /\{(.*?)\}/g,
+            (_, key) => placeholders[key] || `{${key}}`
+        );
+    }
+
     private async sendMail(
         to: string,
         subject: string,
@@ -33,6 +43,13 @@ export default class Provider implements ProviderInterface {
         ) {
             return;
         }
+        const placeholders = {
+            ajd: new Date().toLocaleDateString(),
+            maintenant: new Date().toLocaleTimeString(),
+        };
+        subject = this.replacePlaceholders(subject, placeholders);
+        text = this.replacePlaceholders(text, placeholders);
+
         const transporter = nodemailer.createTransport({
             host: smtpConfig.host,
             port: smtpConfig.port,
