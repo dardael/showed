@@ -1,11 +1,7 @@
 'use client';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
-
-const RichTextEditor = dynamic(() => import('../../input/richTextEditor'), {
-    ssr: false,
-});
+import RichTextEditor from '../../input/richTextEditor';
 
 export default function RichTextInput({
     label,
@@ -28,7 +24,7 @@ export default function RichTextInput({
             <FormLabel>{label}</FormLabel>
             <Input type='hidden' name={name} value={editorData} />
             <RichTextEditor
-                initialData={editorData}
+                initialData={defaultValue}
                 onChange={handleEditorChange}
             />
         </FormControl>
