@@ -104,8 +104,38 @@ const config: Config = {
     // notifyMode: "failure-change",
 
     // A preset that is used as a base for Jest's configuration
-    preset: 'ts-jest',
 
+    // Use a custom test environment for Mongoose-related tests
+    projects: [
+        {
+            displayName: 'components tests',
+            transformIgnorePatterns: ['node_modules/(?!nanoid)'],
+            moduleNameMapper: {
+                '^showed/(.*)$': '<rootDir>/src/$1', // Maps 'showed/*' to 'src/*'
+            },
+            preset: 'ts-jest',
+            testEnvironment: 'jsdom',
+            testMatch: ['**/tests/components/**/*.(test|spec).[jt]s?(x)'],
+            transform: {
+                '^.+\\.(t|j)sx?$': ['@swc/jest', { configFile: '.swcrctest' }],
+            },
+        },
+        {
+            displayName: 'lib tests',
+            transformIgnorePatterns: ['node_modules/(?!nanoid)'],
+            moduleNameMapper: {
+                '^showed/(.*)$': '<rootDir>/src/$1', // Maps 'showed/*' to 'src/*'
+            },
+            preset: 'ts-jest',
+            testEnvironment: 'node',
+            testMatch: ['**/tests/lib/**/*.(test|spec).[jt]s?(x)'],
+            transform: {
+                '^.+\\.(t|j)sx?$': ['@swc/jest', { configFile: '.swcrctest' }],
+            },
+        },
+    ],
+
+    preset: 'ts-jest',
     // Run tests from one or more projects
     // projects: undefined,
 
@@ -136,10 +166,8 @@ const config: Config = {
     // runner: "jest-runner",
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    // setupFiles: [],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    // setupFilesAfterEnv: [],
 
     // The number of seconds after which a test is considered as slow and reported as such in the results.
     // slowTestThreshold: 5,

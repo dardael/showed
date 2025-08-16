@@ -10,6 +10,9 @@ export default interface ComponentProvider {
         content: string;
         title: string;
         position: number;
+        link?: string;
+        width?: number;
+        font?: Font;
     }): Promise<Component>;
     updateComponent(
         id: string,

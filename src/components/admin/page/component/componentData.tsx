@@ -25,13 +25,14 @@ import ItalicTextData from './italicTextData';
 import PageLinkButtonData from './pageLinkButtonData';
 import MapData from './mapData';
 import Loading from 'showed/components/core/feedback/loading';
+import { saveComponent } from 'showed/controllers/page/componentController';
 
 export default function ComponentData({
     component,
     onSave,
 }: {
     component: Component;
-    onSave: (data: FormData) => Promise<Component>;
+    onSave: (component: Component) => void;
 }) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [hasIconChanged, setHasIconChanged] = useState<boolean>(false);
@@ -64,7 +65,9 @@ export default function ComponentData({
             setHasIconChanged(false);
             setFile(null);
         }
-        return onSave(formData);
+        const updatedComponent = await saveComponent(formData);
+        onSave(updatedComponent);
+        return updatedComponent;
     };
     useEffect(() => {
         if (

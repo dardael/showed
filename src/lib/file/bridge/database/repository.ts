@@ -1,4 +1,4 @@
-import { FileModel } from 'showed/lib/file/models/file';
+import { FileModel } from 'showed/lib/file/models/fileModel';
 import type { File } from 'showed/lib/file/models/file';
 import RepositoryInterface from 'showed/lib/file/repository';
 import type Database from 'showed/lib/core/database/service/database';

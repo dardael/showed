@@ -118,6 +118,7 @@ Container.set(personRepositoryToken, personRepository);
 const pageProvider = new PageProvider(
     pageRepository,
     blockRepository,
+    componentRepository,
     fileProvider
 );
 const pageProviderToken = 'PageProvider';

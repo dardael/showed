@@ -1,10 +1,10 @@
 'use server';
-import 'showed/lib/core/dependencyInjection/container';
 import { Component } from 'showed/lib/page/models/component';
 import { ComponentType } from 'showed/lib/page/models/componentType';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import { Font } from 'showed/lib/theme/models/font';
-import { getService } from 'showed/lib/core/dependencyInjection/getter';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
+import { Block } from 'showed/lib/page/models/block';
 export async function saveComponent(data: FormData): Promise<Component> {
     const id = data.get('id')?.toString();
     const content = data.get('content')?.toString();
@@ -45,6 +45,24 @@ export async function createComponent(
         content: '',
         position,
     });
+}
+
+export async function duplicateComponent(
+    component: Component,
+    target: Block
+): Promise<Component> {
+    const provider: ComponentProvider = getService('ComponentProvider');
+    const dataToDuplicate = {
+        blockId: target._id as string,
+        componentType: component.componentType,
+        position: target.children ? target.children.length + 1 : 1,
+        title: component.title,
+        content: component.content,
+        width: component.width,
+        font: component.font,
+        link: component.link,
+    };
+    return provider.createComponent(dataToDuplicate);
 }
 
 export async function getComponents(blockId: string): Promise<Component[]> {

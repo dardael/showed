@@ -1,9 +1,8 @@
 'use server';
-import 'showed/lib/core/dependencyInjection/container';
 import { Person } from 'showed/lib/invitation/models/person';
 import PersonProvider from 'showed/lib/invitation/service/personProvider';
 import { getSessionId } from '../cookies/sessionController';
-import { getService } from 'showed/lib/core/dependencyInjection/getter';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
 
 export async function getAllInvitedPeople(): Promise<Person[]> {
     const personService: PersonProvider = getService('PersonProvider');

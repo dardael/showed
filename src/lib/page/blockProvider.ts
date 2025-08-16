@@ -22,6 +22,9 @@ export default class BlockProvider implements BlockProviderInterface {
         title: string;
         position: number;
         blockType?: BlockType;
+        isVisibleOnlyWhenInvitedToMeal?: boolean;
+        isVisibleOnlyWhenInvitedToReception?: boolean;
+        isVisibleOnlyWhenInvitedToTownHall?: boolean;
     }): Promise<Block> {
         return this.repository.createBlock(blockData);
     }
@@ -54,52 +57,23 @@ export default class BlockProvider implements BlockProviderInterface {
         return deletedBlock;
     }
 
-    public async moveBlock(
-        block: Block,
-        sortDirection: SortDirection
-    ): Promise<void> {
-        const blocks = await this.repository.getBlocks({
-            pageId: block.pageId as string,
-        });
-        const blockToMove = blocks.find((p) => p._id === block._id);
-        if (!blockToMove) {
-            throw new Error('Block not found');
-        }
-        const currentBlockToMoveIndex = blocks.indexOf(blockToMove);
-        let blockToSwitch: Block;
-        if (sortDirection === SortDirection.UP) {
-            if (currentBlockToMoveIndex === 0) {
-                throw new Error('Cannot move block up');
-            }
-            blockToSwitch = blocks[currentBlockToMoveIndex - 1];
-        } else if (sortDirection === SortDirection.DOWN) {
-            if (currentBlockToMoveIndex === blocks.length - 1) {
-                throw new Error('Cannot move block down');
-            }
-            blockToSwitch = blocks[currentBlockToMoveIndex + 1];
-        } else {
-            throw new Error('Unknown sort direction');
-        }
-        blockToMove.position = blockToSwitch.position;
-        blockToSwitch.position = currentBlockToMoveIndex + 1;
-        await this.repository.updateBlock(blockToSwitch._id as string, {
-            position: blockToSwitch.position,
-        });
-        await this.repository.updateBlock(blockToMove._id as string, {
-            position: blockToMove.position,
-        });
-    }
-
     public async moveChildElement(
         element: Block | Component,
         sortDirection: SortDirection
-    ): Promise<void> {
+    ): Promise<(Block | Component)[]> {
         const parentBlockId = isBlock(element)
-            ? element.parentBlockId
+            ? element.pageId || element.parentBlockId
             : element.blockId;
-        const blocks = await this.repository.getBlocks({
-            parentBlockId: parentBlockId,
-        });
+        let blocks;
+        if (isBlock(element) && element.pageId) {
+            blocks = await this.repository.getBlocks({
+                pageId: element.pageId,
+            });
+        } else {
+            blocks = await this.repository.getBlocks({
+                parentBlockId: parentBlockId,
+            });
+        }
         const components = await this.componentRepository.getComponents({
             blockId: parentBlockId as string,
         });
@@ -109,48 +83,68 @@ export default class BlockProvider implements BlockProviderInterface {
             throw new Error('Element not found');
         }
         const currentElementToMoveIndex = elements.indexOf(elementToMove);
-        let elementToSwitch: Block | Component;
-        if (sortDirection === SortDirection.UP) {
-            if (currentElementToMoveIndex === 0) {
-                throw new Error('Cannot move element up');
+        if (currentElementToMoveIndex === -1) {
+            throw new Error('Element to move not found in the list');
+        }
+
+        let updatedElements: (Block | Component)[];
+
+        if (sortDirection === SortDirection.TOP) {
+            updatedElements = elements.map((el) => {
+                if (el._id === element._id) {
+                    return { ...el, position: 1 };
+                } else if (el.position < elementToMove.position) {
+                    return { ...el, position: el.position + 1 };
+                } else {
+                    return el;
+                }
+            });
+        } else if (sortDirection === SortDirection.BOTTOM) {
+            updatedElements = elements.map((el) => {
+                if (el._id === element._id) {
+                    return { ...el, position: elements.length };
+                } else if (el.position > elementToMove.position) {
+                    return { ...el, position: el.position - 1 };
+                } else {
+                    return el;
+                }
+            });
+        } else if (currentElementToMoveIndex >= 0) {
+            const elementToSwitch =
+                sortDirection === SortDirection.UP
+                    ? elements[currentElementToMoveIndex - 1]
+                    : elements[currentElementToMoveIndex + 1];
+            if (!elementToSwitch) {
+                throw new Error(
+                    `Cannot move element ${sortDirection === SortDirection.UP ? 'up' : 'down'}`
+                );
             }
-            elementToSwitch = elements[currentElementToMoveIndex - 1];
-        } else if (sortDirection === SortDirection.DOWN) {
-            if (currentElementToMoveIndex === elements.length - 1) {
-                throw new Error('Cannot move element down');
-            }
-            elementToSwitch = elements[currentElementToMoveIndex + 1];
+            const newPosition = elementToSwitch.position;
+            elementToSwitch.position = elementToMove.position;
+            elementToMove.position = newPosition;
+            updatedElements = elements.map((el) => ({ ...el }));
         } else {
             throw new Error('Unknown sort direction');
         }
 
-        elementToMove.position = elementToSwitch.position;
-        elementToSwitch.position = currentElementToMoveIndex + 1;
+        for (const el of updatedElements) {
+            if (isBlock(el)) {
+                await this.repository.updateBlock(el._id as string, {
+                    position: el.position,
+                });
+            } else {
+                await this.componentRepository.updateComponent(
+                    el._id as string,
+                    {
+                        position: el.position,
+                    }
+                );
+            }
+        }
 
-        if (isBlock(elementToSwitch)) {
-            await this.repository.updateBlock(elementToSwitch._id as string, {
-                position: elementToSwitch.position,
-            });
-        } else {
-            await this.componentRepository.updateComponent(
-                elementToSwitch._id as string,
-                {
-                    position: elementToSwitch.position,
-                }
-            );
-        }
-        if (isBlock(elementToMove)) {
-            await this.repository.updateBlock(elementToMove._id as string, {
-                position: elementToMove.position,
-            });
-        } else {
-            await this.componentRepository.updateComponent(
-                elementToMove._id as string,
-                {
-                    position: elementToMove.position,
-                }
-            );
-        }
+        return updatedElements
+            .sort((a, b) => a.position - b.position)
+            .map((el) => ({ ...el }));
     }
 
     public async getChildElements(

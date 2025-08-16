@@ -8,6 +8,9 @@ export default interface ComponentRepository {
         blockId: string;
         content: string;
         title: string;
+        width?: number;
+        link?: string;
+        font?: Font;
         position: number;
     }): Promise<Component>;
     updateComponent(

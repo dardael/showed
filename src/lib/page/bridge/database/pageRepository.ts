@@ -1,4 +1,4 @@
-import { PageModel } from 'showed/lib/page/models/page';
+import { PageModel } from 'showed/lib/page/models/pageModel';
 import type { Page } from 'showed/lib/page/models/page';
 import PageRepositoryInterface from 'showed/lib/page/pageRepository';
 import type Database from 'showed/lib/core/database/service/database';
@@ -19,6 +19,7 @@ export default class PageRepository implements PageRepositoryInterface {
         title: string;
         urlPart: string;
         position: number;
+        width?: number;
     }): Promise<Page> {
         return this.database.create<Page>(PageModel, pageData);
     }

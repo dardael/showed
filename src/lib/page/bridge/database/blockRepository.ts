@@ -2,7 +2,7 @@ import BlockRepositoryInterface from 'showed/lib/page/blockRepository';
 import type Database from 'showed/lib/core/database/service/database';
 import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 import type { Block } from '../../models/block';
-import { BlockModel } from 'showed/lib/page/models/block';
+import { BlockModel } from 'showed/lib/page/models/blockModel';
 import ComponentRepository from '../../componentRepository';
 import { BlockType } from '../../models/blockType';
 
@@ -31,6 +31,9 @@ export default class BlockRepository implements BlockRepositoryInterface {
         backgroundImageId?: string;
         hasTransparentBackground?: boolean;
         position: number;
+        isVisibleOnlyWhenInvitedToMeal?: boolean;
+        isVisibleOnlyWhenInvitedToReception?: boolean;
+        isVisibleOnlyWhenInvitedToTownHall?: boolean;
         blockType?: BlockType;
     }): Promise<Block> {
         return this.database.create<Block>(BlockModel, blockData);

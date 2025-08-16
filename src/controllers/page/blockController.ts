@@ -1,11 +1,11 @@
 'use server';
-import 'showed/lib/core/dependencyInjection/container';
-import { Block } from 'showed/lib/page/models/block';
+import { Block, isBlock } from 'showed/lib/page/models/block';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
 import BlockProvider from 'showed/lib/page/blockProvider';
-import { getService } from 'showed/lib/core/dependencyInjection/getter';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
 import { Component } from 'showed/lib/page/models/component';
 import { BlockType } from 'showed/lib/page/models/blockType';
+import { isPage, Page } from 'showed/lib/page/models/page';
 
 export async function saveBlock(data: FormData): Promise<Block> {
     const id = data.get('id')?.toString();
@@ -59,6 +59,27 @@ export async function createBlock(
     });
 }
 
+export async function duplicateBlock(
+    block: Block,
+    target: Page | Block
+): Promise<Block> {
+    const provider: BlockProvider = getService('BlockProvider');
+    const dataToDuplicate = {
+        pageId: isPage(target) ? target._id : undefined,
+        parentBlockId: isBlock(target) ? target._id : undefined,
+        position: target.children ? target.children.length + 1 : 1,
+        title: block.title,
+        blockType: block.blockType,
+        hasTransparentBackground: block.hasTransparentBackground,
+        isVisibleOnlyWhenInvitedToMeal: block.isVisibleOnlyWhenInvitedToMeal,
+        isVisibleOnlyWhenInvitedToReception:
+            block.isVisibleOnlyWhenInvitedToReception,
+        isVisibleOnlyWhenInvitedToTownHall:
+            block.isVisibleOnlyWhenInvitedToTownHall,
+    };
+    return provider.createBlock(dataToDuplicate);
+}
+
 export async function getBlocks(pageId: string): Promise<Block[]> {
     const provider: BlockProvider = getService('BlockProvider');
     return provider.getBlocks(pageId);
@@ -69,20 +90,12 @@ export async function deleteBlock(id: string): Promise<Block> {
     return provider.deleteBlock(id);
 }
 
-export async function moveBlock(
-    block: Block,
-    direction: SortDirection
-): Promise<void> {
-    const provider: BlockProvider = getService('BlockProvider');
-    provider.moveBlock(block, direction);
-}
-
 export async function moveChildElement(
     element: Block | Component,
     direction: SortDirection
-): Promise<void> {
+): Promise<(Block | Component)[]> {
     const provider: BlockProvider = getService('BlockProvider');
-    provider.moveChildElement(element, direction);
+    return provider.moveChildElement(element, direction);
 }
 
 export async function getChildElements(

@@ -5,6 +5,7 @@ export default interface PageRepository {
         title: string;
         urlPart: string;
         position: number;
+        width?: number;
     }): Promise<Page>;
     updatePage(
         id: string,

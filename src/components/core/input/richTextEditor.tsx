@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic';
 import { Box } from '@chakra-ui/react';
-
 import { useState } from 'react';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
 
 export default function RichTextEditor({
     initialData = '',

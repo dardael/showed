@@ -1,5 +1,5 @@
-import mongoose, { Model } from 'mongoose';
-
+import { BlockType } from './blockType';
+import { Component } from './component';
 type Block = {
     _id?: string;
     pageId?: string;
@@ -8,30 +8,12 @@ type Block = {
     position: number;
     parentBlockId?: string;
     hasTransparentBackground: boolean;
-    blockType?: string;
+    blockType: BlockType;
     isVisibleOnlyWhenInvitedToReception?: boolean;
     isVisibleOnlyWhenInvitedToMeal?: boolean;
     isVisibleOnlyWhenInvitedToTownHall?: boolean;
+    children?: (Block | Component)[];
 };
-const BlockSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
-    pageId: { type: String },
-    parentBlockId: { type: String },
-    position: { type: Number, required: true },
-    hasTransparentBackground: { type: Boolean, required: true },
-    title: { type: String, required: true },
-    backgroundImageId: { type: String },
-    blockType: { type: String },
-    isVisibleOnlyWhenInvitedToReception: { type: Boolean },
-    isVisibleOnlyWhenInvitedToMeal: { type: Boolean },
-    isVisibleOnlyWhenInvitedToTownHall: { type: Boolean },
-});
-
-let BlockModel: Model<Block> = mongoose?.models?.Block;
-if (!BlockModel) {
-    BlockModel = mongoose.model<Block>('Block', BlockSchema);
-}
-
 function isBlock(object: unknown): object is Block {
     if (typeof object !== 'object' || object === null) {
         return false;
@@ -44,5 +26,5 @@ function isBlock(object: unknown): object is Block {
     );
 }
 
-export { BlockModel, isBlock };
+export { isBlock };
 export type { Block };

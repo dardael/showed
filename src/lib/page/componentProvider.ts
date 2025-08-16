@@ -15,6 +15,9 @@ export default class ComponentProvider implements ComponentProviderInterface {
         content: string;
         title: string;
         position: number;
+        link?: string;
+        width?: number;
+        font?: Font;
     }): Promise<Component> {
         return this.repository.createComponent(componentData);
     }

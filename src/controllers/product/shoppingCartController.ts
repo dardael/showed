@@ -1,5 +1,5 @@
 'use server';
-import { getService } from 'showed/lib/core/dependencyInjection/getter';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
 import { Product } from 'showed/lib/product/models/product';
 import { getSessionId } from '../cookies/sessionController';
 import ShoppingCartProvider from 'showed/lib/product/service/shoppingCartProvider';

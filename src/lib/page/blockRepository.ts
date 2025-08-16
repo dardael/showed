@@ -12,6 +12,9 @@ export default interface BlockRepository {
         backgroundImageId?: string;
         title: string;
         position: number;
+        isVisibleOnlyWhenInvitedToMeal?: boolean;
+        isVisibleOnlyWhenInvitedToReception?: boolean;
+        isVisibleOnlyWhenInvitedToTownHall?: boolean;
         blockType?: BlockType;
     }): Promise<Block>;
     updateBlock(

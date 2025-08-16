@@ -6,7 +6,6 @@ import {
     isComponent,
 } from 'showed/lib/page/models/component';
 import Component from './component';
-import { getChildElements } from 'showed/controllers/page/blockController';
 import { BlockType } from 'showed/lib/page/models/blockType';
 import Block from './block';
 import LinkedBlock from './linkedBlock';
@@ -16,7 +15,6 @@ export default async function HorizontalBlock({
 }: {
     block: BlockModel;
 }) {
-    const elements = await getChildElements(block._id as string);
     let backgroundImage: string | undefined = '';
     if (block.backgroundImageId) {
         backgroundImage = (
@@ -37,7 +35,12 @@ export default async function HorizontalBlock({
                 })}
             >
                 <Flex wrap={'wrap'}>
-                    {elements.map((element) => (
+                    {(
+                        (block.children || []) as (
+                            | BlockModel
+                            | ComponentModel
+                        )[]
+                    ).map((element) => (
                         <Center key={element._id as string} flex={'1'}>
                             {isBlock(element) &&
                                 element.blockType === BlockType.HORIZONTAL && (

@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import { Block } from './block';
 
 type Page = {
     _id?: string;
@@ -7,20 +7,16 @@ type Page = {
     position: number;
     soundId?: string;
     width?: number;
+    children?: Block[];
 };
-const PageSchema = new mongoose.Schema({
-    _id: { type: String, required: true },
-    title: { type: String, required: true },
-    urlPart: { type: String, required: true },
-    position: { type: Number, required: true },
-    soundId: { type: String },
-    width: { type: Number },
-});
 
-let PageModel: Model<Page> = mongoose.models.Page;
-if (!PageModel) {
-    PageModel = mongoose.model<Page>('Page', PageSchema);
+function isPage(object: unknown): object is Page {
+    if (typeof object !== 'object' || object === null) {
+        return false;
+    }
+    return 'title' in object && 'position' in object && 'urlPart' in object;
 }
 
-export { PageModel };
+// Export the type separately and maintain compatibility
 export type { Page };
+export { isPage };

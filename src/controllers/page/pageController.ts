@@ -1,7 +1,7 @@
 'use server';
 import type { Page } from 'showed/lib/page/models/page';
 import { SortDirection } from 'showed/lib/page/models/sortDirection';
-import PageProvider from 'showed/lib/page/pageProvider';
+import PageProvider from 'showed/lib/page/service/pageProvider';
 import { revalidatePath } from 'next/cache';
 import { getService } from '#src/lib/core/dependencyInjection/getter';
 
@@ -36,10 +36,29 @@ export async function createPage(position: number): Promise<Page> {
     });
 }
 
+export async function duplicatePage(
+    page: Page,
+    position: number
+): Promise<Page> {
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
+    const dataToDuplicate = {
+        position: position,
+        title: page.title,
+        width: page.width,
+    };
+    return provider.createPage(dataToDuplicate);
+}
+
 export async function getPages(): Promise<Page[]> {
     const provider: PageProvider = getService<PageProvider>('PageProvider');
     const page = await provider.getPages();
     return page;
+}
+
+export async function getPagesWithChildren(): Promise<Page[]> {
+    const provider: PageProvider = getService<PageProvider>('PageProvider');
+    const pages = await provider.getPagesWithChildren();
+    return pages;
 }
 
 export async function deletePage(id: string): Promise<Page> {
@@ -50,9 +69,9 @@ export async function deletePage(id: string): Promise<Page> {
 export async function movePage(
     page: Page,
     direction: SortDirection
-): Promise<void> {
+): Promise<Page[]> {
     const provider: PageProvider = getService<PageProvider>('PageProvider');
-    provider.movePage(page, direction);
+    return provider.movePage(page, direction);
 }
 
 export async function reloadPage(id: string): Promise<void> {

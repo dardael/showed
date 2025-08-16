@@ -1,8 +1,7 @@
 'use server';
-import 'showed/lib/core/dependencyInjection/container';
 import { Product } from 'showed/lib/product/models/product';
 import ProductProvider from 'showed/lib/product/service/productProvider';
-import { getService } from 'showed/lib/core/dependencyInjection/getter';
+import { getService } from '#src/lib/core/dependencyInjection/getter';
 export async function updateProduct(product: Product): Promise<void> {
     const productService: ProductProvider = getService('ProductProvider');
     return productService.updateProduct(product);

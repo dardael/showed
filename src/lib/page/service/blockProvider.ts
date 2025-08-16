@@ -12,6 +12,9 @@ export default interface BlockProvider {
         position: number;
         hasTransparentBackground: boolean;
         blockType?: BlockType;
+        isVisibleOnlyWhenInvitedToMeal?: boolean;
+        isVisibleOnlyWhenInvitedToReception?: boolean;
+        isVisibleOnlyWhenInvitedToTownHall?: boolean;
     }): Promise<Block>;
     updateBlock(
         id: string,
@@ -28,9 +31,8 @@ export default interface BlockProvider {
     getBlocks(pageId: string): Promise<Block[]>;
     getChildElements(parentBlockId: string): Promise<(Block | Component)[]>;
     deleteBlock(id: string): Promise<Block>;
-    moveBlock(block: Block, sortDirection: SortDirection): Promise<void>;
     moveChildElement(
         element: Component | Block,
         sortDirection: SortDirection
-    ): Promise<void>;
+    ): Promise<(Block | Component)[]>;
 }

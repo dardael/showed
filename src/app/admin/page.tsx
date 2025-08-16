@@ -2,7 +2,7 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import MaintainerData from 'showed/components/admin/maintainerData';
 import FooterData from 'showed/components/admin/footerData';
-import PagesData from 'showed/components/admin/pagesData';
+import PagesTree from 'showed/components/admin/page/pagesTree';
 import Appearance from 'showed/components/admin/appearance';
 import LoginForm from 'showed/components/core/form/loginForm';
 import { useState } from 'react';
@@ -36,7 +36,7 @@ export default function Home() {
                         <FooterData></FooterData>
                     </TabPanel>
                     <TabPanel>
-                        <PagesData></PagesData>
+                        <PagesTree></PagesTree>
                     </TabPanel>
                     <TabPanel>
                         <EmailAdmin></EmailAdmin>

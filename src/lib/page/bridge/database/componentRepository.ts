@@ -2,7 +2,7 @@ import ComponentRepositoryInterface from 'showed/lib/page/componentRepository';
 import type Database from 'showed/lib/core/database/service/database';
 import { SortOrder } from 'showed/lib/core/database/model/sortOrder';
 import type { Component } from '../../models/component';
-import { ComponentModel } from 'showed/lib/page/models/component';
+import { ComponentModel } from 'showed/lib/page/models/componentModel';
 import { ComponentType } from '../../models/componentType';
 import { Font } from 'showed/lib/theme/models/font';
 
@@ -27,6 +27,9 @@ export default class ComponentRepository
         title: string;
         content: string;
         position: number;
+        width?: number;
+        link?: string;
+        font?: Font;
     }): Promise<Component> {
         return this.database.create<Component>(ComponentModel, componentData);
     }
