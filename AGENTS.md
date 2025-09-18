@@ -64,7 +64,6 @@ showed/
 - use dependency injection in lib directory
 - Prefer functional and declarative programming patterns over imperative
 - Emphasize type safety and static analysis
-- Practice component-driven development
 
 ### Code implementation guidelines
 
@@ -86,10 +85,13 @@ showed/
 - Space infix operators
 - Add space after commas
 - Keep else statements on the same line as closing curly braces
-- Use curly braces for multi-line if statements
+- Use curly braces for if statements
 - Always handle error parameters in callbacks
 - Limit line length to 80 characters
 - Use trailing commas in multiline object/array literals
+- avoid static function in classes
+- Add comments only for complex logic. Functions and variable names should be self-explanatory
+- Only have a class or a react component by file. Only interfaces and types can be grouped in a single file with its class or component
 
 ### Naming Conventions
 
@@ -102,9 +104,7 @@ showed/
 
 #### Specific Naming Patterns
 
-- Prefix event handlers with 'handle': `handleClick`, `handleSubmit`
 - Prefix boolean variables with verbs: `isLoading`, `hasError`, `canSubmit`
-- Prefix custom hooks with 'use': `useAuth`, `useForm`
 - Use complete words over abbreviations
 
 ## Core Feature Implementation
@@ -120,48 +120,6 @@ showed/
 - Use React.memo() strategically for performance
 - Implement proper cleanup in useEffect hooks
 
-```tsx
-// Example: User Profile Component
-interface UserProfileProps {
-    userId: string;
-    onUpdate?: (user: User) => void;
-}
-
-export function UserProfile({ userId, onUpdate }: UserProfileProps) {
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                setIsLoading(true);
-                const userData = await getUserById(userId);
-                setUser(userData);
-            } catch (error) {
-                setHasError(true);
-                console.error('Failed to fetch user:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchUser();
-    }, [userId]);
-
-    if (isLoading) return <div>Loading...</div>;
-    if (hasError) return <div>Error loading user</div>;
-    if (!user) return <div>User not found</div>;
-
-    return (
-        <div className='user-profile'>
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
-        </div>
-    );
-}
-```
-
 #### React Performance Optimization
 
 - Use useCallback for memoizing callback functions
@@ -169,42 +127,6 @@ export function UserProfile({ userId, onUpdate }: UserProfileProps) {
 - Avoid inline function definitions in JSX
 - Implement code splitting using dynamic imports
 - Implement proper key props in lists (avoid using index as key)
-
-```tsx
-import { memo, useMemo, useCallback } from 'react';
-
-interface UserListProps {
-    users: User[];
-    onUserSelect: (userId: string) => void;
-}
-
-export const UserList = memo(({ users, onUserSelect }: UserListProps) => {
-    const sortedUsers = useMemo(() => {
-        return users.sort((a, b) => a.name.localeCompare(b.name));
-    }, [users]);
-
-    const handleUserClick = useCallback(
-        (userId: string) => {
-            onUserSelect(userId);
-        },
-        [onUserSelect]
-    );
-
-    return (
-        <div className='user-list'>
-            {sortedUsers.map((user) => (
-                <div
-                    key={user.id}
-                    onClick={() => handleUserClick(user.id)}
-                    className='user-item'
-                >
-                    {user.name}
-                </div>
-            ))}
-        </div>
-    );
-});
-```
 
 ### Next.js Best Practices
 
@@ -380,38 +302,9 @@ export const selectUserError = (state: RootState) => state.user.error;
 
 ### Styling Guidelines
 
-- Use Tailwind CSS for utility-first, maintainable styling
 - Design with mobile-first, responsive principles for flexibility across devices
-- Implement dark mode using CSS variables or Tailwind's dark mode features
 - Ensure color contrast ratios meet accessibility standards for readability
 - Maintain consistent spacing values to establish visual harmony
-
-```tsx
-// Example: Styled component with Tailwind and dark mode
-interface CardProps {
-    title: string;
-    children: React.ReactNode;
-    variant?: 'default' | 'outlined' | 'filled';
-}
-
-export function Card({ title, children, variant = 'default' }: CardProps) {
-    const baseClasses = 'rounded-lg p-6 transition-colors duration-200';
-    const variantClasses = {
-        default: 'bg-white dark:bg-gray-800 shadow-md',
-        outlined: 'border border-gray-200 dark:border-gray-700',
-        filled: 'bg-gray-50 dark:bg-gray-900',
-    };
-
-    return (
-        <div className={`${baseClasses} ${variantClasses[variant]}`}>
-            <h3 className='mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100'>
-                {title}
-            </h3>
-            <div className='text-gray-700 dark:text-gray-300'>{children}</div>
-        </div>
-    );
-}
-```
 
 ## Testing Strategy
 
@@ -421,47 +314,6 @@ export function Card({ title, children, variant = 'default' }: CardProps) {
 - Use Jest and React Testing Library for reliable and efficient testing of React components
 - Follow patterns like Arrange-Act-Assert to ensure clarity and consistency in tests
 - Mock external dependencies and API calls to isolate unit tests
-
-### Integration Testing
-
-- Focus on user workflows to ensure app functionality
-- Set up and tear down test environments properly to maintain test independence
-- Use snapshot testing selectively to catch unintended UI changes without over-relying on it
-- Leverage testing utilities (e.g., screen in RTL) for cleaner and more readable tests
-
-```tsx
-// Example: Component testing with React Testing Library
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../lib/store';
-import { UserProfile } from '../components/UserProfile';
-
-const renderWithProvider = (component: React.ReactElement) => {
-    return render(<Provider store={store}>{component}</Provider>);
-};
-
-describe('UserProfile Component', () => {
-    test('displays user information correctly', async () => {
-        const mockUser = {
-            id: '1',
-            name: 'John Doe',
-            email: 'john@example.com',
-        };
-
-        renderWithProvider(<UserProfile userId='1' />);
-
-        await waitFor(() => {
-            expect(screen.getByText('John Doe')).toBeInTheDocument();
-            expect(screen.getByText('john@example.com')).toBeInTheDocument();
-        });
-    });
-
-    test('handles loading state', () => {
-        renderWithProvider(<UserProfile userId='1' />);
-        expect(screen.getByText('Loading...')).toBeInTheDocument();
-    });
-});
-```
 
 ## Error Handling and Validation
 
@@ -474,57 +326,6 @@ describe('UserProfile Component', () => {
 
 - Use error boundaries to catch and handle errors in React component trees gracefully
 - Design user-friendly fallback UIs to display when errors occur, keeping users informed without breaking the app
-
-```tsx
-// Example: Error Boundary component
-import { Component, ErrorInfo, ReactNode } from 'react';
-
-interface Props {
-    children: ReactNode;
-}
-
-interface State {
-    hasError: boolean;
-    error?: Error;
-}
-
-export class ErrorBoundary extends Component<Props, State> {
-    public state: State = {
-        hasError: false,
-    };
-
-    public static getDerivedStateFromError(error: Error): State {
-        return { hasError: true, error };
-    }
-
-    public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        console.error('Uncaught error:', error, errorInfo);
-    }
-
-    public render() {
-        if (this.state.hasError) {
-            return (
-                <div className='error-boundary p-8 text-center'>
-                    <h2 className='mb-4 text-xl font-bold text-red-600'>
-                        Something went wrong
-                    </h2>
-                    <p className='mb-4 text-gray-600'>
-                        We're sorry, but something unexpected happened.
-                    </p>
-                    <button
-                        onClick={() => this.setState({ hasError: false })}
-                        className='rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600'
-                    >
-                        Try again
-                    </button>
-                </div>
-            );
-        }
-
-        return this.props.children;
-    }
-}
-```
 
 ## Performance Optimization
 
@@ -613,44 +414,15 @@ export function SafeHtml({ html, className }: SafeHtmlProps) {
 - Make all interactive elements accessible
 - Provide clear and accessible error feedback
 
-## Monitoring and Logging
-
-### Application Monitoring
-
-- Performance metrics tracking
-- User behavior analytics
-- Core Web Vitals monitoring
-
-### Log Management
-
-- Structured logging with appropriate log levels
-- Centralized log storage
-- Error alerting and notification
-
-```tsx
-// Custom error logging utility
-export const logger = {
-    error: (message: string, error?: Error, context?: Record<string, any>) => {
-        console.error(message, error, context);
-    },
-    warn: (message: string, context?: Record<string, any>) => {
-        console.warn(message, context);
-    },
-    info: (message: string, context?: Record<string, any>) => {
-        console.info(message, context);
-    },
-};
-```
-
 ## dependency injection
 
 typedi is used for dependency injection in the project. It allows for better separation of concerns and easier testing by decoupling components from their dependencies. it is used with hexagonal architecture in the lib directory. in the lib/core directory, you can find the `dependencyInjection` folder which contains the `container.ts` file that fills the dependency injection container with dependencies, and the `getter.ts` file that contains the method to get the object from the dependency injection container. The `getter.mock.ts` file is used to mock the dependency injection container for storybook.
 
-then in lib folder. each directory is a functional domain. for example lib/theme contains the theme logic. in each functional domain. you can find a service folder which contains interface for service visible outside the domain. the implementation of these interfaces are directly under the domain folder. for example in lib/theme/service you can find the `themeService.ts` file which contains the interface for the theme service, and in lib/theme you can find the `themeServiceImpl.ts` file which contains the implementation of the theme service. this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
+In lib folder. each directory is a functional domain. for example lib/theme contains the theme logic. in each functional domain. you can find a service folder which contains interface for service visible outside the domain. the implementation of these interfaces are directly under the domain folder. for example in lib/theme/service you can find the `themeService.ts` file which contains the interface for the theme service, and in lib/theme you can find the `themeServiceImpl.ts` file which contains the implementation of the theme service. this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
 
-Then for other object not visible outside, you can find the interface direclty under the domain folder, and the implementation in /bridge folder. for example in lib/theme you can find the `theme.ts` file which contains the interface for the theme, and in lib/theme/bridge you can find the `themeImpl.ts` file which contains the implementation of the theme. this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
+For other object not visible outside, you can find the interface direclty under the domain folder, and the implementation in /bridge folder. for example in lib/theme you can find the `theme.ts` file which contains the interface for the theme, and in lib/theme/bridge you can find the `themeImpl.ts` file which contains the implementation of the theme. this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
 
-finally in a domain folder, you can find the model folder which contains the model for the domain and the document model for monggose. for example in lib/theme/model you can find the `themeModel.ts`which contains the logic for Mongoose model and `theme.ts` file which contains the model for the theme . this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
+In a domain folder, you can find the model folder which contains the model for the domain and the document model for monggose. for example in lib/theme/model you can find the `themeModel.ts`which contains the logic for Mongoose model and `theme.ts` file which contains the model for the theme . this allows for better separation of concerns and easier testing by decoupling components from their dependencies.
 
 ## Command to use
 
