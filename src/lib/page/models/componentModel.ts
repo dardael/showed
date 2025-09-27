@@ -11,6 +11,12 @@ const ComponentSchema = new mongoose.Schema({
     title: { type: String },
     content: { type: String },
     link: { type: String },
+    fontFamily: { type: String },
+    fontWeight: { type: String },
+    fontSize: { type: Number },
+    alignment: { type: String },
+    foregroundColor: { type: String },
+    backgroundColor: { type: String },
 });
 
 let ComponentModel: Model<Component> = mongoose.models?.Component;

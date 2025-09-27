@@ -30,6 +30,12 @@ export default class ComponentRepository
         width?: number;
         link?: string;
         font?: Font;
+        fontFamily?: string;
+        fontWeight?: string;
+        fontSize?: number;
+        alignment?: 'left' | 'center' | 'right' | 'justify';
+        foregroundColor?: string;
+        backgroundColor?: string;
     }): Promise<Component> {
         return this.database.create<Component>(ComponentModel, componentData);
     }
@@ -43,6 +49,12 @@ export default class ComponentRepository
             position: number;
             width?: number;
             font?: Font;
+            fontFamily?: string;
+            fontWeight?: string;
+            fontSize?: number;
+            alignment?: 'left' | 'center' | 'right' | 'justify';
+            foregroundColor?: string;
+            backgroundColor?: string;
         }
     ): Promise<Component> {
         return this.database.findByIdAndUpdate<Component>(

@@ -12,6 +12,12 @@ export default interface ComponentRepository {
         link?: string;
         font?: Font;
         position: number;
+        fontFamily?: string;
+        fontWeight?: string;
+        fontSize?: number;
+        alignment?: 'left' | 'center' | 'right' | 'justify';
+        foregroundColor?: string;
+        backgroundColor?: string;
     }): Promise<Component>;
     updateComponent(
         id: string,
@@ -22,6 +28,12 @@ export default interface ComponentRepository {
             width?: number;
             link?: string;
             font?: Font;
+            fontFamily?: string;
+            fontWeight?: string;
+            fontSize?: number;
+            alignment?: 'left' | 'center' | 'right' | 'justify';
+            foregroundColor?: string;
+            backgroundColor?: string;
         }
     ): Promise<Component>;
     deleteComponent(id: string): Promise<Component>;

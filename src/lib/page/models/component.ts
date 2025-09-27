@@ -11,6 +11,13 @@ type Component = {
     link?: string;
     width?: number;
     font?: Font;
+    // Text block specific properties
+    fontFamily?: string;
+    fontWeight?: string;
+    fontSize?: number;
+    alignment?: 'left' | 'center' | 'right' | 'justify';
+    foregroundColor?: string;
+    backgroundColor?: string;
 };
 function isComponent(object: unknown): object is Component {
     if (typeof object !== 'object' || object === null) {

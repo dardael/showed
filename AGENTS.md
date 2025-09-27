@@ -4,6 +4,10 @@
 
 This comprehensive guide outlines best practices, conventions, and standards for development with modern web technologies including ReactJS, NextJS, TypeScript,CSS, and UI frameworks. The guide emphasizes clean, maintainable, and scalable code following SOLID principles and functional programming patterns.
 
+## Functionnal purpose
+
+this app is designed to create showcase webapp. the website must be parametrable to create and modify it without coding. the user must be able to create pages, add block to pages, and add components to blocks. the user must be able to customize the look and feel of the website with themes. the user must be able to manage the content of the website. furthermore, the app must handle product creation, shopping cart and command processing. no payment are made on the website. the command is only registered and the user is contacted by email to proceed to payment.
+
 ## Tech Stack
 
 - **Frontend Framework**: Next.js 14+ with App Router
@@ -34,7 +38,7 @@ showed/
 |  |  |  |  |-- container.ts      # the file that fill the dependency injection container with dependencies
 |  |  |  |  |-- getter.ts         # contains the method to get the object from the dependency injection container.
 |  |  |  |  |-- getter.mock.ts    # contains the method to mock the dependency injection container for storybook.
-|  |-- controllers/               # server actions used to call server from client
+|  |-- controllers/               # server actions used to call server from client components and pages
 |  |-- lib/                       # containing logic, mostly used by controllers
 |  |  |-- frontend/               # contains frontend logic
 |  |  |-- core/                   # core logic used across the app
@@ -66,13 +70,6 @@ showed/
 - Emphasize type safety and static analysis
 
 ### Code implementation guidelines
-
-#### planning phase
-
-- Begin with step-by-step planning
-- Write detailed pseudocode before implementation
-- Document component architecture and data flow
-- Consider edge cases and error scenarios
 
 #### Code Style Standards
 
@@ -145,7 +142,7 @@ showed/
     - Script component for external scripts
     - Head component for metadata
 - Implement proper loading states
-- Use proper data fetching methods
+- Use proper data fetching methods using server actions
 
 #### Server Components
 
@@ -200,7 +197,7 @@ interface User {
     updatedAt: Date;
 }
 
-interface ApiResponse<T> {
+interface Response<T> {
     data: T;
     message: string;
     success: boolean;
@@ -333,7 +330,6 @@ export const selectUserError = (state: RootState) => state.user.error;
 
 - Code splitting with dynamic imports
 - Lazy loading for non-critical components
-- Caching strategies for API responses
 - Image optimization with Next.js Image component
 
 ```tsx
@@ -362,7 +358,6 @@ export function App() {
 
 - Database query optimization
 - Load balancing strategies
-- API response optimization
 
 ## Security Considerations
 

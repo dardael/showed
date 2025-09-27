@@ -18,6 +18,7 @@ import ItalicText from './component/italicText';
 import PositionButton from './component/positionButton';
 import PageLinkButton from './component/pageLinkButton';
 import Map from './component/map';
+import TextBlock from './component/textBlock';
 
 export default async function Component({
     component,
@@ -65,6 +66,9 @@ export default async function Component({
             )}
             {component.componentType === ComponentType.TEXT && (
                 <Text component={component} />
+            )}
+            {component.componentType === ComponentType.TEXT_BLOCK && (
+                <TextBlock component={component} />
             )}
             {component.componentType === ComponentType.STAINED_GLASS_PHOTO && (
                 <StainedGlassPhoto component={component} />

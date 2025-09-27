@@ -175,6 +175,7 @@ const PagesTree = () => {
                                             }
                                             items={[
                                                 ComponentType.TEXT,
+                                                ComponentType.TEXT_BLOCK,
                                                 ComponentType.ITALIC_TEXT,
                                                 ComponentType.BOLD_TEXT,
                                                 ComponentType.UNDERLINED_ABOVELINED_TEXT,

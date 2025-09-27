@@ -24,6 +24,7 @@ import ItalicHeaderData from './italicHeaderData';
 import ItalicTextData from './italicTextData';
 import PageLinkButtonData from './pageLinkButtonData';
 import MapData from './mapData';
+import TextBlockData from './textBlockData';
 import Loading from 'showed/components/core/feedback/loading';
 import { saveComponent } from 'showed/controllers/page/componentController';
 
@@ -142,6 +143,9 @@ export default function ComponentData({
                 )}
                 {component.componentType === ComponentType.TEXT && (
                     <TextData component={component} />
+                )}
+                {component.componentType === ComponentType.TEXT_BLOCK && (
+                    <TextBlockData component={component} />
                 )}
                 {component.componentType === ComponentType.ITALIC_TEXT && (
                     <ItalicTextData component={component} />

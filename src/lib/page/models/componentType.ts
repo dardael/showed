@@ -6,6 +6,7 @@ export enum ComponentType {
     BOLD_TEXT = 'BOLD_TEXT',
     ITALIC_TEXT = 'ITALIC_TEXT',
     TEXT = 'TEXT',
+    TEXT_BLOCK = 'TEXT_BLOCK',
     RICH_TEXT_EDITOR = 'RICH_TEXT_EDITOR',
     COUNTDOWN = 'COUNTDOWN',
     MAP = 'MAP',
@@ -39,6 +40,8 @@ export function getComponentTypeLabel(componentType: ComponentType): string {
             return 'Texte en italique';
         case ComponentType.TEXT:
             return 'Texte';
+        case ComponentType.TEXT_BLOCK:
+            return 'Bloc de texte personnalisable';
         case ComponentType.STAINED_GLASS_PHOTO:
             return 'Photo vitrail';
         case ComponentType.ROUND_PHOTO:

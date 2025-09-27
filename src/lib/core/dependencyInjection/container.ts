@@ -17,6 +17,7 @@ import OrderProvider from 'showed/lib/product/orderProvider';
 import ShoppingCartProvider from 'showed/lib/product/shoppingCartProvider';
 import ComponentProvider from 'showed/lib/page/componentProvider';
 import BlockProvider from 'showed/lib/page/blockProvider';
+import TextBlockServiceImpl from '../../page/textBlockServiceImpl';
 import SocialNetworkRepository from 'showed/lib/socialNetwork/bridge/database/repository';
 import SocialNetworkProvider from 'showed/lib/socialNetwork/provider';
 import EncodingProvider from 'showed/lib/core/security/encodingProvider';
@@ -155,6 +156,10 @@ Container.set(blockProviderToken, blockProvider);
 const componentProvider = new ComponentProvider(componentRepository);
 const componentProviderToken = 'ComponentProvider';
 Container.set(componentProviderToken, componentProvider);
+
+const textBlockService = new TextBlockServiceImpl(componentProvider);
+const textBlockServiceToken = 'TextBlockService';
+Container.set(textBlockServiceToken, textBlockService);
 
 const personProvider = new PersonProvider(personRepository, cache);
 const personProviderToken = 'PersonProvider';

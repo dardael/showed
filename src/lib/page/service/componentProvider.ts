@@ -13,6 +13,12 @@ export default interface ComponentProvider {
         link?: string;
         width?: number;
         font?: Font;
+        fontFamily?: string;
+        fontWeight?: string;
+        fontSize?: number;
+        alignment?: 'left' | 'center' | 'right' | 'justify';
+        foregroundColor?: string;
+        backgroundColor?: string;
     }): Promise<Component>;
     updateComponent(
         id: string,
@@ -23,6 +29,12 @@ export default interface ComponentProvider {
             position: number;
             width?: number;
             font?: Font;
+            fontFamily?: string;
+            fontWeight?: string;
+            fontSize?: number;
+            alignment?: 'left' | 'center' | 'right' | 'justify';
+            foregroundColor?: string;
+            backgroundColor?: string;
         }
     ): Promise<Component>;
     getComponents(blockId: string): Promise<Component[]>;

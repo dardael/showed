@@ -18,6 +18,12 @@ export default class ComponentProvider implements ComponentProviderInterface {
         link?: string;
         width?: number;
         font?: Font;
+        fontFamily?: string;
+        fontWeight?: string;
+        fontSize?: number;
+        alignment?: 'left' | 'center' | 'right' | 'justify';
+        foregroundColor?: string;
+        backgroundColor?: string;
     }): Promise<Component> {
         return this.repository.createComponent(componentData);
     }
@@ -30,6 +36,12 @@ export default class ComponentProvider implements ComponentProviderInterface {
             link?: string;
             width?: number;
             font?: Font;
+            fontFamily?: string;
+            fontWeight?: string;
+            fontSize?: number;
+            alignment?: 'left' | 'center' | 'right' | 'justify';
+            foregroundColor?: string;
+            backgroundColor?: string;
         }
     ): Promise<Component> {
         return this.repository.updateComponent(id, update);
