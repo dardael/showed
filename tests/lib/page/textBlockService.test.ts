@@ -37,7 +37,10 @@ describe('TextBlockService', () => {
                 backgroundColor: '#FFFFFF',
             };
 
-            await textBlockService.addTextBlockToBlock('block1', properties);
+            await textBlockService.addTextBlockToBlock(
+                'block1',
+                properties as any
+            );
 
             expect(mockComponentProvider.createComponent).toHaveBeenCalledWith({
                 blockId: 'block1',

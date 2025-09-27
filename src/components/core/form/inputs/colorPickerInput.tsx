@@ -25,11 +25,23 @@ export default function ColorPickerInput({
         <FormControl isRequired={isRequired}>
             <FormLabel>{label}</FormLabel>
             <Input type='hidden' name={name} value={colorData} />
-            <ColorPicker
-                colors={colors}
-                initialColor={colorData}
-                onChange={handleColorPickerChange}
-            />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ColorPicker
+                    colors={colors}
+                    initialColor={colorData}
+                    onChange={handleColorPickerChange}
+                />
+                <div
+                    style={{
+                        width: '30px',
+                        height: '30px',
+                        backgroundColor: colorData || 'transparent',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                    }}
+                    title={`Selected color: ${colorData}`}
+                />
+            </div>
         </FormControl>
     );
 }
